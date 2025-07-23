@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Command Reference Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .platform-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .command-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .builder-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .builder-section h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .command-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .command-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .command-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .command-item.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .command-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .command-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .parameter-builder {
+            margin-top: 20px;
+        }
+
+        .parameter-group {
+            margin-bottom: 15px;
+        }
+
+        .parameter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .parameter-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+        }
+
+        .generated-command {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #5a67d8;
+        }
+
+        .output-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .output-sample {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .tutorial-section {
+            margin-bottom: 30px;
+        }
+
+        .tutorial-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .tutorial-section h3 {
+            color: #34495e;
+            margin: 20px 0 10px 0;
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .command-table th,
+        .command-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .command-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .command-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .favorites-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .favorite-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flowchart {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flowchart-node {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 20px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flowchart-node:hover {
+            background: #5a67d8;
+            transform: scale(1.05);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .history-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 3px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .command-builder {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-selector {
+                flex-direction: column;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Network Command Reference Center</h1>
+            <p>Master Network+ Commands Across Windows, Linux, and Cisco Platforms</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('tutorial', this)">📚 Tutorial</button>
+            <button class="nav-tab" onclick="showTab('builder', this)">🔨 Command Builder</button>
+            <button class="nav-tab" onclick="showTab('troubleshooting', this)">🔧 Troubleshooting</button>
+            <button class="nav-tab" onclick="showTab('favorites', this)">⭐ Favorites</button>
+            <button class="nav-tab" onclick="showTab('history', this)">📝 History</button>
+        </div>
+
+        <!-- Tutorial Tab -->
+        <div id="tutorial" class="tab-content active">
+            <div class="tutorial-section">
+                <h2>📖 Complete Network+ Command Tutorial</h2>
+                
+                <div class="alert alert-info">
+                    <strong>Welcome to the Network Command Reference Center!</strong><br>
+                    This comprehensive guide covers essential networking commands across Windows, Linux, and Cisco platforms for Network+ certification and real-world network administration.
+                </div>
+
+                <h3>🎯 Learning Objectives</h3>
+                <ul style="margin: 15px 0 15px 30px; line-height: 1.6;">
+                    <li>Master essential network diagnostic commands across platforms</li>
+                    <li>Understand command syntax, parameters, and output interpretation</li>
+                    <li>Apply commands for effective network troubleshooting</li>
+                    <li>Build practical command sequences for common scenarios</li>
+                    <li>Develop systematic network problem-solving skills</li>
+                </ul>
+
+                <h3>🖥️ Windows Network Commands</h3>
+                <p>Windows provides powerful built-in networking tools through the Command Prompt and PowerShell. These commands are essential for Windows-based network administration and troubleshooting.</p>
+                
+                <table class="command-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Purpose</th>
+                            <th>Key Parameters</th>
+                            <th>Example Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ipconfig</strong></td>
+                            <td>Display/manage IP configuration</td>
+                            <td>/all, /release, /renew, /flushdns</td>
+                            <td><code>ipconfig /all</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ping</strong></td>
+                            <td>Test connectivity to remote host</td>
+                            <td>-t, -n count, -l size, -i TTL</td>
+                            <td><code>ping -t google.com</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>tracert</strong></td>
+                            <td>Trace route to destination</td>
+                            <td>-h hops, -w timeout</td>
+                            <td><code>tracert 8.8.8.8</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>nslookup</strong></td>
+                            <td>Query DNS servers</td>
+                            <td>-type=record, server</td>
+                            <td><code>nslookup google.com</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>netstat</strong></td>
+                            <td>Display network connections</td>
+                            <td>-a, -n, -r, -s, -p protocol</td>
+                            <td><code>netstat -an</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>arp</strong></td>
+                            <td>View/manage ARP table</td>
+                            <td>-a, -d, -s</td>
+                            <td><code>arp -a</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>route</strong></td>
+                            <td>View/manage routing table</td>
+                            <td>print, add, delete</td>
+                            <td><code>route print</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>netsh</strong></td>
+                            <td>Network configuration utility</td>
+                            <td>interface, wlan, firewall</td>
+                            <td><code>netsh wlan show profiles</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert alert-info">
+                    <strong>Pro Tip:</strong> Use <code>ipconfig /all</code> as your starting point for Windows network troubleshooting. It provides comprehensive network adapter information including IP addresses, DNS servers, and DHCP status.
+                </div>
+
+                <h4>Windows Command Examples with Output</h4>
+                <div class="code-block">
+C:\> ipconfig /all
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-ABC123
+   Primary Dns Suffix  . . . . . . . :
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) Ethernet Connection
+   Physical Address. . . . . . . . . : 00-1B-21-AB-CD-EF
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 192.168.1.100(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.1
+   DNS Servers . . . . . . . . . . . : 192.168.1.1
+                                       8.8.8.8
+</div>
+
+                <h3>🐧 Linux Network Commands</h3>
+                <p>Linux offers powerful networking tools through the command line. Modern Linux distributions are moving from legacy tools (like ifconfig) to newer alternatives (like ip command).</p>
+                
+                <table class="command-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Purpose</th>
+                            <th>Key Parameters</th>
+                            <th>Example Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ip</strong></td>
+                            <td>Modern network configuration</td>
+                            <td>addr, link, route, neigh</td>
+                            <td><code>ip addr show</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ifconfig</strong></td>
+                            <td>Legacy interface configuration</td>
+                            <td>interface, up, down</td>
+                            <td><code>ifconfig eth0</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ping</strong></td>
+                            <td>Test connectivity</td>
+                            <td>-c count, -i interval, -s size</td>
+                            <td><code>ping -c 4 google.com</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>traceroute</strong></td>
+                            <td>Trace packet route</td>
+                            <td>-m hops, -p port, -n</td>
+                            <td><code>traceroute 8.8.8.8</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>dig</strong></td>
+                            <td>Advanced DNS lookup</td>
+                            <td>@server, +short, -t type</td>
+                            <td><code>dig @8.8.8.8 google.com</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ss</strong></td>
+                            <td>Modern socket statistics</td>
+                            <td>-tuln, -p, -s</td>
+                            <td><code>ss -tuln</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>netstat</strong></td>
+                            <td>Legacy network statistics</td>
+                            <td>-tuln, -r, -i</td>
+                            <td><code>netstat -tuln</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>tcpdump</strong></td>
+                            <td>Packet capture and analysis</td>
+                            <td>-i interface, -n, -v, host</td>
+                            <td><code>tcpdump -i eth0 host google.com</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Linux Command Examples with Output</h4>
+                <div class="code-block">
+$ ip addr show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:1b:21:ab:cd:ef brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global dynamic noprefixroute eth0
+       valid_lft 86395sec preferred_lft 86395sec
+    inet6 fe80::21b:21ff:feab:cdef/64 scope link
+       valid_lft forever preferred_lft forever
+
+$ dig google.com +short
+142.250.185.110
+</div>
+
+                <h3>🔧 Cisco IOS Commands</h3>
+                <p>Cisco IOS commands are essential for managing Cisco routers and switches. Understanding the command hierarchy and modes is crucial for effective network device management.</p>
+                
+                <table class="command-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Mode</th>
+                            <th>Purpose</th>
+                            <th>Example Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>show ip interface brief</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Interface status summary</td>
+                            <td><code>show ip interface brief</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>show ip route</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Display routing table</td>
+                            <td><code>show ip route</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>show running-config</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Display active configuration</td>
+                            <td><code>show run</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ping</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Test connectivity</td>
+                            <td><code>ping 8.8.8.8</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>traceroute</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Trace route to destination</td>
+                            <td><code>traceroute 8.8.8.8</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>show arp</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Display ARP table</td>
+                            <td><code>show arp</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>show mac address-table</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Display MAC address table</td>
+                            <td><code>show mac address-table</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>configure terminal</strong></td>
+                            <td>Privileged EXEC</td>
+                            <td>Enter configuration mode</td>
+                            <td><code>conf t</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Cisco IOS Command Examples with Output</h4>
+                <div class="code-block">
+Router# show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up
+GigabitEthernet0/1         10.0.0.1        YES NVRAM  up                    up
+Serial0/0/0                unassigned      YES NVRAM  administratively down down
+
+Router# show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.0.0.0/24 is directly connected, GigabitEthernet0/1
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/1
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, GigabitEthernet0/0
+L        192.168.1.1/32 is directly connected, GigabitEthernet0/0
+</div>
+
+                <h3>🔄 Command Chaining and Scripting</h3>
+                <p>Combining commands creates powerful troubleshooting sequences. Here are practical examples:</p>
+
+                <h4>Windows Command Sequences</h4>
+                <div class="code-block">
+REM Complete network diagnostics sequence
+ipconfig /all > network_info.txt
+ping -n 4 8.8.8.8 >> network_info.txt
+tracert 8.8.8.8 >> network_info.txt
+nslookup google.com >> network_info.txt
+netstat -rn >> network_info.txt
+echo Network diagnostics complete!
+
+REM Reset network configuration
+ipconfig /release
+ipconfig /flushdns
+ipconfig /renew
+netsh winsock reset
+netsh int ip reset
+</div>
+
+                <h4>Linux Command Sequences</h4>
+                <div class="code-block">
+#!/bin/bash
+# Comprehensive network check script
+
+echo "=== Network Interface Information ==="
+ip addr show
+
+echo -e "\n=== Routing Table ==="
+ip route show
+
+echo -e "\n=== DNS Configuration ==="
+cat /etc/resolv.conf
+
+echo -e "\n=== Connectivity Test ==="
+ping -c 4 8.8.8.8
+
+echo -e "\n=== DNS Resolution Test ==="
+dig google.com +short
+
+echo -e "\n=== Active Connections ==="
+ss -tuln
+</div>
+
+                <h3>📊 Output Interpretation Guide</h3>
+                
+                <h4>Understanding ping Output</h4>
+                <div class="alert alert-info">
+                    <strong>Key Metrics:</strong><br>
+                    • <strong>Reply time:</strong> Network latency (lower is better)<br>
+                    • <strong>TTL (Time To Live):</strong> Remaining hops (helps identify OS)<br>
+                    • <strong>Packet loss:</strong> Network reliability indicator<br>
+                    • <strong>Request timeout:</strong> Indicates connectivity issues
+                </div>
+
+                <h4>Analyzing traceroute Results</h4>
+                <div class="alert alert-warning">
+                    <strong>Troubleshooting Tips:</strong><br>
+                    • <strong>* * * (asterisks):</strong> Router not responding to ICMP<br>
+                    • <strong>High latency spike:</strong> Congestion at that hop<br>
+                    • <strong>Consistent timeouts:</strong> Firewall or routing issue<br>
+                    • <strong>Loops or long paths:</strong> Routing table problems
+                </div>
+
+                <h4>Reading Routing Tables</h4>
+                <p>Routing table entries show how packets are forwarded:</p>
+                <ul style="margin: 15px 0 15px 30px; line-height: 1.6;">
+                    <li><strong>Destination:</strong> Target network or host</li>
+                    <li><strong>Gateway:</strong> Next hop router</li>
+                    <li><strong>Interface:</strong> Outgoing network interface</li>
+                    <li><strong>Metric:</strong> Cost of the route</li>
+                    <li><strong>Route Source:</strong> How the route was learned</li>
+                </ul>
+
+                <h3>🎯 Common Troubleshooting Scenarios</h3>
+                
+                <h4>Scenario 1: Cannot Access Internet</h4>
+                <ol style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                    <li><strong>Check local configuration:</strong> <code>ipconfig /all</code> (Windows) or <code>ip addr show</code> (Linux)</li>
+                    <li><strong>Test local connectivity:</strong> <code>ping 127.0.0.1</code> (loopback)</li>
+                    <li><strong>Test gateway:</strong> <code>ping [gateway_ip]</code></li>
+                    <li><strong>Test external connectivity:</strong> <code>ping 8.8.8.8</code></li>
+                    <li><strong>Test DNS resolution:</strong> <code>nslookup google.com</code></li>
+                    <li><strong>Trace the route:</strong> <code>tracert google.com</code></li>
+                </ol>
+
+                <h4>Scenario 2: Slow Network Performance</h4>
+                <ol style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                    <li><strong>Check interface statistics:</strong> <code>netstat -i</code> (Linux) or <code>netsh int ip show int</code> (Windows)</li>
+                    <li><strong>Monitor active connections:</strong> <code>netstat -an</code></li>
+                    <li><strong>Test latency:</strong> <code>ping -t destination</code></li>
+                    <li><strong>Check for packet loss:</strong> Extended ping tests</li>
+                    <li><strong>Analyze traffic:</strong> <code>tcpdump</code> (Linux) or Wireshark</li>
+                </ol>
+
+                <h3>🏆 Best Practices</h3>
+                <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                    <li><strong>Document findings:</strong> Always save command output for analysis</li>
+                    <li><strong>Use systematic approach:</strong> Start with basic connectivity, then move to specific issues</li>
+                    <li><strong>Understand your baseline:</strong> Know normal network performance metrics</li>
+                    <li><strong>Test incrementally:</strong> Test each network layer systematically</li>
+                    <li><strong>Verify changes:</strong> Always confirm that fixes actually resolve the issue</li>
+                    <li><strong>Keep learning:</strong> Networks evolve, so keep updating your command knowledge</li>
+                </ul>
+
+                <div class="alert alert-info">
+                    <strong>Practice Makes Perfect!</strong><br>
+                    Use the Command Builder tab to practice creating commands with different parameters. The Troubleshooting tab provides guided workflows for common network issues.
+                </div>
+            </div>
+        </div>
+
+        <!-- Command Builder Tab -->
+        <div id="builder" class="tab-content">
+            <input type="text" class="search-bar" id="commandSearch" placeholder="🔍 Search commands by name or description..." oninput="searchCommands()">
+            
+            <div class="platform-selector">
+                <button class="platform-btn active" onclick="selectPlatform('windows', this)">🖥️ Windows</button>
+                <button class="platform-btn" onclick="selectPlatform('linux', this)">🐧 Linux</button>
+                <button class="platform-btn" onclick="selectPlatform('cisco', this)">🔧 Cisco IOS</button>
+            </div>
+
+            <div class="command-builder">
+                <div class="builder-section">
+                    <h3>Select Command</h3>
+                    <div class="command-list" id="commandList">
+                        <!-- Commands will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="builder-section">
+                    <h3>Command Parameters</h3>
+                    <div id="parameterBuilder">
+                        <p>Select a command to see available parameters</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="generated-command" id="generatedCommand">
+                <button class="copy-btn" onclick="copyCommand()">📋 Copy</button>
+                <div id="commandOutput">Select a command to start building</div>
+            </div>
+
+            <div class="output-section">
+                <h3>📋 Sample Output & Explanation</h3>
+                <div class="output-sample" id="sampleOutput">Select a command to see sample output and explanation</div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting Tab -->
+        <div id="troubleshooting" class="tab-content">
+            <h2>🔧 Network Troubleshooting Flowcharts</h2>
+            
+            <div class="flowchart">
+                <h3>Internet Connectivity Issues</h3>
+                <div class="flowchart-node" onclick="runDiagnostic('connectivity')">Start Connectivity Check</div>
+                <div class="flowchart-node" onclick="runDiagnostic('local')">Check Local Config</div>
+                <div class="flowchart-node" onclick="runDiagnostic('gateway')">Test Gateway</div>
+                <div class="flowchart-node" onclick="runDiagnostic('dns')">Check DNS</div>
+                <div class="flowchart-node" onclick="runDiagnostic('external')">Test External</div>
+            </div>
+
+            <div class="flowchart">
+                <h3>Network Performance Issues</h3>
+                <div class="flowchart-node" onclick="runDiagnostic('performance')">Start Performance Check</div>
+                <div class="flowchart-node" onclick="runDiagnostic('bandwidth')">Test Bandwidth</div>
+                <div class="flowchart-node" onclick="runDiagnostic('latency')">Check Latency</div>
+                <div class="flowchart-node" onclick="runDiagnostic('packetloss')">Test Packet Loss</div>
+            </div>
+
+            <div id="diagnosticOutput" class="output-section" style="display: none;">
+                <h3>Diagnostic Results</h3>
+                <div id="diagnosticCommands"></div>
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="favorites" class="tab-content">
+            <h2>⭐ Favorite Commands</h2>
+            <div class="favorites-list" id="favoritesList">
+                <p>No favorites saved yet. Add commands from the Command Builder tab!</p>
+            </div>
+        </div>
+
+        <!-- History Tab -->
+        <div id="history" class="tab-content">
+            <h2>📝 Command History</h2>
+            <button onclick="clearHistory()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">Clear History</button>
+            <div id="historyList">
+                <p>No commands executed yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentPlatform = 'windows';
+        let selectedCommand = null;
+        let commandHistory = [];
+        let favorites = [];
+
+        // Command database
+        const commands = {
+            windows: {
+                ipconfig: {
+                    name: 'ipconfig',
+                    desc: 'Display and manage IP configuration',
+                    params: [
+                        { name: 'action', type: 'select', options: ['', '/all', '/release', '/renew', '/flushdns', '/displaydns'], desc: 'Action to perform' },
+                        { name: 'adapter', type: 'text', placeholder: 'Adapter name (optional)', desc: 'Specific adapter name' }
+                    ],
+                    output: `Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : COMPUTER-NAME
+   Primary Dns Suffix  . . . . . . . :
+   Node Type . . . . . . . . . . . . : Hybrid
+
+Ethernet adapter Local Area Connection:
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) Ethernet Adapter
+   Physical Address. . . . . . . . . : 00-1B-21-AB-CD-EF
+   DHCP Enabled. . . . . . . . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 192.168.1.100
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.1`,
+                    explanation: 'Shows network adapter configuration. Use /all for detailed info, /release and /renew for DHCP troubleshooting.'
+                },
+                ping: {
+                    name: 'ping',
+                    desc: 'Test network connectivity to a host',
+                    params: [
+                        { name: 'target', type: 'text', placeholder: 'google.com or 8.8.8.8', required: true, desc: 'Target host or IP address' },
+                        { name: 'count', type: 'number', placeholder: '4', desc: 'Number of packets (-n)' },
+                        { name: 'size', type: 'number', placeholder: '32', desc: 'Packet size in bytes (-l)' },
+                        { name: 'continuous', type: 'checkbox', desc: 'Continuous ping (-t)' }
+                    ],
+                    output: `Pinging google.com [142.250.185.110] with 32 bytes of data:
+Reply from 142.250.185.110: bytes=32 time=20ms TTL=57
+Reply from 142.250.185.110: bytes=32 time=18ms TTL=57
+Reply from 142.250.185.110: bytes=32 time=19ms TTL=57
+Reply from 142.250.185.110: bytes=32 time=21ms TTL=57
+
+Ping statistics for 142.250.185.110:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 18ms, Maximum = 21ms, Average = 19ms`,
+                    explanation: 'Tests connectivity and measures latency. TTL indicates OS type, low times = good connection.'
+                },
+                tracert: {
+                    name: 'tracert',
+                    desc: 'Trace the route packets take to a destination',
+                    params: [
+                        { name: 'target', type: 'text', placeholder: 'google.com or 8.8.8.8', required: true, desc: 'Target host or IP address' },
+                        { name: 'maxhops', type: 'number', placeholder: '30', desc: 'Maximum hops (-h)' }
+                    ],
+                    output: `Tracing route to google.com [142.250.185.110]
+over a maximum of 30 hops:
+
+  1     1 ms     1 ms     1 ms  192.168.1.1
+  2    12 ms    11 ms    10 ms  10.0.0.1
+  3    15 ms    16 ms    14 ms  203.0.113.1
+  4    20 ms    19 ms    21 ms  google.com [142.250.185.110]
+
+Trace complete.`,
+                    explanation: 'Shows path packets take through routers. High latency or timeouts (*) indicate network issues.'
+                },
+                nslookup: {
+                    name: 'nslookup',
+                    desc: 'Query DNS servers for domain information',
+                    params: [
+                        { name: 'domain', type: 'text', placeholder: 'google.com', desc: 'Domain to lookup' },
+                        { name: 'server', type: 'text', placeholder: '8.8.8.8', desc: 'DNS server to query' },
+                        { name: 'type', type: 'select', options: ['', 'A', 'AAAA', 'MX', 'NS', 'PTR', 'SOA'], desc: 'Record type' }
+                    ],
+                    output: `Server:  dns.google
+Address:  8.8.8.8
+
+Non-authoritative answer:
+Name:    google.com
+Address:  142.250.185.110`,
+                    explanation: 'Resolves domain names to IP addresses. Use different record types to query specific DNS records.'
+                },
+                netstat: {
+                    name: 'netstat',
+                    desc: 'Display network connections and statistics',
+                    params: [
+                        { name: 'all', type: 'checkbox', desc: 'Show all connections (-a)' },
+                        { name: 'numeric', type: 'checkbox', desc: 'Show numerical addresses (-n)' },
+                        { name: 'routing', type: 'checkbox', desc: 'Show routing table (-r)' },
+                        { name: 'stats', type: 'checkbox', desc: 'Show statistics (-s)' }
+                    ],
+                    output: `Active Connections
+
+  Proto  Local Address          Foreign Address        State
+  TCP    0.0.0.0:80             0.0.0.0:0              LISTENING
+  TCP    192.168.1.100:1234     93.184.216.34:80      ESTABLISHED
+  UDP    0.0.0.0:53             *:*`,
+                    explanation: 'Shows active network connections. LISTENING = server ports, ESTABLISHED = active connections.'
+                }
+            },
+            linux: {
+                ip: {
+                    name: 'ip',
+                    desc: 'Modern Linux network configuration tool',
+                    params: [
+                        { name: 'object', type: 'select', options: ['addr', 'link', 'route', 'neigh'], required: true, desc: 'Object type' },
+                        { name: 'action', type: 'select', options: ['show', 'add', 'del'], desc: 'Action' },
+                        { name: 'interface', type: 'text', placeholder: 'eth0', desc: 'Network interface' }
+                    ],
+                    output: `2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
+    link/ether 00:1b:21:ab:cd:ef brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global dynamic eth0
+       valid_lft 86395sec preferred_lft 86395sec`,
+                    explanation: 'Modern replacement for ifconfig. Shows interface status, IP addresses, and network configuration.'
+                },
+                ping: {
+                    name: 'ping',
+                    desc: 'Test network connectivity',
+                    params: [
+                        { name: 'target', type: 'text', placeholder: 'google.com', required: true, desc: 'Target host' },
+                        { name: 'count', type: 'number', placeholder: '4', desc: 'Packet count (-c)' },
+                        { name: 'interval', type: 'number', placeholder: '1', desc: 'Interval in seconds (-i)' },
+                        { name: 'size', type: 'number', placeholder: '56', desc: 'Packet size (-s)' }
+                    ],
+                    output: `PING google.com (142.250.185.110) 56(84) bytes of data.
+64 bytes from 142.250.185.110: icmp_seq=1 ttl=57 time=19.2 ms
+64 bytes from 142.250.185.110: icmp_seq=2 ttl=57 time=18.7 ms
+64 bytes from 142.250.185.110: icmp_seq=3 ttl=57 time=20.1 ms
+
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss
+round-trip min/avg/max/stddev = 18.7/19.3/20.1/0.6 ms`,
+                    explanation: 'Linux ping shows sequence numbers and detailed statistics including standard deviation.'
+                },
+                dig: {
+                    name: 'dig',
+                    desc: 'Advanced DNS lookup utility',
+                    params: [
+                        { name: 'domain', type: 'text', placeholder: 'google.com', required: true, desc: 'Domain to query' },
+                        { name: 'server', type: 'text', placeholder: '@8.8.8.8', desc: 'DNS server' },
+                        { name: 'type', type: 'select', options: ['', 'A', 'AAAA', 'MX', 'NS', 'PTR', 'SOA'], desc: 'Record type' },
+                        { name: 'short', type: 'checkbox', desc: 'Short output (+short)' }
+                    ],
+                    output: `; <<>> DiG 9.16.1 <<>> google.com
+;; ANSWER SECTION:
+google.com.             299     IN      A       142.250.185.110
+
+;; Query time: 20 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)`,
+                    explanation: 'More detailed than nslookup. Shows query time, TTL values, and full DNS response.'
+                },
+                ss: {
+                    name: 'ss',
+                    desc: 'Modern socket statistics utility',
+                    params: [
+                        { name: 'tcp', type: 'checkbox', desc: 'Show TCP sockets (-t)' },
+                        { name: 'udp', type: 'checkbox', desc: 'Show UDP sockets (-u)' },
+                        { name: 'listening', type: 'checkbox', desc: 'Show listening sockets (-l)' },
+                        { name: 'numeric', type: 'checkbox', desc: 'Show numerical addresses (-n)' },
+                        { name: 'processes', type: 'checkbox', desc: 'Show processes (-p)' }
+                    ],
+                    output: `State      Recv-Q Send-Q Local Address:Port    Peer Address:Port
+LISTEN     0      128          0.0.0.0:22           0.0.0.0:*
+LISTEN     0      128             [::]:22              [::]:*
+ESTAB      0      0      192.168.1.100:22    192.168.1.50:54321`,
+                    explanation: 'Modern replacement for netstat. Shows socket states and queue information.'
+                }
+            },
+            cisco: {
+                'show ip interface brief': {
+                    name: 'show ip interface brief',
+                    desc: 'Display interface status summary',
+                    params: [],
+                    output: `Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     192.168.1.1     YES NVRAM  up                    up
+GigabitEthernet0/1     10.0.0.1        YES NVRAM  up                    up
+Serial0/0/0           unassigned      YES NVRAM  administratively down down`,
+                    explanation: 'Quick overview of all interfaces. Status shows physical layer, Protocol shows data link layer.'
+                },
+                'show ip route': {
+                    name: 'show ip route',
+                    desc: 'Display the routing table',
+                    params: [
+                        { name: 'network', type: 'text', placeholder: '192.168.1.0', desc: 'Specific network (optional)' }
+                    ],
+                    output: `Codes: L - local, C - connected, S - static, R - RIP, O - OSPF
+       D - EIGRP, EX - EIGRP external
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.0.0.0/24 is directly connected, GigabitEthernet0/1
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/1
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, GigabitEthernet0/0
+L        192.168.1.1/32 is directly connected, GigabitEthernet0/0`,
+                    explanation: 'Shows how router forwards packets. C=Connected, L=Local, S=Static, D=EIGRP, O=OSPF routes.'
+                },
+                ping: {
+                    name: 'ping',
+                    desc: 'Test connectivity from router',
+                    params: [
+                        { name: 'target', type: 'text', placeholder: '8.8.8.8', required: true, desc: 'Target IP address' },
+                        { name: 'source', type: 'text', placeholder: 'GigabitEthernet0/0', desc: 'Source interface' },
+                        { name: 'repeat', type: 'number', placeholder: '5', desc: 'Repeat count' }
+                    ],
+                    output: `Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 20/22/28 ms`,
+                    explanation: 'Tests connectivity from router perspective. ! = success, . = timeout, U = unreachable.'
+                }
+            }
+        };
+
+        // Initialize the application
+        function init() {
+            showTab('tutorial');
+            selectPlatform('windows');
+            loadHistory();
+            loadFavorites();
+        }
+
+        // Tab management
+        function showTab(tabName, element) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            if (element) {
+                element.classList.add('active');
+            } else {
+                // Fallback: find the tab by content
+                const navTab = Array.from(navTabs).find(tab => 
+                    tab.textContent.toLowerCase().includes(tabName.toLowerCase())
+                );
+                if (navTab) navTab.classList.add('active');
+            }
+        }
+
+        // Platform selection
+        function selectPlatform(platform, element) {
+            currentPlatform = platform;
+            
+            // Update platform buttons
+            const buttons = document.querySelectorAll('.platform-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // Update command list
+            updateCommandList();
+            
+            // Clear selected command
+            selectedCommand = null;
+            updateParameterBuilder();
+            updateGeneratedCommand();
+        }
+
+        // Update command list based on platform
+        function updateCommandList() {
+            const commandList = document.getElementById('commandList');
+            commandList.innerHTML = '';
+            
+            const platformCommands = commands[currentPlatform];
+            
+            Object.keys(platformCommands).forEach(cmdKey => {
+                const cmd = platformCommands[cmdKey];
+                const cmdElement = document.createElement('div');
+                cmdElement.className = 'command-item';
+                cmdElement.onclick = function() { selectCommand(cmdKey, this); };
+                
+                cmdElement.innerHTML = `
+                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-desc">${cmd.desc}</div>
+                `;
+                
+                commandList.appendChild(cmdElement);
+            });
+        }
+
+        // Select a command
+        function selectCommand(cmdKey, element) {
+            selectedCommand = cmdKey;
+            
+            // Update visual selection
+            const items = document.querySelectorAll('.command-item');
+            items.forEach(item => item.classList.remove('selected'));
+            if (element) {
+                element.classList.add('selected');
+            }
+            
+            // Update parameter builder
+            updateParameterBuilder();
+            updateGeneratedCommand();
+            updateSampleOutput();
+        }
+
+        // Update parameter builder
+        function updateParameterBuilder() {
+            const paramBuilder = document.getElementById('parameterBuilder');
+            
+            if (!selectedCommand) {
+                paramBuilder.innerHTML = '<p>Select a command to see available parameters</p>';
+                return;
+            }
+            
+            const cmd = commands[currentPlatform][selectedCommand];
+            paramBuilder.innerHTML = '';
+            
+            if (cmd.params.length === 0) {
+                paramBuilder.innerHTML = '<p>This command has no configurable parameters</p>';
+                return;
+            }
+            
+            cmd.params.forEach((param, index) => {
+                const paramGroup = document.createElement('div');
+                paramGroup.className = 'parameter-group';
+                
+                let input = '';
+                switch (param.type) {
+                    case 'text':
+                        input = `<input type="text" class="parameter-input" id="param_${index}" placeholder="${param.placeholder || ''}" ${param.required ? 'required' : ''}>`;
+                        break;
+                    case 'number':
+                        input = `<input type="number" class="parameter-input" id="param_${index}" placeholder="${param.placeholder || ''}" ${param.required ? 'required' : ''}>`;
+                        break;
+                    case 'select':
+                        input = `<select class="parameter-input" id="param_${index}">
+                            ${param.options.map(opt => `<option value="${opt}">${opt || 'Default'}</option>`).join('')}
+                        </select>`;
+                        break;
+                    case 'checkbox':
+                        input = `<input type="checkbox" id="param_${index}" style="transform: scale(1.2); margin-right: 10px;">`;
+                        break;
+                }
+                
+                paramGroup.innerHTML = `
+                    <label for="param_${index}">${param.name} ${param.required ? '*' : ''}</label>
+                    ${input}
+                    <small style="color: #666; display: block; margin-top: 5px;">${param.desc}</small>
+                `;
+                
+                paramBuilder.appendChild(paramGroup);
+                
+                // Add event listener to update command
+                const inputElement = paramGroup.querySelector(`#param_${index}`);
+                inputElement.addEventListener('input', updateGeneratedCommand);
+                inputElement.addEventListener('change', updateGeneratedCommand);
+            });
+        }
+
+        // Update generated command
+        function updateGeneratedCommand() {
+            const commandOutput = document.getElementById('commandOutput');
+            
+            if (!selectedCommand) {
+                commandOutput.textContent = 'Select a command to start building';
+                return;
+            }
+            
+            const cmd = commands[currentPlatform][selectedCommand];
+            let generatedCmd = cmd.name;
+            
+            // Build command with parameters
+            cmd.params.forEach((param, index) => {
+                const input = document.getElementById(`param_${index}`);
+                if (!input) return;
+                
+                let value = '';
+                if (param.type === 'checkbox') {
+                    if (input.checked) {
+                        switch (param.name) {
+                            case 'continuous':
+                                generatedCmd += ' -t';
+                                break;
+                            case 'all':
+                                generatedCmd += ' -a';
+                                break;
+                            case 'numeric':
+                                generatedCmd += ' -n';
+                                break;
+                            case 'routing':
+                                generatedCmd += ' -r';
+                                break;
+                            case 'stats':
+                                generatedCmd += ' -s';
+                                break;
+                            case 'tcp':
+                                generatedCmd += ' -t';
+                                break;
+                            case 'udp':
+                                generatedCmd += ' -u';
+                                break;
+                            case 'listening':
+                                generatedCmd += ' -l';
+                                break;
+                            case 'processes':
+                                generatedCmd += ' -p';
+                                break;
+                            case 'short':
+                                generatedCmd += ' +short';
+                                break;
+                        }
+                    }
+                } else {
+                    value = input.value.trim();
+                    if (value) {
+                        switch (param.name) {
+                            case 'target':
+                            case 'domain':
+                                generatedCmd += ` ${value}`;
+                                break;
+                            case 'adapter':
+                                if (currentPlatform === 'windows') {
+                                    generatedCmd += ` "${value}"`;
+                                }
+                                break;
+                            case 'action':
+                                if (value && currentPlatform === 'windows' && selectedCommand === 'ipconfig') {
+                                    generatedCmd += ` ${value}`;
+                                }
+                                break;
+                            case 'count':
+                                if (currentPlatform === 'windows') {
+                                    generatedCmd += ` -n ${value}`;
+                                } else if (currentPlatform === 'linux') {
+                                    generatedCmd += ` -c ${value}`;
+                                }
+                                break;
+                            case 'size':
+                                if (currentPlatform === 'windows') {
+                                    generatedCmd += ` -l ${value}`;
+                                } else if (currentPlatform === 'linux') {
+                                    generatedCmd += ` -s ${value}`;
+                                }
+                                break;
+                            case 'maxhops':
+                                generatedCmd += ` -h ${value}`;
+                                break;
+                            case 'server':
+                                if (value.startsWith('@')) {
+                                    generatedCmd += ` ${value}`;
+                                } else {
+                                    generatedCmd += ` ${value}`;
+                                }
+                                break;
+                            case 'type':
+                                if (value && currentPlatform === 'windows') {
+                                    generatedCmd += ` -type=${value}`;
+                                } else if (value && currentPlatform === 'linux') {
+                                    generatedCmd += ` ${value}`;
+                                }
+                                break;
+                            case 'object':
+                                if (currentPlatform === 'linux' && selectedCommand === 'ip') {
+                                    generatedCmd += ` ${value}`;
+                                }
+                                break;
+                            case 'action':
+                                if (currentPlatform === 'linux' && selectedCommand === 'ip' && value !== 'show') {
+                                    generatedCmd += ` ${value}`;
+                                } else if (currentPlatform === 'linux' && selectedCommand === 'ip') {
+                                    generatedCmd += ` ${value}`;
+                                }
+                                break;
+                            case 'interface':
+                                generatedCmd += ` ${value}`;
+                                break;
+                            case 'interval':
+                                generatedCmd += ` -i ${value}`;
+                                break;
+                            case 'network':
+                                generatedCmd += ` ${value}`;
+                                break;
+                            case 'source':
+                                generatedCmd += ` source ${value}`;
+                                break;
+                            case 'repeat':
+                                generatedCmd += ` repeat ${value}`;
+                                break;
+                        }
+                    }
+                }
+            });
+            
+            commandOutput.textContent = generatedCmd;
+            
+            // Add to history
+            if (generatedCmd !== cmd.name) {
+                addToHistory(generatedCmd);
+            }
+        }
+
+        // Update sample output
+        function updateSampleOutput() {
+            const sampleOutput = document.getElementById('sampleOutput');
+            
+            if (!selectedCommand) {
+                sampleOutput.textContent = 'Select a command to see sample output and explanation';
+                return;
+            }
+            
+            const cmd = commands[currentPlatform][selectedCommand];
+            sampleOutput.innerHTML = `
+                <strong>Sample Output:</strong><br>
+                ${cmd.output}
+                
+                <br><br><strong>Explanation:</strong><br>
+                ${cmd.explanation}
+            `;
+        }
+
+        // Copy command to clipboard
+        function copyCommand() {
+            const commandText = document.getElementById('commandOutput').textContent;
+            navigator.clipboard.writeText(commandText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Search commands
+        function searchCommands() {
+            const searchTerm = document.getElementById('commandSearch').value.toLowerCase();
+            const commandItems = document.querySelectorAll('.command-item');
+            
+            commandItems.forEach(item => {
+                const name = item.querySelector('.command-name').textContent.toLowerCase();
+                const desc = item.querySelector('.command-desc').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || desc.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Add command to history
+        function addToHistory(command) {
+            const timestamp = new Date().toLocaleString();
+            const historyItem = {
+                command: command,
+                platform: currentPlatform,
+                timestamp: timestamp
+            };
+            
+            // Remove duplicates and add to beginning
+            commandHistory = commandHistory.filter(item => item.command !== command);
+            commandHistory.unshift(historyItem);
+            
+            // Keep only last 50 items
+            if (commandHistory.length > 50) {
+                commandHistory = commandHistory.slice(0, 50);
+            }
+            
+            // Update history display
+            updateHistoryDisplay();
+        }
+
+        // Load and display history
+        function loadHistory() {
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (commandHistory.length === 0) {
+                historyList.innerHTML = '<p>No commands executed yet.</p>';
+                return;
+            }
+            
+            historyList.innerHTML = commandHistory.map(item => `
+                <div class="history-item">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <code>${item.command}</code>
+                        <small style="color: #666;">${item.platform} - ${item.timestamp}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Clear history
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear command history?')) {
+                commandHistory = [];
+                updateHistoryDisplay();
+            }
+        }
+
+        // Add to favorites
+        function addToFavorites(command) {
+            if (!favorites.find(fav => fav.command === command)) {
+                const favoriteItem = {
+                    command: command,
+                    platform: currentPlatform,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                favorites.push(favoriteItem);
+                updateFavoritesDisplay();
+            }
+        }
+
+        // Load and display favorites
+        function loadFavorites() {
+            updateFavoritesDisplay();
+        }
+
+        function updateFavoritesDisplay() {
+            const favoritesList = document.getElementById('favoritesList');
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = '<p>No favorites saved yet. Add commands from the Command Builder tab!</p>';
+                return;
+            }
+            
+            favoritesList.innerHTML = favorites.map((item, index) => `
+                <div class="favorite-item">
+                    <div>
+                        <code>${item.command}</code>
+                        <br><small style="color: #666;">${item.platform} - ${item.timestamp}</small>
+                    </div>
+                    <button onclick="removeFavorite(${index})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        // Remove from favorites
+        function removeFavorite(index) {
+            favorites.splice(index, 1);
+            updateFavoritesDisplay();
+        }
+
+        // Run diagnostic commands
+        function runDiagnostic(type) {
+            const diagnosticOutput = document.getElementById('diagnosticOutput');
+            const diagnosticCommands = document.getElementById('diagnosticCommands');
+            
+            let commands = [];
+            
+            switch (type) {
+                case 'connectivity':
+                    commands = [
+                        { cmd: 'ping 127.0.0.1', desc: 'Test loopback interface' },
+                        { cmd: 'ping [gateway]', desc: 'Test default gateway' },
+                        { cmd: 'ping 8.8.8.8', desc: 'Test external connectivity' }
+                    ];
+                    break;
+                case 'local':
+                    if (currentPlatform === 'windows') {
+                        commands = [{ cmd: 'ipconfig /all', desc: 'Check network configuration' }];
+                    } else if (currentPlatform === 'linux') {
+                        commands = [{ cmd: 'ip addr show', desc: 'Check network configuration' }];
+                    } else {
+                        commands = [{ cmd: 'show ip interface brief', desc: 'Check interface status' }];
+                    }
+                    break;
+                case 'gateway':
+                    if (currentPlatform === 'windows') {
+                        commands = [
+                            { cmd: 'route print', desc: 'Show routing table' },
+                            { cmd: 'ping [gateway_ip]', desc: 'Test gateway connectivity' }
+                        ];
+                    } else if (currentPlatform === 'linux') {
+                        commands = [
+                            { cmd: 'ip route show', desc: 'Show routing table' },
+                            { cmd: 'ping -c 4 [gateway_ip]', desc: 'Test gateway connectivity' }
+                        ];
+                    } else {
+                        commands = [{ cmd: 'show ip route', desc: 'Show routing table' }];
+                    }
+                    break;
+                case 'dns':
+                    if (currentPlatform === 'windows') {
+                        commands = [
+                            { cmd: 'nslookup google.com', desc: 'Test DNS resolution' },
+                            { cmd: 'ipconfig /displaydns', desc: 'Show DNS cache' }
+                        ];
+                    } else {
+                        commands = [
+                            { cmd: 'dig google.com', desc: 'Test DNS resolution' },
+                            { cmd: 'cat /etc/resolv.conf', desc: 'Check DNS configuration' }
+                        ];
+                    }
+                    break;
+                case 'performance':
+                    commands = [
+                        { cmd: 'ping -t google.com', desc: 'Continuous latency test (Windows)' },
+                        { cmd: 'ping -c 100 google.com', desc: 'Extended latency test (Linux)' }
+                    ];
+                    break;
+            }
+            
+            diagnosticCommands.innerHTML = commands.map(item => `
+                <div style="background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <code style="background: #f8f9fa; padding: 5px; border-radius: 3px;">${item.cmd}</code>
+                    <p style="margin: 5px 0 0 0; color: #666;">${item.desc}</p>
+                </div>
+            `).join('');
+            
+            diagnosticOutput.style.display = 'block';
+        }
+
+        // Initialize the application when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>

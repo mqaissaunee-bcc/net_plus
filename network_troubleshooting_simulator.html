@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network+ Troubleshooting Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tutorial-section {
+            margin-bottom: 30px;
+        }
+        
+        .tutorial-section h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tutorial-section h3 {
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .methodology-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .osi-layers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .layer-card {
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9));
+        }
+        
+        .layer-7 { border-color: #e74c3c; }
+        .layer-6 { border-color: #f39c12; }
+        .layer-5 { border-color: #f1c40f; }
+        .layer-4 { border-color: #2ecc71; }
+        .layer-3 { border-color: #3498db; }
+        .layer-2 { border-color: #9b59b6; }
+        .layer-1 { border-color: #34495e; }
+        
+        .simulator-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .scenario-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .scenario-select select {
+            padding: 10px 15px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background: white;
+            font-size: 16px;
+        }
+        
+        .score-display {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .simulation-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 968px) {
+            .simulation-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .network-diagram {
+            background: white;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagnostic-tools {
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .tool-header {
+            background: #34495e;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tool-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background: #2980b9;
+        }
+        
+        .tool-btn.active {
+            background: #e74c3c;
+        }
+        
+        .command-output {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .command-input {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .command-input input {
+            flex: 1;
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px 0 0 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-input button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .troubleshooting-guide {
+            background: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .guide-step {
+            background: white;
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .guide-step.completed {
+            border-left-color: #27ae60;
+            background: #d5f4e6;
+        }
+        
+        .guide-step.current {
+            border-left-color: #f39c12;
+            background: #fdf2e9;
+        }
+        
+        .device {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .device:hover {
+            transform: scale(1.1);
+        }
+        
+        .device.problem {
+            animation: pulse 2s infinite;
+            border: 3px solid #e74c3c;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+        
+        .computer { background: #3498db; top: 20px; left: 20px; }
+        .router { background: #e74c3c; top: 20px; right: 20px; }
+        .switch { background: #f39c12; bottom: 20px; left: 20px; }
+        .server { background: #27ae60; bottom: 20px; right: 20px; }
+        .internet { background: #9b59b6; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: #34495e;
+            z-index: 1;
+        }
+        
+        .connection.problem {
+            background: #e74c3c;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
+        
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 20px;
+            padding: 3px;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 20px;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .hint-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f1aeb5;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .tool-explanation {
+            background: #e8f4f8;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌐 Network+ Troubleshooting Simulator</h1>
+            <p>Master Network Troubleshooting for CompTIA Network+ Certification</p>
+        </header>
+        
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('tutorial')">📚 Tutorial</button>
+            <button class="tab-btn" onclick="showTab('simulator')">🛠️ Simulator</button>
+            <button class="tab-btn" onclick="showTab('scenarios')">🎯 Scenarios</button>
+            <button class="tab-btn" onclick="showTab('tools')">⚙️ Diagnostic Tools</button>
+            <button class="tab-btn" onclick="showTab('progress')">📊 Progress</button>
+        </nav>
+
+        <!-- Tutorial Tab -->
+        <div id="tutorial" class="tab-content active">
+            <div class="tutorial-section">
+                <h2>🔧 CompTIA Network+ Troubleshooting Methodology</h2>
+                <p>The CompTIA Network+ certification emphasizes a systematic approach to troubleshooting network issues. This methodology provides a structured framework for identifying, analyzing, and resolving network problems efficiently.</p>
+                
+                <h3>The 7-Step Troubleshooting Process</h3>
+                <div class="methodology-steps">
+                    <div class="step-card">
+                        <h4>1️⃣ Identify the Problem</h4>
+                        <p><strong>Key Activities:</strong></p>
+                        <ul>
+                            <li>Gather information from users</li>
+                            <li>Identify symptoms and error messages</li>
+                            <li>Determine if anything has changed</li>
+                            <li>Document the problem clearly</li>
+                            <li>Question users about recent changes</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>💡 Best Practice:</strong> Start simple - don't assume the problem is complex. Often, simple issues like loose cables or power problems are the culprit.
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>2️⃣ Establish a Theory of Probable Cause</h4>
+                        <p><strong>Approach:</strong></p>
+                        <ul>
+                            <li>Question the obvious first</li>
+                            <li>Consider multiple approaches</li>
+                            <li>Use the OSI model (bottom-up or top-down)</li>
+                            <li>Apply divide and conquer strategies</li>
+                            <li>Consider recent changes</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>💡 OSI Model Approach:</strong> Start with Layer 1 (Physical) and work up, or start with Layer 7 (Application) and work down.
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>3️⃣ Test the Theory</h4>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li><strong>If confirmed:</strong> Determine next steps to resolve</li>
+                            <li><strong>If not confirmed:</strong> Re-establish new theory or escalate</li>
+                            <li>Use diagnostic tools to validate theories</li>
+                            <li>Isolate variables one at a time</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>4️⃣ Establish Plan of Action</h4>
+                        <p><strong>Planning Considerations:</strong></p>
+                        <ul>
+                            <li>Identify potential effects of the solution</li>
+                            <li>Consider impact on users and systems</li>
+                            <li>Plan for rollback procedures</li>
+                            <li>Schedule implementation during maintenance windows</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>5️⃣ Implement the Solution</h4>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Execute the planned solution</li>
+                            <li>Monitor during implementation</li>
+                            <li>Be prepared to escalate if needed</li>
+                            <li>Document each step taken</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>6️⃣ Verify Full System Functionality</h4>
+                        <p><strong>Verification Steps:</strong></p>
+                        <ul>
+                            <li>Test the original problem is resolved</li>
+                            <li>Ensure no new problems were introduced</li>
+                            <li>Implement preventive measures if possible</li>
+                            <li>Confirm user satisfaction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>7️⃣ Document Findings and Actions</h4>
+                        <p><strong>Documentation Should Include:</strong></p>
+                        <ul>
+                            <li>Problem description and symptoms</li>
+                            <li>Root cause analysis</li>
+                            <li>Solution implemented</li>
+                            <li>Lessons learned</li>
+                            <li>Prevention recommendations</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>💡 Why Document?</strong> Future troubleshooting, knowledge sharing, trend analysis, and compliance requirements.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <h2>🏗️ OSI Model Layered Troubleshooting Approach</h2>
+                <p>The OSI (Open Systems Interconnection) model provides a systematic framework for troubleshooting network issues by breaking down network communication into seven distinct layers.</p>
+                
+                <div class="osi-layers">
+                    <div class="layer-card layer-7">
+                        <h4>Layer 7: Application</h4>
+                        <p><strong>Issues:</strong> DNS problems, HTTP errors, email issues</p>
+                        <p><strong>Tools:</strong> nslookup, dig, telnet, web browsers</p>
+                        <p><strong>Symptoms:</strong> Application-specific errors, can't access websites, email problems</p>
+                    </div>
+                    
+                    <div class="layer-card layer-6">
+                        <h4>Layer 6: Presentation</h4>
+                        <p><strong>Issues:</strong> Encryption/decryption problems, data format issues</p>
+                        <p><strong>Tools:</strong> SSL/TLS analyzers, certificate viewers</p>
+                        <p><strong>Symptoms:</strong> SSL certificate errors, data corruption</p>
+                    </div>
+                    
+                    <div class="layer-card layer-5">
+                        <h4>Layer 5: Session</h4>
+                        <p><strong>Issues:</strong> Session establishment/termination problems</p>
+                        <p><strong>Tools:</strong> Session monitoring tools, netstat</p>
+                        <p><strong>Symptoms:</strong> Connection drops, session timeouts</p>
+                    </div>
+                    
+                    <div class="layer-card layer-4">
+                        <h4>Layer 4: Transport</h4>
+                        <p><strong>Issues:</strong> TCP/UDP port problems, firewall blocks</p>
+                        <p><strong>Tools:</strong> netstat, telnet, port scanners</p>
+                        <p><strong>Symptoms:</strong> Connection refused, timeouts, port blocks</p>
+                    </div>
+                    
+                    <div class="layer-card layer-3">
+                        <h4>Layer 3: Network</h4>
+                        <p><strong>Issues:</strong> IP addressing, routing problems</p>
+                        <p><strong>Tools:</strong> ping, traceroute, route, ipconfig</p>
+                        <p><strong>Symptoms:</strong> Can't reach remote networks, routing loops</p>
+                    </div>
+                    
+                    <div class="layer-card layer-2">
+                        <h4>Layer 2: Data Link</h4>
+                        <p><strong>Issues:</strong> MAC addressing, switch problems, VLAN issues</p>
+                        <p><strong>Tools:</strong> ARP table, MAC address tables, switch logs</p>
+                        <p><strong>Symptoms:</strong> Local network connectivity issues, broadcast storms</p>
+                    </div>
+                    
+                    <div class="layer-card layer-1">
+                        <h4>Layer 1: Physical</h4>
+                        <p><strong>Issues:</strong> Cable problems, hardware failures, signal issues</p>
+                        <p><strong>Tools:</strong> Cable testers, multimeters, OTDR, link lights</p>
+                        <p><strong>Symptoms:</strong> No link lights, intermittent connectivity, slow speeds</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <h2>🔍 Common Network Issues and Symptoms</h2>
+                
+                <h3>Physical Layer Issues</h3>
+                <div class="step-card">
+                    <h4>Cable Problems</h4>
+                    <ul>
+                        <li><strong>Bad/damaged cables:</strong> Intermittent connectivity, slow speeds, no connection</li>
+                        <li><strong>Incorrect cable types:</strong> Wrong category (Cat5 vs Cat6), straight-through vs crossover</li>
+                        <li><strong>Improper termination:</strong> Poor crimping, split pairs, incorrect pin assignments</li>
+                        <li><strong>Cable length issues:</strong> Exceeding maximum cable lengths (100m for Ethernet)</li>
+                    </ul>
+                    <div class="tool-explanation">
+                        <strong>Diagnostic Approach:</strong> Start with cable testers, check for continuity, test for shorts/opens, verify cable standards compliance.
+                    </div>
+                </div>
+                
+                <h3>Network Layer Issues</h3>
+                <div class="step-card">
+                    <h4>IP Configuration Problems</h4>
+                    <ul>
+                        <li><strong>DHCP failures:</strong> No IP address, incorrect IP range, DHCP scope exhaustion</li>
+                        <li><strong>Static IP conflicts:</strong> Duplicate IP addresses, incorrect subnet masks</li>
+                        <li><strong>Default gateway issues:</strong> Wrong gateway, gateway unreachable</li>
+                        <li><strong>DNS problems:</strong> Wrong DNS servers, DNS resolution failures</li>
+                    </ul>
+                </div>
+                
+                <h3>Performance Issues</h3>
+                <div class="step-card">
+                    <h4>Common Performance Problems</h4>
+                    <ul>
+                        <li><strong>Packet Loss:</strong> Hardware failures, network congestion, buffer overflows</li>
+                        <li><strong>High Latency:</strong> Network congestion, routing inefficiencies, processing delays</li>
+                        <li><strong>Jitter:</strong> Inconsistent network delays, affecting real-time applications</li>
+                        <li><strong>Bandwidth Saturation:</strong> Traffic exceeds link capacity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tutorial-section">
+                <h2>⚙️ Essential Diagnostic Tools</h2>
+                
+                <h3>Command Line Tools</h3>
+                <div class="code-block">
+<strong>PING</strong> - Tests connectivity and measures round-trip time
+ping 192.168.1.1
+ping -t 8.8.8.8      # Continuous ping (Windows)
+ping -c 4 google.com  # Send 4 packets (Linux/Mac)
+
+<strong>TRACEROUTE/TRACERT</strong> - Traces packet path to destination
+tracert google.com    # Windows
+traceroute google.com # Linux/Mac
+
+<strong>NSLOOKUP</strong> - DNS lookup tool
+nslookup google.com
+nslookup google.com 8.8.8.8  # Use specific DNS server
+
+<strong>IPCONFIG/IFCONFIG</strong> - IP configuration information
+ipconfig /all         # Windows - show all adapters
+ifconfig -a          # Linux/Mac - show all interfaces
+ipconfig /release     # Release DHCP lease
+ipconfig /renew       # Renew DHCP lease
+ipconfig /flushdns    # Clear DNS cache
+
+<strong>NETSTAT</strong> - Network statistics and connections
+netstat -an          # Show all connections and ports
+netstat -rn          # Show routing table
+netstat -s           # Show protocol statistics
+
+<strong>ARP</strong> - Address Resolution Protocol table
+arp -a               # Show ARP table
+arp -d *             # Clear ARP table
+                </div>
+                
+                <h3>Hardware Tools</h3>
+                <div class="step-card">
+                    <h4>Cable Testing Equipment</h4>
+                    <ul>
+                        <li><strong>Cable Tester:</strong> Tests continuity, identifies opens/shorts, verifies pin configurations</li>
+                        <li><strong>Cable Certifier:</strong> Validates cable performance against standards (Cat5e, Cat6, etc.)</li>
+                        <li><strong>Time Domain Reflectometer (TDR):</strong> Locates cable faults and measures cable length</li>
+                        <li><strong>Optical Time Domain Reflectometer (OTDR):</strong> Tests fiber optic cables</li>
+                        <li><strong>Tone Generator and Probe:</strong> Traces cables in complex installations</li>
+                    </ul>
+                </div>
+                
+                <h3>Software Tools</h3>
+                <div class="step-card">
+                    <h4>Network Analysis Software</h4>
+                    <ul>
+                        <li><strong>Wireshark:</strong> Packet capture and analysis</li>
+                        <li><strong>Network Scanners:</strong> Nmap, Advanced IP Scanner</li>
+                        <li><strong>Bandwidth Monitors:</strong> MRTG, PRTG, SolarWinds</li>
+                        <li><strong>Wi-Fi Analyzers:</strong> WiFi Explorer, inSSIDer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulator Tab -->
+        <div id="simulator" class="tab-content">
+            <div class="simulator-controls">
+                <div class="scenario-select">
+                    <label for="scenario">Choose Scenario:</label>
+                    <select id="scenario" onchange="loadScenario()">
+                        <option value="basic_connectivity">Basic Connectivity Issue</option>
+                        <option value="dhcp_failure">DHCP Server Failure</option>
+                        <option value="dns_resolution">DNS Resolution Problem</option>
+                        <option value="cable_fault">Physical Cable Fault</option>
+                        <option value="routing_issue">Routing Configuration Error</option>
+                        <option value="wireless_interference">Wireless Interference</option>
+                        <option value="packet_loss">Packet Loss Investigation</option>
+                        <option value="bandwidth_saturation">Bandwidth Saturation</option>
+                    </select>
+                </div>
+                <div class="score-display">
+                    Score: <span id="currentScore">0</span> | Steps: <span id="stepCounter">0</span>
+                </div>
+            </div>
+            
+            <div class="simulation-area">
+                <div class="network-diagram" id="networkDiagram">
+                    <h3 style="margin-bottom: 20px;">Network Topology</h3>
+                    <div class="device computer" onclick="selectDevice('computer')" title="User Computer">💻</div>
+                    <div class="device switch" onclick="selectDevice('switch')" title="Network Switch">🔀</div>
+                    <div class="device router" onclick="selectDevice('router')" title="Router">📡</div>
+                    <div class="device server" onclick="selectDevice('server')" title="Server">🖥️</div>
+                    <div class="device internet" onclick="selectDevice('internet')" title="Internet">🌐</div>
+                    
+                    <!-- Connection lines will be drawn by JavaScript -->
+                </div>
+                
+                <div class="diagnostic-tools">
+                    <div class="tool-header">
+                        <h3>Diagnostic Tools Console</h3>
+                        <span id="selectedDevice">Device: None</span>
+                    </div>
+                    <div class="tool-buttons">
+                        <button class="tool-btn" onclick="selectTool('ping')">PING</button>
+                        <button class="tool-btn" onclick="selectTool('tracert')">TRACERT</button>
+                        <button class="tool-btn" onclick="selectTool('nslookup')">NSLOOKUP</button>
+                        <button class="tool-btn" onclick="selectTool('ipconfig')">IPCONFIG</button>
+                        <button class="tool-btn" onclick="selectTool('netstat')">NETSTAT</button>
+                        <button class="tool-btn" onclick="selectTool('arp')">ARP</button>
+                    </div>
+                    <div class="command-output" id="commandOutput"></div>
+                    <div class="command-input">
+                        <input type="text" id="commandInput" placeholder="Enter command..." onkeypress="handleCommand(event)">
+                        <button onclick="executeCommand()">Execute</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="troubleshooting-guide">
+                <h3>Troubleshooting Steps</h3>
+                <div id="troubleshootingSteps"></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%;">0% Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenarios Tab -->
+        <div id="scenarios" class="tab-content">
+            <div class="tutorial-section">
+                <h2>🎯 Practice Scenarios</h2>
+                <p>These scenarios are designed to progressively build your troubleshooting skills from basic to advanced Network+ level challenges.</p>
+                
+                <div class="methodology-steps">
+                    <div class="step-card">
+                        <h4>🟢 Basic Level Scenarios</h4>
+                        <ul>
+                            <li><strong>No Internet Access:</strong> User cannot browse websites but network shows connected</li>
+                            <li><strong>IP Configuration Issues:</strong> Computer receives wrong IP address or no IP</li>
+                            <li><strong>Physical Connectivity:</strong> Intermittent connection drops and cable issues</li>
+                            <li><strong>DNS Resolution:</strong> Can ping IP addresses but not domain names</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>Focus:</strong> OSI Layers 1-3, basic command-line tools, systematic approach
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>🟡 Intermediate Level Scenarios</h4>
+                        <ul>
+                            <li><strong>DHCP Server Problems:</strong> Multiple clients losing IP addresses</li>
+                            <li><strong>VLAN Configuration:</strong> Devices in different VLANs cannot communicate</li>
+                            <li><strong>Routing Issues:</strong> Remote network segments unreachable</li>
+                            <li><strong>Performance Degradation:</strong> Network slow during specific times</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>Focus:</strong> Multiple device troubleshooting, advanced tools, network services
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <h4>🔴 Advanced Level Scenarios</h4>
+                        <ul>
+                            <li><strong>Complex Packet Loss:</strong> Intermittent packet loss affecting VoIP quality</li>
+                            <li><strong>Wireless Interference:</strong> Wi-Fi performance issues in enterprise environment</li>
+                            <li><strong>Security-Related Issues:</strong> Firewall blocking legitimate traffic</li>
+                            <li><strong>WAN Connectivity:</strong> Multi-site connectivity problems with QoS issues</li>
+                        </ul>
+                        <div class="hint-box">
+                            <strong>Focus:</strong> Advanced protocols, security implications, performance optimization
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Scenario-Based Learning Objectives</h3>
+                <div class="tool-explanation">
+                    <h4>What You'll Learn:</h4>
+                    <ul>
+                        <li>Apply the 7-step CompTIA troubleshooting methodology</li>
+                        <li>Use OSI model layers to systematically isolate problems</li>
+                        <li>Master essential command-line diagnostic tools</li>
+                        <li>Understand common network failure patterns</li>
+                        <li>Develop efficient troubleshooting workflows</li>
+                        <li>Practice documentation and communication skills</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Tab -->
+        <div id="tools" class="tab-content">
+            <div class="tutorial-section">
+                <h2>⚙️ Diagnostic Tools Reference</h2>
+                
+                <div class="step-card">
+                    <h3>PING Command</h3>
+                    <p><strong>Purpose:</strong> Tests connectivity and measures round-trip time using ICMP Echo Request/Reply</p>
+                    <div class="code-block">
+# Basic ping
+ping 192.168.1.1
+ping google.com
+
+# Windows specific options
+ping -t 8.8.8.8          # Continuous ping
+ping -n 10 192.168.1.1   # Send specific number of packets
+ping -l 1500 google.com  # Set packet size
+
+# Linux/Mac options
+ping -c 4 google.com     # Count - send 4 packets
+ping -i 2 192.168.1.1    # Interval - wait 2 seconds between packets
+ping -s 1000 google.com  # Packet size
+                    </div>
+                    <div class="tool-explanation">
+                        <strong>Interpretation:</strong> Success indicates Layer 3 connectivity. Timeouts suggest routing issues, firewalls, or device problems. High response times indicate network congestion or processing delays.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h3>TRACEROUTE/TRACERT Command</h3>
+                    <p><strong>Purpose:</strong> Traces the path packets take from source to destination, showing each hop</p>
+                    <div class="code-block">
+# Windows
+tracert google.com
+tracert -h 15 8.8.8.8    # Maximum 15 hops
+
+# Linux/Mac
+traceroute google.com
+traceroute -m 20 8.8.8.8 # Maximum 20 hops
+traceroute -n 8.8.8.8    # Numeric output (no DNS resolution)
+                    </div>
+                    <div class="tool-explanation">
+                        <strong>Interpretation:</strong> Shows routing path and identifies where connectivity fails. Timeouts (*) may indicate firewalls or overloaded devices. High latency at specific hops indicates bottlenecks.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h3>NSLOOKUP Command</h3>
+                    <p><strong>Purpose:</strong> Queries DNS servers to resolve hostnames to IP addresses and vice versa</p>
+                    <div class="code-block">
+# Basic DNS lookup
+nslookup google.com
+
+# Use specific DNS server
+nslookup google.com 8.8.8.8
+
+# Reverse DNS lookup
+nslookup 8.8.8.8
+
+# Interactive mode for multiple queries
+nslookup
+> set type=MX
+> gmail.com      # Query MX records
+> set type=A
+> google.com     # Query A records
+                    </div>
+                    <div class="tool-explanation">
+                        <strong>Interpretation:</strong> Successful resolution confirms DNS functionality. Timeouts or errors suggest DNS server problems, network connectivity issues, or misconfigured DNS settings.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h3>IPCONFIG/IFCONFIG Command</h3>
+                    <p><strong>Purpose:</strong> Displays and manages IP configuration information</p>
+                    <div class="code-block">
+# Windows IPCONFIG
+ipconfig                 # Basic IP info
+ipconfig /all           # Detailed information
+ipconfig /release       # Release DHCP lease
+ipconfig /renew         # Renew DHCP lease
+ipconfig /flushdns      # Clear DNS cache
+ipconfig /registerdns   # Register DNS entries
+
+# Linux/Mac IFCONFIG
+ifconfig                # Show all interfaces
+ifconfig eth0           # Show specific interface
+ifconfig eth0 up        # Enable interface
+ifconfig eth0 down      # Disable interface
+
+# Linux IP command (newer)
+ip addr show            # Show all interfaces
+ip route show           # Show routing table
+                    </div>
+                    <div class="tool-explanation">
+                        <strong>Interpretation:</strong> Verify correct IP addressing, subnet masks, default gateways, and DNS servers. APIPA addresses (169.254.x.x) indicate DHCP failure.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div id="progress" class="tab-content">
+            <div class="tutorial-section">
+                <h2>📊 Your Learning Progress</h2>
+                
+                <div class="step-card">
+                    <h3>Completed Scenarios</h3>
+                    <div id="completedScenarios">
+                        <p>Complete scenarios in the simulator to track your progress here.</p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h3>Skills Assessment</h3>
+                    <div class="methodology-steps">
+                        <div class="step-card">
+                            <h4>Troubleshooting Methodology</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%;">0%</div>
+                            </div>
+                            <p>Master the 7-step CompTIA troubleshooting process</p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <h4>OSI Model Application</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%;">0%</div>
+                            </div>
+                            <p>Apply layered troubleshooting approach</p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <h4>Diagnostic Tools</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%;">0%</div>
+                            </div>
+                            <p>Proficiency with command-line tools</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h3>Network+ Exam Readiness</h3>
+                    <div class="tool-explanation">
+                        <h4>Domain 5.0: Network Troubleshooting (24% of exam)</h4>
+                        <ul>
+                            <li>5.1 Explain the network troubleshooting methodology ✅</li>
+                            <li>5.2 Troubleshoot common cable connectivity issues</li>
+                            <li>5.3 Troubleshoot common network service issues</li>
+                            <li>5.4 Troubleshoot common wireless connectivity issues</li>
+                            <li>5.5 Troubleshoot general networking issues</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentScenario = 'basic_connectivity';
+        let currentTool = '';
+        let selectedDevice = '';
+        let score = 0;
+        let stepCounter = 0;
+        let completedSteps = [];
+        
+        // Scenario data
+        const scenarios = {
+            'basic_connectivity': {
+                title: 'Basic Connectivity Issue',
+                description: 'User reports inability to access the internet. Computer shows network connected but no web browsing possible.',
+                problemDevices: ['router'],
+                symptoms: [
+                    'Cannot browse websites',
+                    'Network icon shows connected',
+                    'Other users having same issue',
+                    'No recent changes reported'
+                ],
+                steps: [
+                    'Identify the problem - Gather information from user',
+                    'Test basic connectivity with ping to gateway',
+                    'Test external connectivity with ping to 8.8.8.8',
+                    'Test DNS resolution with nslookup',
+                    'Check router configuration and status',
+                    'Implement solution - restart router/check ISP',
+                    'Verify full functionality',
+                    'Document the resolution'
+                ],
+                hints: [
+                    'Start with OSI Layer 3 - Network layer testing',
+                    'Use ping to test connectivity step by step',
+                    'Check if problem is DNS or routing related',
+                    'Consider ISP or router configuration issues'
+                ]
+            },
+            'dhcp_failure': {
+                title: 'DHCP Server Failure',
+                description: 'Multiple clients cannot obtain IP addresses. Some computers have APIPA addresses (169.254.x.x).',
+                problemDevices: ['server'],
+                symptoms: [
+                    'Clients getting 169.254.x.x addresses',
+                    'Cannot obtain DHCP lease',
+                    'Network communication failures',
+                    'Started after power outage'
+                ],
+                steps: [
+                    'Identify symptoms - Multiple clients affected',
+                    'Check client IP configuration with ipconfig',
+                    'Test DHCP server connectivity',
+                    'Verify DHCP service status on server',
+                    'Check DHCP scope and availability',
+                    'Restart DHCP service or server',
+                    'Renew client IP addresses',
+                    'Monitor and document resolution'
+                ]
+            },
+            'cable_fault': {
+                title: 'Physical Cable Fault',
+                description: 'Intermittent connectivity issues on workstation. Connection drops randomly throughout the day.',
+                problemDevices: ['computer', 'switch'],
+                symptoms: [
+                    'Intermittent connection drops',
+                    'Link light flickering',
+                    'Slow data transfer speeds',
+                    'Only affects one workstation'
+                ],
+                steps: [
+                    'Identify physical layer symptoms',
+                    'Check cable connections and condition',
+                    'Test with cable tester if available',
+                    'Try different cable and port',
+                    'Check network adapter drivers',
+                    'Replace faulty cable or hardware',
+                    'Test connectivity thoroughly',
+                    'Document physical layer resolution'
+                ]
+            }
+            // Add more scenarios as needed
+        };
+        
+        // Initialize application
+        function init() {
+            drawNetworkConnections();
+            loadScenario();
+            updateScore();
+        }
+        
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all tab buttons
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Network diagram functions
+        function drawNetworkConnections() {
+            const diagram = document.getElementById('networkDiagram');
+            const connections = [
+                {from: 'computer', to: 'switch'},
+                {from: 'switch', to: 'router'},
+                {from: 'router', to: 'internet'},
+                {from: 'router', to: 'server'}
+            ];
+            
+            // Remove existing connections
+            const existingLines = diagram.querySelectorAll('.connection');
+            existingLines.forEach(line => line.remove());
+            
+            connections.forEach(conn => {
+                const line = createConnectionLine(conn.from, conn.to);
+                if (line) diagram.appendChild(line);
+            });
+        }
+        
+        function createConnectionLine(device1, device2) {
+            const elem1 = document.querySelector(`.${device1}`);
+            const elem2 = document.querySelector(`.${device2}`);
+            
+            if (!elem1 || !elem2) return null;
+            
+            const rect1 = elem1.getBoundingClientRect();
+            const rect2 = elem2.getBoundingClientRect();
+            const diagramRect = document.getElementById('networkDiagram').getBoundingClientRect();
+            
+            const x1 = rect1.left - diagramRect.left + rect1.width / 2;
+            const y1 = rect1.top - diagramRect.top + rect1.height / 2;
+            const x2 = rect2.left - diagramRect.left + rect2.width / 2;
+            const y2 = rect2.top - diagramRect.top + rect2.height / 2;
+            
+            const line = document.createElement('div');
+            line.className = 'connection';
+            
+            const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            
+            line.style.width = length + 'px';
+            line.style.left = x1 + 'px';
+            line.style.top = y1 + 'px';
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.transformOrigin = '0 50%';
+            
+            return line;
+        }
+        
+        // Scenario management
+        function loadScenario() {
+            const scenarioSelect = document.getElementById('scenario');
+            currentScenario = scenarioSelect.value;
+            const scenario = scenarios[currentScenario];
+            
+            if (!scenario) return;
+            
+            // Reset problem indicators
+            document.querySelectorAll('.device').forEach(device => {
+                device.classList.remove('problem');
+            });
+            
+            // Mark problem devices
+            scenario.problemDevices.forEach(deviceClass => {
+                document.querySelector(`.${deviceClass}`).classList.add('problem');
+            });
+            
+            // Update troubleshooting steps
+            updateTroubleshootingSteps(scenario);
+            
+            // Reset progress
+            completedSteps = [];
+            stepCounter = 0;
+            updateProgress();
+            
+            // Clear command output
+            document.getElementById('commandOutput').innerHTML = '';
+        }
+        
+        function updateTroubleshootingSteps(scenario) {
+            const container = document.getElementById('troubleshootingSteps');
+            container.innerHTML = '';
+            
+            scenario.steps.forEach((step, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'guide-step';
+                stepDiv.innerHTML = `
+                    <strong>Step ${index + 1}:</strong> ${step}
+                    ${scenario.hints && scenario.hints[index] ? 
+                        `<div class="hint-box"><strong>💡 Hint:</strong> ${scenario.hints[index]}</div>` : 
+                        ''}
+                `;
+                container.appendChild(stepDiv);
+            });
+        }
+        
+        // Device selection
+        function selectDevice(device) {
+            selectedDevice = device;
+            document.getElementById('selectedDevice').textContent = `Device: ${device.charAt(0).toUpperCase() + device.slice(1)}`;
+            
+            // Visual feedback
+            document.querySelectorAll('.device').forEach(d => d.style.border = '');
+            document.querySelector(`.${device}`).style.border = '3px solid #f39c12';
+        }
+        
+        // Tool selection
+        function selectTool(tool) {
+            currentTool = tool;
+            
+            // Update UI
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show tool-specific help
+            const output = document.getElementById('commandOutput');
+            const helpText = getToolHelp(tool);
+            output.innerHTML += `<div style="color: #3498db;">${helpText}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function getToolHelp(tool) {
+            const help = {
+                'ping': 'PING - Test connectivity to IP addresses or hostnames\nUsage: ping [target]',
+                'tracert': 'TRACERT - Trace route to destination\nUsage: tracert [target]',
+                'nslookup': 'NSLOOKUP - DNS lookup utility\nUsage: nslookup [hostname]',
+                'ipconfig': 'IPCONFIG - Display/manage IP configuration\nUsage: ipconfig [options]',
+                'netstat': 'NETSTAT - Network statistics and connections\nUsage: netstat [options]',
+                'arp': 'ARP - Display/manage ARP table\nUsage: arp [options]'
+            };
+            return help[tool] || '';
+        }
+        
+        // Command execution
+        function handleCommand(event) {
+            if (event.key === 'Enter') {
+                executeCommand();
+            }
+        }
+        
+        function executeCommand() {
+            const input = document.getElementById('commandInput');
+            const command = input.value.trim().toLowerCase();
+            const output = document.getElementById('commandOutput');
+            
+            if (!command) return;
+            
+            // Display command
+            output.innerHTML += `<div style="color: #2ecc71;">C:\\> ${command}</div>`;
+            
+            // Process command
+            const result = processCommand(command);
+            output.innerHTML += `<div style="color: #ecf0f1;">${result}</div><br>`;
+            
+            // Clear input
+            input.value = '';
+            
+            // Scroll to bottom
+            output.scrollTop = output.scrollHeight;
+            
+            // Update step progress
+            checkStepCompletion(command);
+        }
+        
+        function processCommand(command) {
+            const scenario = scenarios[currentScenario];
+            const parts = command.split(' ');
+            const cmd = parts[0];
+            const target = parts[1] || '';
+            
+            // Simulate command outputs based on scenario
+            switch (cmd) {
+                case 'ping':
+                    return simulatePing(target, scenario);
+                case 'tracert':
+                case 'traceroute':
+                    return simulateTracert(target, scenario);
+                case 'nslookup':
+                    return simulateNslookup(target, scenario);
+                case 'ipconfig':
+                    return simulateIpconfig(parts[1], scenario);
+                case 'netstat':
+                    return simulateNetstat(parts[1], scenario);
+                case 'arp':
+                    return simulateArp(parts[1], scenario);
+                default:
+                    return `'${cmd}' is not recognized as an internal or external command.`;
+            }
+        }
+        
+        function simulatePing(target, scenario) {
+            if (!target) return 'Usage: ping [target]';
+            
+            // Simulate different responses based on scenario and target
+            if (currentScenario === 'basic_connectivity') {
+                if (target === '192.168.1.1' || target === 'gateway') {
+                    return `Pinging 192.168.1.1 with 32 bytes of data:
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+
+Ping statistics for 192.168.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)`;
+                } else if (target === '8.8.8.8' || target.includes('google')) {
+                    return `Pinging 8.8.8.8 with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 8.8.8.8:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss)`;
+                }
+            }
+            
+            // Default successful ping
+            return `Pinging ${target} with 32 bytes of data:
+Reply from ${target}: bytes=32 time=15ms TTL=64
+Reply from ${target}: bytes=32 time=14ms TTL=64
+Reply from ${target}: bytes=32 time=16ms TTL=64
+Reply from ${target}: bytes=32 time=15ms TTL=64`;
+        }
+        
+        function simulateIpconfig(option, scenario) {
+            if (option === '/all') {
+                return `Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-USER01
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . : local
+   Description . . . . . . . . . . . : Intel Ethernet Adapter
+   Physical Address. . . . . . . . . : 00-11-22-33-44-55
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 192.168.1.100(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.1
+   DNS Servers . . . . . . . . . . . : 8.8.8.8
+                                       8.8.4.4`;
+            }
+            
+            return `Windows IP Configuration
+
+Ethernet adapter Ethernet:
+   IPv4 Address. . . . . . . . . . . : 192.168.1.100
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.1`;
+        }
+        
+        function simulateNslookup(target, scenario) {
+            if (!target) return 'Usage: nslookup [hostname]';
+            
+            if (currentScenario === 'dns_resolution') {
+                return `DNS request timed out.
+    timeout was 2 seconds.
+Server:  UnKnown
+Address:  192.168.1.1
+
+DNS request timed out.
+    timeout was 2 seconds.
+*** Request to UnKnown timed-out`;
+            }
+            
+            return `Server:  google-public-dns-a.google.com
+Address:  8.8.8.8
+
+Non-authoritative answer:
+Name:    ${target}
+Address:  172.217.164.110`;
+        }
+        
+        function simulateTracert(target, scenario) {
+            if (!target) return 'Usage: tracert [target]';
+            
+            return `Tracing route to ${target} over a maximum of 30 hops
+
+  1     1 ms     1 ms     1 ms  192.168.1.1
+  2    10 ms    12 ms    11 ms  10.0.1.1
+  3    25 ms    24 ms    26 ms  172.16.1.1
+  4    35 ms    33 ms    36 ms  ${target}
+
+Trace complete.`;
+        }
+        
+        function simulateNetstat(option, scenario) {
+            return `Active Connections
+
+  Proto  Local Address          Foreign Address        State
+  TCP    127.0.0.1:49152        DESKTOP-USER01:0       LISTENING
+  TCP    192.168.1.100:49153    52.96.139.3:https     ESTABLISHED
+  TCP    192.168.1.100:49154    40.97.108.1:https     ESTABLISHED`;
+        }
+        
+        function simulateArp(option, scenario) {
+            return `Interface: 192.168.1.100 --- 0x2
+  Internet Address      Physical Address      Type
+  192.168.1.1           aa-bb-cc-dd-ee-ff     dynamic
+  192.168.1.255         ff-ff-ff-ff-ff-ff     static`;
+        }
+        
+        // Progress tracking
+        function checkStepCompletion(command) {
+            const scenario = scenarios[currentScenario];
+            if (!scenario) return;
+            
+            // Simple step completion logic
+            if (command.includes('ping') && !completedSteps.includes('ping')) {
+                completedSteps.push('ping');
+                score += 10;
+                markStepCompleted('ping');
+            } else if (command.includes('ipconfig') && !completedSteps.includes('ipconfig')) {
+                completedSteps.push('ipconfig');
+                score += 10;
+                markStepCompleted('ipconfig');
+            } else if (command.includes('nslookup') && !completedSteps.includes('nslookup')) {
+                completedSteps.push('nslookup');
+                score += 10;
+                markStepCompleted('nslookup');
+            }
+            
+            stepCounter++;
+            updateScore();
+            updateProgress();
+        }
+        
+        function markStepCompleted(stepType) {
+            const steps = document.querySelectorAll('.guide-step');
+            steps.forEach((step, index) => {
+                if (step.textContent.toLowerCase().includes(stepType)) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+        
+        function updateScore() {
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('stepCounter').textContent = stepCounter;
+        }
+        
+        function updateProgress() {
+            const scenario = scenarios[currentScenario];
+            if (!scenario) return;
+            
+            const totalSteps = scenario.steps.length;
+            const progress = (completedSteps.length / totalSteps) * 100;
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = Math.round(progress) + '% Complete';
+        }
+        
+        // Initialize when page loads
+        window.onload = init;
+        window.onresize = drawNetworkConnections;
+    </script>
+</body>
+</html>

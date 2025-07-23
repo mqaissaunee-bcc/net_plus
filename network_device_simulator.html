@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Device Configuration Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a5a);
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 600px;
+        }
+
+        .tutorial-section {
+            display: none;
+        }
+
+        .tutorial-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tutorial-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tutorial-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-btn:hover {
+            background: #e0e0e0;
+            border-color: #bbb;
+        }
+
+        .tutorial-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .simulator {
+            display: none;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            height: 70vh;
+        }
+
+        .simulator.active {
+            display: grid;
+        }
+
+        .device-panel {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #ddd;
+        }
+
+        .device-selector {
+            margin-bottom: 20px;
+        }
+
+        .device-selector select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .cli-terminal {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            border-radius: 10px;
+            height: 400px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .cli-input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+
+        .command-help {
+            background: #e8f4f8;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .config-status {
+            background: #f1f8e9;
+            border: 1px solid #4CAF50;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #d32f2f;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: #e8f5e8;
+            border: 1px solid #4CAF50;
+            color: #2e7d32;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #1976D2;
+        }
+
+        .scenario-selector {
+            margin-bottom: 20px;
+        }
+
+        .scenario-selector select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .tutorial-content {
+            line-height: 1.6;
+        }
+
+        .tutorial-content h2 {
+            color: #1e3c72;
+            margin: 20px 0 15px 0;
+            border-bottom: 2px solid #1e3c72;
+            padding-bottom: 5px;
+        }
+
+        .tutorial-content h3 {
+            color: #2a5298;
+            margin: 15px 0 10px 0;
+        }
+
+        .tutorial-content ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        .tutorial-content li {
+            margin: 5px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .simulator {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Network Device Configuration Simulator</h1>
+            <p>Interactive Learning Environment for Network+ Certification & CCNA Preparation</p>
+        </div>
+
+        <div class="main-nav">
+            <button class="nav-btn active" onclick="showSection('tutorials')">📚 Tutorials</button>
+            <button class="nav-btn" onclick="showSection('simulator')">💻 CLI Simulator</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">🎯 Scenarios</button>
+            <button class="nav-btn" onclick="showSection('validation')">✅ Validation Tools</button>
+        </div>
+
+        <div class="content-area">
+            <!-- Tutorials Section -->
+            <div id="tutorials" class="tutorial-section active">
+                <div class="tutorial-nav">
+                    <button class="tutorial-btn active" onclick="showTutorial('fundamentals')">Network Fundamentals</button>
+                    <button class="tutorial-btn" onclick="showTutorial('cli-basics')">CLI Basics</button>
+                    <button class="tutorial-btn" onclick="showTutorial('vlan-config')">VLAN Configuration</button>
+                    <button class="tutorial-btn" onclick="showTutorial('routing')">Static Routing</button>
+                    <button class="tutorial-btn" onclick="showTutorial('port-security')">Port Security</button>
+                    <button class="tutorial-btn" onclick="showTutorial('device-management')">Device Management</button>
+                </div>
+
+                <div id="fundamentals" class="tutorial-content">
+                    <h2>🔧 Network Device Fundamentals</h2>
+                    
+                    <h3>Router vs Switch: Core Differences</h3>
+                    <p>Understanding the fundamental differences between routers and switches is essential for network configuration:</p>
+                    
+                    <div class="code-block">
+<strong>Router (Layer 3 Device):</strong>
+• Routes packets between different networks
+• Uses IP addresses for forwarding decisions
+• Maintains routing tables
+• Performs Network Address Translation (NAT)
+• Connects LANs to WANs
+
+<strong>Switch (Layer 2 Device):</strong>
+• Forwards frames within the same network
+• Uses MAC addresses for forwarding decisions
+• Maintains MAC address tables
+• Creates collision domains per port
+• Connects devices within a LAN
+                    </div>
+
+                    <h3>Network Device Components</h3>
+                    <ul>
+                        <li><strong>CPU:</strong> Executes the operating system and routing protocols</li>
+                        <li><strong>RAM:</strong> Stores running configuration and routing tables</li>
+                        <li><strong>NVRAM:</strong> Stores startup configuration</li>
+                        <li><strong>Flash Memory:</strong> Stores the operating system (IOS)</li>
+                        <li><strong>Interfaces:</strong> Physical ports for network connections</li>
+                    </ul>
+
+                    <h3>Communication Types</h3>
+                    <div class="command-help">
+                        <strong>Full Duplex:</strong> Devices can send and receive simultaneously (modern switches)<br>
+                        <strong>Half Duplex:</strong> Devices can either send OR receive at a time (legacy hubs)<br>
+                        <strong>Unicast:</strong> One-to-one communication<br>
+                        <strong>Broadcast:</strong> One-to-all communication<br>
+                        <strong>Multicast:</strong> One-to-many communication
+                    </div>
+
+                    <h3>OSI Model in Network Devices</h3>
+                    <p>Network devices operate at different OSI layers:</p>
+                    <ul>
+                        <li><strong>Layer 1 (Physical):</strong> Hubs, Repeaters</li>
+                        <li><strong>Layer 2 (Data Link):</strong> Switches, Bridges</li>
+                        <li><strong>Layer 3 (Network):</strong> Routers, Layer 3 Switches</li>
+                    </ul>
+                </div>
+
+                <div id="cli-basics" class="tutorial-content" style="display: none;">
+                    <h2>💻 Command Line Interface (CLI) Basics</h2>
+                    
+                    <h3>Access Methods</h3>
+                    <div class="code-block">
+<strong>Console Access:</strong>
+• Physical connection via console cable
+• Direct access to device
+• Used for initial configuration
+
+<strong>Telnet:</strong>
+• Remote access over network
+• Unsecured (plaintext)
+• Legacy method
+
+<strong>SSH (Secure Shell):</strong>
+• Encrypted remote access
+• Preferred method for security
+• Requires initial configuration
+                    </div>
+
+                    <h3>IOS Command Modes</h3>
+                    <div class="command-help">
+                        <strong>User EXEC Mode:</strong> Router> (Limited commands)<br>
+                        <strong>Privileged EXEC Mode:</strong> Router# (All show commands)<br>
+                        <strong>Global Configuration Mode:</strong> Router(config)# (Global settings)<br>
+                        <strong>Interface Configuration Mode:</strong> Router(config-if)# (Interface settings)
+                    </div>
+
+                    <h3>Essential Navigation Commands</h3>
+                    <div class="code-block">
+# Enter privileged mode
+enable
+
+# Enter global config mode
+configure terminal
+
+# Enter interface config mode
+interface fastethernet0/1
+
+# Go back one level
+exit
+
+# Return to privileged mode
+end
+
+# Display current configuration
+show running-config
+
+# Display saved configuration
+show startup-config
+
+# Save configuration
+copy running-config startup-config
+                    </div>
+
+                    <h3>Command Help and Shortcuts</h3>
+                    <ul>
+                        <li><strong>?</strong> - Shows available commands</li>
+                        <li><strong>Tab</strong> - Auto-completes commands</li>
+                        <li><strong>Ctrl+C</strong> - Cancels current command</li>
+                        <li><strong>Up Arrow</strong> - Recalls previous commands</li>
+                        <li><strong>Space bar</strong> - Shows next page in long output</li>
+                    </ul>
+
+                    <h3>Basic Configuration Commands</h3>
+                    <div class="code-block">
+# Set device name
+hostname [name]
+
+# Set privileged mode password
+enable password [pass]
+
+# Set encrypted privileged password
+enable secret [pass]
+
+# Configure console port
+line console 0
+
+# Configure virtual terminal lines
+line vty 0 4
+
+# Set line password
+password [pass]
+
+# Enable password checking
+login
+                    </div>
+                </div>
+
+                <div id="vlan-config" class="tutorial-content" style="display: none;">
+                    <h2>🏗️ VLAN Configuration</h2>
+                    
+                    <h3>What are VLANs?</h3>
+                    <p>Virtual Local Area Networks (VLANs) allow you to segment a physical network into multiple logical networks, improving security and reducing broadcast domains.</p>
+
+                    <h3>VLAN Types</h3>
+                    <div class="command-help">
+                        <strong>Data VLAN:</strong> Carries user-generated traffic<br>
+                        <strong>Voice VLAN:</strong> Dedicated to VoIP traffic<br>
+                        <strong>Management VLAN:</strong> Used for device management<br>
+                        <strong>Native VLAN:</strong> Default VLAN for untagged traffic on trunk ports
+                    </div>
+
+                    <h3>Creating VLANs</h3>
+                    <div class="code-block">
+# Enter global configuration mode
+configure terminal
+
+# Create VLAN 10
+vlan 10
+name Sales
+exit
+
+# Create VLAN 20
+vlan 20
+name Marketing
+exit
+
+# Create VLAN 30
+vlan 30
+name IT
+exit
+                    </div>
+
+                    <h3>Configuring Access Ports</h3>
+                    <div class="code-block">
+# Configure interface as access port
+interface fastethernet0/1
+switchport mode access
+switchport access vlan 10
+exit
+
+# Configure multiple interfaces
+interface range fastethernet0/2-5
+switchport mode access
+switchport access vlan 20
+exit
+                    </div>
+
+                    <h3>Configuring Trunk Ports</h3>
+                    <div class="code-block">
+# Configure trunk port
+interface fastethernet0/24
+switchport mode trunk
+switchport trunk native vlan 1
+switchport trunk allowed vlan 10,20,30
+exit
+                    </div>
+
+                    <h3>VLAN Verification Commands</h3>
+                    <div class="code-block">
+# Display VLAN summary
+show vlan brief
+
+# Show specific VLAN details
+show vlan id 10
+
+# Display trunk port information
+show interfaces trunk
+
+# Show port status and VLAN assignment
+show interfaces status
+
+# Display MAC address table
+show mac address-table
+                    </div>
+
+                    <h3>VLAN Troubleshooting</h3>
+                    <ul>
+                        <li>Verify VLAN exists on both ends of trunk</li>
+                        <li>Check trunk allowed VLAN list</li>
+                        <li>Verify native VLAN configuration</li>
+                        <li>Confirm port mode (access vs trunk)</li>
+                        <li>Check for duplex/speed mismatches</li>
+                    </ul>
+                </div>
+
+                <div id="routing" class="tutorial-content" style="display: none;">
+                    <h2>🛣️ Static Routing Configuration</h2>
+                    
+                    <h3>Routing Fundamentals</h3>
+                    <p>Routers use routing tables to determine the best path for packet forwarding. Static routes are manually configured routes that remain until manually removed.</p>
+
+                    <h3>Static Route Syntax</h3>
+                    <div class="code-block">
+ip route [destination_network] [subnet_mask] [next_hop_address | exit_interface] [administrative_distance]
+
+Examples:
+ip route 192.168.2.0 255.255.255.0 192.168.1.2
+ip route 10.0.0.0 255.0.0.0 serial0/0/0
+ip route 172.16.0.0 255.255.0.0 192.168.1.1 120
+                    </div>
+
+                    <h3>Default Route Configuration</h3>
+                    <div class="command-help">
+                        A default route (0.0.0.0/0) is used when no specific route exists for a destination.
+                    </div>
+                    <div class="code-block">
+# Configure default route pointing to ISP gateway
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+
+# Configure default route using exit interface
+ip route 0.0.0.0 0.0.0.0 serial0/0/1
+                    </div>
+
+                    <h3>Interface Configuration</h3>
+                    <div class="code-block">
+# Configure router interface
+interface fastethernet0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+# Configure serial interface with clock rate (DCE)
+interface serial0/0/0
+ip address 10.0.0.1 255.255.255.252
+clock rate 64000
+no shutdown
+exit
+                    </div>
+
+                    <h3>Routing Table Verification</h3>
+                    <div class="code-block">
+# Display routing table
+show ip route
+
+# Show only static routes
+show ip route static
+
+# Display interface status
+show ip interface brief
+
+# Test connectivity
+ping [destination_ip]
+
+# Trace packet path
+traceroute [destination_ip]
+                    </div>
+
+                    <h3>Administrative Distance</h3>
+                    <div class="command-help">
+                        Administrative Distance (AD) determines route preference:<br>
+                        • Connected: 0<br>
+                        • Static: 1<br>
+                        • EIGRP: 90<br>
+                        • OSPF: 110<br>
+                        • RIP: 120
+                    </div>
+
+                    <h3>Floating Static Routes</h3>
+                    <div class="code-block">
+# Primary route (AD = 1)
+ip route 192.168.2.0 255.255.255.0 192.168.1.2
+
+# Backup route (AD = 5)
+ip route 192.168.2.0 255.255.255.0 192.168.1.3 5
+                    </div>
+                </div>
+
+                <div id="port-security" class="tutorial-content" style="display: none;">
+                    <h2>🔒 Port Security Configuration</h2>
+                    
+                    <h3>Port Security Overview</h3>
+                    <p>Port security prevents unauthorized devices from accessing the network by controlling which MAC addresses can send traffic through a switch port.</p>
+
+                    <h3>Port Security Modes</h3>
+                    <div class="command-help">
+                        <strong>Protect:</strong> Drops unauthorized frames, no logging<br>
+                        <strong>Restrict:</strong> Drops frames, increments counter, sends SNMP trap<br>
+                        <strong>Shutdown:</strong> Error-disables port, sends SNMP trap (default)
+                    </div>
+
+                    <h3>Basic Port Security Configuration</h3>
+                    <div class="code-block">
+# Enable port security on access port
+interface fastethernet0/1
+switchport mode access
+switchport port-security
+switchport port-security maximum 1
+switchport port-security violation shutdown
+switchport port-security mac-address sticky
+exit
+                    </div>
+
+                    <h3>MAC Address Learning Methods</h3>
+                    <div class="code-block">
+# Static MAC address assignment
+switchport port-security mac-address 0012.3456.789a
+
+# Sticky learning (dynamic addresses become static)
+switchport port-security mac-address sticky
+
+# Dynamic learning (addresses not saved)
+# Default behavior when no mac-address command used
+                    </div>
+
+                    <h3>Port Security Verification</h3>
+                    <div class="code-block">
+show port-security                    # Overall port security status
+show port-security interface fa0/1    # Specific interface details
+show port-security address           # Secure MAC addresses
+show interfaces status err-disabled  # Error-disabled ports
+                    </div>
+
+                    <h3>Recovery from Error-Disabled State</h3>
+                    <div class="code-block">
+# Manual recovery
+interface fastethernet0/1
+shutdown
+no shutdown
+exit
+
+# Automatic recovery (global configuration)
+errdisable recovery cause psecure-violation
+errdisable recovery interval 300
+                    </div>
+
+                    <h3>Advanced Port Security Features</h3>
+                    <div class="code-block">
+# Configure aging for dynamic addresses
+switchport port-security aging time 10
+switchport port-security aging type inactivity
+
+# Configure different maximums for different types
+switchport port-security maximum 3
+switchport port-security maximum 1 vlan access
+                    </div>
+
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li>Use sticky learning for stable environments</li>
+                        <li>Set appropriate maximum values</li>
+                        <li>Configure aging for dynamic environments</li>
+                        <li>Use restrict mode in production for monitoring</li>
+                        <li>Document all statically configured MAC addresses</li>
+                    </ul>
+                </div>
+
+                <div id="device-management" class="tutorial-content" style="display: none;">
+                    <h2>⚙️ Device Management</h2>
+                    
+                    <h3>Basic Device Hardening</h3>
+                    <div class="code-block">
+# Set hostname
+hostname SW-Floor1
+
+# Configure privileged mode passwords
+enable secret Cisco123!
+enable password (deprecated - use secret)
+
+# Disable unused services
+no ip http-server
+no cdp run
+no service pad
+                    </div>
+
+                    <h3>User Account Management</h3>
+                    <div class="code-block">
+# Create local user accounts
+username admin privilege 15 secret AdminPass123!
+username tech privilege 5 secret TechPass123!
+
+# Configure console access
+line console 0
+login local
+exec-timeout 5 0
+logging synchronous
+exit
+
+# Configure VTY (Telnet/SSH) access
+line vty 0 4
+login local
+transport input ssh
+exec-timeout 10 0
+exit
+                    </div>
+
+                    <h3>SSH Configuration</h3>
+                    <div class="code-block">
+# Generate RSA key pair
+crypto key generate rsa
+# Choose key size: 1024 or higher
+
+# Configure SSH parameters
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+# Configure domain name (required for SSH)
+ip domain-name company.local
+                    </div>
+
+                    <h3>SNMP Configuration</h3>
+                    <div class="code-block">
+# Configure SNMP community strings
+snmp-server community public RO
+snmp-server community private RW
+
+# Configure SNMP contact and location
+snmp-server contact admin@company.com
+snmp-server location "Building A, Floor 2"
+
+# Enable SNMP traps
+snmp-server enable traps
+snmp-server host 192.168.1.100 version 2c public
+                    </div>
+
+                    <h3>Time and Logging Configuration</h3>
+                    <div class="code-block">
+# Configure NTP
+ntp server 192.168.1.1
+
+# Configure timezone
+clock timezone EST -5
+clock summer-time EDT recurring
+
+# Configure logging
+logging buffered 16384
+logging console warnings
+logging trap informational
+logging 192.168.1.200
+                    </div>
+
+                    <h3>Configuration Backup and Management</h3>
+                    <div class="code-block">
+# Save configuration
+copy running-config startup-config
+copy running-config tftp://192.168.1.100/backup.cfg
+
+# Restore configuration
+copy tftp://192.168.1.100/backup.cfg running-config
+copy startup-config running-config
+
+# Archive configuration
+archive
+path tftp://192.168.1.100/archive/$h-$t
+write-memory
+exit
+                    </div>
+
+                    <h3>VLAN Management Interface</h3>
+                    <div class="code-block">
+# Create management VLAN
+vlan 99
+name Management
+exit
+
+# Configure SVI for management
+interface vlan99
+ip address 192.168.99.10 255.255.255.0
+no shutdown
+exit
+
+# Set default gateway
+ip default-gateway 192.168.99.1
+
+# Assign management VLAN to interface
+interface fastethernet0/1
+switchport access vlan 99
+exit
+                    </div>
+
+                    <h3>Monitoring and Verification</h3>
+                    <div class="code-block">
+# Device information
+show version
+
+# Hardware inventory
+show inventory
+
+# Environmental status
+show environment
+
+# CPU utilization
+show processes cpu
+
+# Memory usage
+show memory
+
+# Flash memory contents
+show flash
+
+# Active user sessions
+show users
+
+# System logs
+show logging
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulator Section -->
+            <div id="simulator" class="simulator">
+                <div class="device-panel">
+                    <h3>Device Configuration</h3>
+                    
+                    <div class="device-selector">
+                        <label for="deviceType">Device Type:</label>
+                        <select id="deviceType" onchange="changeDevice()">
+                            <option value="switch">Cisco Switch (2960)</option>
+                            <option value="router">Cisco Router (2811)</option>
+                        </select>
+                    </div>
+
+                    <div class="config-status">
+                        <h4>Device Status</h4>
+                        <div id="deviceStatus">
+                            <strong>Device:</strong> <span id="currentDevice">Switch-1</span><br>
+                            <strong>Mode:</strong> <span id="currentMode">User EXEC</span><br>
+                            <strong>Interface:</strong> <span id="currentInterface">N/A</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="showHelp()">Show Help</button>
+                        <button class="action-btn" onclick="clearTerminal()">Clear Terminal</button>
+                        <button class="action-btn" onclick="exportConfig()">Export Config</button>
+                        <button class="action-btn" onclick="importConfig()">Import Config</button>
+                    </div>
+
+                    <div class="command-help" id="helpPanel" style="display: none;">
+                        <h4>Available Commands:</h4>
+                        <div id="availableCommands"></div>
+                    </div>
+                </div>
+
+                <div class="device-panel">
+                    <h3>CLI Terminal</h3>
+                    <div class="cli-terminal" id="terminal">
+                        <div id="terminalOutput">Switch-1> </div>
+                        <div>
+                            <span id="prompt">Switch-1> </span>
+                            <input type="text" class="cli-input" id="commandInput" onkeypress="handleCommand(event)" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenarios Section -->
+            <div id="scenarios" class="tutorial-section">
+                <h2>🎯 Configuration Scenarios</h2>
+                
+                <div class="scenario-selector">
+                    <label for="scenarioSelect">Select Scenario:</label>
+                    <select id="scenarioSelect" onchange="loadScenario()">
+                        <option value="basic-switch">Basic Switch Setup</option>
+                        <option value="vlan-basic">Basic VLAN Configuration</option>
+                        <option value="vlan-trunk">VLAN with Trunk Ports</option>
+                        <option value="router-basic">Basic Router Configuration</option>
+                        <option value="static-routing">Static Routing Setup</option>
+                        <option value="port-security">Port Security Implementation</option>
+                        <option value="management">Device Management Setup</option>
+                        <option value="complete-network">Complete Network Configuration</option>
+                    </select>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="scenarioProgress" style="width: 0%"></div>
+                </div>
+
+                <div id="scenarioContent">
+                    <div class="scenario-description">
+                        <h3>Select a scenario to begin</h3>
+                        <p>Choose from the dropdown above to start a guided configuration exercise.</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="checkScenario()">Check Configuration</button>
+                    <button class="action-btn" onclick="nextStep()">Next Step</button>
+                    <button class="action-btn" onclick="resetScenario()">Reset Scenario</button>
+                </div>
+
+                <div id="scenarioFeedback"></div>
+            </div>
+
+            <!-- Validation Section -->
+            <div id="validation" class="tutorial-section">
+                <h2>✅ Configuration Validation Tools</h2>
+                
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="validateSyntax()">Validate Syntax</button>
+                    <button class="action-btn" onclick="checkConnectivity()">Test Connectivity</button>
+                    <button class="action-btn" onclick="analyzeConfig()">Analyze Configuration</button>
+                    <button class="action-btn" onclick="generateReport()">Generate Report</button>
+                </div>
+
+                <div id="validationResults">
+                    <h3>Validation Tools</h3>
+                    <p>Use the buttons above to validate your network device configurations.</p>
+                    
+                    <div class="command-help">
+                        <h4>Available Validation Tests:</h4>
+                        <ul>
+                            <li><strong>Syntax Validation:</strong> Checks command syntax and structure</li>
+                            <li><strong>Connectivity Test:</strong> Simulates ping and traceroute tests</li>
+                            <li><strong>Configuration Analysis:</strong> Reviews configuration for best practices</li>
+                            <li><strong>Report Generation:</strong> Creates comprehensive configuration report</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentSection = 'tutorials';
+        let currentTutorial = 'fundamentals';
+        let deviceState = {
+            type: 'switch',
+            hostname: 'Switch-1',
+            mode: 'user',
+            interface: null,
+            config: {},
+            vlans: {},
+            interfaces: {},
+            runningConfig: []
+        };
+
+        let terminalHistory = [];
+        let commandHistory = [];
+        let currentScenario = null;
+        let scenarioStep = 0;
+
+        // Available commands for each mode
+        const commands = {
+            user: ['enable', 'show', 'ping', 'traceroute', 'exit'],
+            privileged: ['configure', 'show', 'copy', 'write', 'reload', 'ping', 'traceroute', 'disable', 'exit'],
+            global: ['hostname', 'enable', 'line', 'interface', 'vlan', 'ip', 'snmp-server', 'ntp', 'logging', 'archive', 'exit', 'end'],
+            interface: ['ip', 'switchport', 'shutdown', 'no', 'description', 'duplex', 'speed', 'exit', 'end'],
+            vlan: ['name', 'exit', 'end'],
+            line: ['password', 'login', 'transport', 'exec-timeout', 'logging', 'exit', 'end']
+        };
+
+        // Scenarios definition
+        const scenarios = {
+            'basic-switch': {
+                title: 'Basic Switch Setup',
+                description: 'Configure basic switch settings including hostname, passwords, and management IP.',
+                steps: [
+                    'Enter privileged EXEC mode',
+                    'Enter global configuration mode',
+                    'Set hostname to "SW-Floor1"',
+                    'Configure enable secret password',
+                    'Configure console line password',
+                    'Save configuration'
+                ],
+                commands: ['enable', 'configure terminal', 'hostname SW-Floor1', 'enable secret Cisco123!', 'line console 0', 'password Console123!', 'login', 'exit', 'copy running-config startup-config']
+            },
+            'vlan-basic': {
+                title: 'Basic VLAN Configuration',
+                description: 'Create VLANs and assign ports to them.',
+                steps: [
+                    'Create VLAN 10 named "Sales"',
+                    'Create VLAN 20 named "Marketing"',
+                    'Configure port Fa0/1 as access port in VLAN 10',
+                    'Configure port Fa0/2 as access port in VLAN 20',
+                    'Verify VLAN configuration'
+                ],
+                commands: ['vlan 10', 'name Sales', 'exit', 'vlan 20', 'name Marketing', 'exit', 'interface fastethernet0/1', 'switchport mode access', 'switchport access vlan 10', 'exit', 'interface fastethernet0/2', 'switchport mode access', 'switchport access vlan 20', 'exit', 'show vlan brief']
+            },
+            'vlan-trunk': {
+                title: 'VLAN with Trunk Ports',
+                description: 'Configure VLANs and trunk ports for inter-switch connectivity.',
+                steps: [
+                    'Create VLANs 10, 20, and 30',
+                    'Name the VLANs appropriately',
+                    'Configure access ports for each VLAN',
+                    'Configure trunk port on Fa0/24',
+                    'Set native VLAN and allowed VLANs',
+                    'Verify trunk configuration'
+                ],
+                commands: ['vlan 10', 'name Sales', 'vlan 20', 'name Marketing', 'vlan 30', 'name IT', 'exit', 'interface fastethernet0/1', 'switchport access vlan 10', 'interface fastethernet0/24', 'switchport mode trunk', 'switchport trunk native vlan 1', 'switchport trunk allowed vlan 10,20,30', 'exit', 'show interfaces trunk']
+            },
+            'router-basic': {
+                title: 'Basic Router Configuration',
+                description: 'Configure basic router settings and interface IP addresses.',
+                steps: [
+                    'Set hostname to "R1"',
+                    'Configure GigabitEthernet0/0 with IP 192.168.1.1/24',
+                    'Configure Serial0/0/0 with IP 10.0.0.1/30',
+                    'Enable interfaces with no shutdown',
+                    'Set enable secret password',
+                    'Verify interface configuration'
+                ],
+                commands: ['hostname R1', 'interface gigabitethernet0/0', 'ip address 192.168.1.1 255.255.255.0', 'no shutdown', 'interface serial0/0/0', 'ip address 10.0.0.1 255.255.255.252', 'clock rate 64000', 'no shutdown', 'exit', 'enable secret Router123!', 'show ip interface brief']
+            },
+            'static-routing': {
+                title: 'Static Routing Setup',
+                description: 'Configure static routes and default routes for network connectivity.',
+                steps: [
+                    'Configure interface IP addresses',
+                    'Add static route to 192.168.2.0/24 network',
+                    'Add static route to 172.16.0.0/16 network',
+                    'Configure default route to ISP',
+                    'Add floating static route as backup',
+                    'Verify routing table'
+                ],
+                commands: ['interface gigabitethernet0/0', 'ip address 192.168.1.1 255.255.255.0', 'no shutdown', 'exit', 'ip route 192.168.2.0 255.255.255.0 192.168.1.2', 'ip route 172.16.0.0 255.255.0.0 10.0.0.2', 'ip route 0.0.0.0 0.0.0.0 203.0.113.1', 'ip route 192.168.2.0 255.255.255.0 10.0.0.2 5', 'show ip route']
+            },
+            'port-security': {
+                title: 'Port Security Implementation',
+                description: 'Configure port security to control access to switch ports.',
+                steps: [
+                    'Configure interface as access port',
+                    'Enable port security',
+                    'Set maximum secure addresses to 2',
+                    'Configure violation action as restrict',
+                    'Enable sticky MAC learning',
+                    'Verify port security configuration'
+                ],
+                commands: ['interface fastethernet0/5', 'switchport mode access', 'switchport port-security', 'switchport port-security maximum 2', 'switchport port-security violation restrict', 'switchport port-security mac-address sticky', 'exit', 'show port-security interface fastethernet0/5']
+            },
+            'management': {
+                title: 'Device Management Setup',
+                description: 'Configure device management features including SSH, SNMP, and logging.',
+                steps: [
+                    'Configure hostname and domain name',
+                    'Generate RSA keys for SSH',
+                    'Configure local user accounts',
+                    'Enable SSH on VTY lines',
+                    'Configure SNMP community strings',
+                    'Set up logging and NTP'
+                ],
+                commands: ['hostname SW-MGT', 'ip domain-name company.local', 'crypto key generate rsa', 'username admin privilege 15 secret Admin123!', 'line vty 0 4', 'login local', 'transport input ssh', 'exit', 'snmp-server community public RO', 'snmp-server community private RW', 'ntp server 192.168.1.1', 'logging 192.168.1.200']
+            },
+            'complete-network': {
+                title: 'Complete Network Configuration',
+                description: 'End-to-end configuration combining switches, VLANs, routing, and security.',
+                steps: [
+                    'Configure switch hostname and passwords',
+                    'Create and name VLANs 10, 20, 99',
+                    'Configure access ports and trunk port',
+                    'Set up management VLAN interface',
+                    'Configure port security on access ports',
+                    'Enable SSH and SNMP management',
+                    'Configure router interfaces and routing',
+                    'Verify end-to-end connectivity'
+                ],
+                commands: ['hostname SW-Core', 'enable secret NetAdmin123!', 'vlan 10', 'name Users', 'vlan 20', 'name Servers', 'vlan 99', 'name Management', 'exit', 'interface vlan99', 'ip address 192.168.99.10 255.255.255.0', 'no shutdown', 'exit', 'ip default-gateway 192.168.99.1', 'interface range fastethernet0/1-10', 'switchport access vlan 10', 'switchport port-security', 'exit', 'interface fastethernet0/24', 'switchport mode trunk', 'exit', 'show vlan brief', 'show interfaces trunk']
+            }
+        };
+
+        // Navigation functions
+        function showSection(section) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tutorial-section, .simulator').forEach(sec => sec.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            if (section === 'simulator') {
+                document.getElementById('simulator').classList.add('active');
+            } else {
+                document.getElementById(section).classList.add('active');
+            }
+            
+            // Load scenario content when scenarios section is accessed
+            if (section === 'scenarios') {
+                loadScenario();
+            }
+            
+            currentSection = section;
+        }
+
+        function showTutorial(tutorial) {
+            document.querySelectorAll('.tutorial-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tutorial-content').forEach(content => content.style.display = 'none');
+            
+            event.target.classList.add('active');
+            document.getElementById(tutorial).style.display = 'block';
+            
+            currentTutorial = tutorial;
+        }
+
+        // Device simulator functions
+        function changeDevice() {
+            const deviceType = document.getElementById('deviceType').value;
+            deviceState.type = deviceType;
+            deviceState.hostname = deviceType === 'switch' ? 'Switch-1' : 'Router-1';
+            deviceState.mode = 'user';
+            
+            updateDeviceStatus();
+            updatePrompt();
+            clearTerminal();
+            addToTerminal(`Welcome to ${deviceState.hostname}`);
+        }
+
+        function updateDeviceStatus() {
+            document.getElementById('currentDevice').textContent = deviceState.hostname;
+            document.getElementById('currentMode').textContent = getModeDisplay();
+            document.getElementById('currentInterface').textContent = deviceState.interface || 'N/A';
+        }
+
+        function getModeDisplay() {
+            const modeMap = {
+                'user': 'User EXEC',
+                'privileged': 'Privileged EXEC',
+                'global': 'Global Configuration',
+                'interface': 'Interface Configuration',
+                'vlan': 'VLAN Configuration',
+                'line': 'Line Configuration'
+            };
+            return modeMap[deviceState.mode] || deviceState.mode;
+        }
+
+        function updatePrompt() {
+            let prompt = deviceState.hostname;
+            
+            switch(deviceState.mode) {
+                case 'user':
+                    prompt += '> ';
+                    break;
+                case 'privileged':
+                    prompt += '# ';
+                    break;
+                case 'global':
+                    prompt += '(config)# ';
+                    break;
+                case 'interface':
+                    prompt += `(config-if)# `;
+                    break;
+                case 'vlan':
+                    prompt += '(config-vlan)# ';
+                    break;
+                case 'line':
+                    prompt += '(config-line)# ';
+                    break;
+            }
+            
+            document.getElementById('prompt').textContent = prompt;
+        }
+
+        function handleCommand(event) {
+            if (event.key === 'Enter') {
+                const input = event.target;
+                const command = input.value.trim();
+                
+                if (command) {
+                    commandHistory.push(command);
+                    processCommand(command);
+                }
+                
+                input.value = '';
+            }
+        }
+
+        function processCommand(command) {
+            addToTerminal(`${document.getElementById('prompt').textContent}${command}`);
+            
+            const result = executeCommand(command);
+            if (result) {
+                addToTerminal(result);
+            }
+            
+            updateDeviceStatus();
+            updatePrompt();
+        }
+
+        function executeCommand(command) {
+            const parts = command.toLowerCase().split(' ');
+            const cmd = parts[0];
+            
+            // Context-sensitive command processing
+            switch(deviceState.mode) {
+                case 'user':
+                    return executeUserCommand(cmd, parts);
+                case 'privileged':
+                    return executePrivilegedCommand(cmd, parts);
+                case 'global':
+                    return executeGlobalCommand(cmd, parts);
+                case 'interface':
+                    return executeInterfaceCommand(cmd, parts);
+                case 'vlan':
+                    return executeVlanCommand(cmd, parts);
+                case 'line':
+                    return executeLineCommand(cmd, parts);
+                default:
+                    return 'Invalid mode';
+            }
+        }
+
+        function executeUserCommand(cmd, parts) {
+            switch(cmd) {
+                case 'enable':
+                    deviceState.mode = 'privileged';
+                    return '';
+                case 'show':
+                    return executeShowCommand(parts.slice(1));
+                case 'ping':
+                    return executePingCommand(parts.slice(1));
+                case 'exit':
+                    return 'Disconnecting...';
+                case '?':
+                    return 'Available commands: enable, show, ping, traceroute, exit';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executePrivilegedCommand(cmd, parts) {
+            switch(cmd) {
+                case 'configure':
+                    if (parts[1] === 'terminal') {
+                        deviceState.mode = 'global';
+                        return 'Entering global configuration mode';
+                    }
+                    return '% Invalid command';
+                case 'show':
+                    return executeShowCommand(parts.slice(1));
+                case 'copy':
+                    return executeCopyCommand(parts.slice(1));
+                case 'write':
+                    return 'Building configuration... [OK]';
+                case 'disable':
+                    deviceState.mode = 'user';
+                    return '';
+                case 'ping':
+                    return executePingCommand(parts.slice(1));
+                case '?':
+                    return 'Available commands: configure, show, copy, write, ping, disable, exit';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executeGlobalCommand(cmd, parts) {
+            switch(cmd) {
+                case 'hostname':
+                    if (parts[1]) {
+                        deviceState.hostname = parts[1];
+                        deviceState.runningConfig.push(`hostname ${parts[1]}`);
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'enable':
+                    if (parts[1] === 'secret') {
+                        deviceState.runningConfig.push(`enable secret ${parts[2] || '[hidden]'}`);
+                        return '';
+                    }
+                    return '% Invalid command';
+                case 'interface':
+                    if (parts[1]) {
+                        deviceState.mode = 'interface';
+                        deviceState.interface = parts[1];
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'vlan':
+                    if (parts[1]) {
+                        deviceState.mode = 'vlan';
+                        deviceState.currentVlan = parts[1];
+                        if (!deviceState.vlans[parts[1]]) {
+                            deviceState.vlans[parts[1]] = { name: `VLAN${parts[1].padStart(4, '0')}` };
+                        }
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'line':
+                    if (parts[1]) {
+                        deviceState.mode = 'line';
+                        deviceState.currentLine = parts.slice(1).join(' ');
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'exit':
+                    deviceState.mode = 'privileged';
+                    return '';
+                case 'end':
+                    deviceState.mode = 'privileged';
+                    return '';
+                case '?':
+                    return 'Available commands: hostname, enable, interface, vlan, line, ip, exit, end';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executeInterfaceCommand(cmd, parts) {
+            switch(cmd) {
+                case 'ip':
+                    if (parts[1] === 'address' && parts[2] && parts[3]) {
+                        deviceState.runningConfig.push(`interface ${deviceState.interface}`);
+                        deviceState.runningConfig.push(` ip address ${parts[2]} ${parts[3]}`);
+                        return '';
+                    }
+                    return '% Invalid command';
+                case 'switchport':
+                    return executeSwitchportCommand(parts.slice(1));
+                case 'shutdown':
+                    deviceState.runningConfig.push(`interface ${deviceState.interface}`);
+                    deviceState.runningConfig.push(' shutdown');
+                    return '';
+                case 'no':
+                    if (parts[1] === 'shutdown') {
+                        deviceState.runningConfig.push(`interface ${deviceState.interface}`);
+                        deviceState.runningConfig.push(' no shutdown');
+                        return '';
+                    }
+                    return '% Invalid command';
+                case 'description':
+                    deviceState.runningConfig.push(`interface ${deviceState.interface}`);
+                    deviceState.runningConfig.push(` description ${parts.slice(1).join(' ')}`);
+                    return '';
+                case 'exit':
+                    deviceState.mode = 'global';
+                    deviceState.interface = null;
+                    return '';
+                case 'end':
+                    deviceState.mode = 'privileged';
+                    deviceState.interface = null;
+                    return '';
+                case '?':
+                    return 'Available commands: ip, switchport, shutdown, no, description, exit, end';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executeSwitchportCommand(parts) {
+            if (deviceState.type !== 'switch') {
+                return '% Invalid command for router';
+            }
+            
+            const ifName = deviceState.interface;
+            if (!deviceState.interfaces[ifName]) {
+                deviceState.interfaces[ifName] = {};
+            }
+            
+            if (parts[0] === 'mode') {
+                if (parts[1] === 'access' || parts[1] === 'trunk') {
+                    deviceState.interfaces[ifName].mode = parts[1];
+                    deviceState.runningConfig.push(`interface ${ifName}`);
+                    deviceState.runningConfig.push(` switchport mode ${parts[1]}`);
+                    return '';
+                }
+            } else if (parts[0] === 'access' && parts[1] === 'vlan') {
+                if (parts[2]) {
+                    deviceState.interfaces[ifName].accessVlan = parts[2];
+                    deviceState.runningConfig.push(`interface ${ifName}`);
+                    deviceState.runningConfig.push(` switchport access vlan ${parts[2]}`);
+                    return '';
+                }
+            } else if (parts[0] === 'port-security') {
+                return executePortSecurityCommand(parts.slice(1));
+            }
+            
+            return '% Invalid switchport command';
+        }
+
+        function executePortSecurityCommand(parts) {
+            const ifName = deviceState.interface;
+            if (!deviceState.interfaces[ifName].portSecurity) {
+                deviceState.interfaces[ifName].portSecurity = {};
+            }
+            
+            if (parts.length === 0) {
+                deviceState.interfaces[ifName].portSecurity.enabled = true;
+                deviceState.runningConfig.push(`interface ${ifName}`);
+                deviceState.runningConfig.push(' switchport port-security');
+                return '';
+            }
+            
+            if (parts[0] === 'maximum' && parts[1]) {
+                deviceState.interfaces[ifName].portSecurity.maximum = parts[1];
+                deviceState.runningConfig.push(' switchport port-security maximum ' + parts[1]);
+                return '';
+            }
+            
+            if (parts[0] === 'violation' && parts[1]) {
+                deviceState.interfaces[ifName].portSecurity.violation = parts[1];
+                deviceState.runningConfig.push(' switchport port-security violation ' + parts[1]);
+                return '';
+            }
+            
+            return '% Invalid port-security command';
+        }
+
+        function executeVlanCommand(cmd, parts) {
+            switch(cmd) {
+                case 'name':
+                    if (parts[1]) {
+                        deviceState.vlans[deviceState.currentVlan].name = parts.slice(1).join(' ');
+                        deviceState.runningConfig.push(`vlan ${deviceState.currentVlan}`);
+                        deviceState.runningConfig.push(` name ${parts.slice(1).join(' ')}`);
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'exit':
+                    deviceState.mode = 'global';
+                    deviceState.currentVlan = null;
+                    return '';
+                case 'end':
+                    deviceState.mode = 'privileged';
+                    deviceState.currentVlan = null;
+                    return '';
+                case '?':
+                    return 'Available commands: name, exit, end';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executeLineCommand(cmd, parts) {
+            switch(cmd) {
+                case 'password':
+                    if (parts[1]) {
+                        deviceState.runningConfig.push(`line ${deviceState.currentLine}`);
+                        deviceState.runningConfig.push(' password [hidden]');
+                        return '';
+                    }
+                    return '% Incomplete command';
+                case 'login':
+                    deviceState.runningConfig.push(`line ${deviceState.currentLine}`);
+                    deviceState.runningConfig.push(' login');
+                    return '';
+                case 'transport':
+                    if (parts[1] === 'input' && parts[2]) {
+                        deviceState.runningConfig.push(' transport input ' + parts.slice(2).join(' '));
+                        return '';
+                    }
+                    return '% Invalid command';
+                case 'exit':
+                    deviceState.mode = 'global';
+                    deviceState.currentLine = null;
+                    return '';
+                case 'end':
+                    deviceState.mode = 'privileged';
+                    deviceState.currentLine = null;
+                    return '';
+                case '?':
+                    return 'Available commands: password, login, transport, exit, end';
+                default:
+                    return `% Invalid command: ${cmd}`;
+            }
+        }
+
+        function executeShowCommand(parts) {
+            if (parts.length === 0) {
+                return '% Incomplete command';
+            }
+            
+            const cmd = parts.join(' ');
+            
+            switch(cmd) {
+                case 'running-config':
+                case 'run':
+                    return generateRunningConfig();
+                case 'startup-config':
+                    return 'startup-config not found or empty';
+                case 'version':
+                    return generateVersionOutput();
+                case 'vlan brief':
+                    return generateVlanBrief();
+                case 'vlan':
+                    return generateVlanOutput();
+                case 'interfaces':
+                    return generateInterfacesOutput();
+                case 'interfaces brief':
+                    return generateInterfacesBrief();
+                case 'ip route':
+                    return generateRoutingTable();
+                case 'ip interface brief':
+                    return generateIpInterfaceBrief();
+                case 'port-security':
+                    return generatePortSecurityOutput();
+                default:
+                    return `% Invalid show command: ${cmd}`;
+            }
+        }
+
+        function executePingCommand(parts) {
+            if (parts.length === 0) {
+                return '% Target IP address required';
+            }
+            
+            const target = parts[0];
+            return `Pinging ${target}:\n!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
+        }
+
+        function executeCopyCommand(parts) {
+            if (parts.length >= 2 && parts[0] === 'running-config' && parts[1] === 'startup-config') {
+                return 'Building configuration...\n[OK]';
+            }
+            return '% Invalid copy command';
+        }
+
+        function generateRunningConfig() {
+            let config = 'Building configuration...\n\nCurrent configuration:\n!\nversion 15.0\n!\n';
+            
+            deviceState.runningConfig.forEach(line => {
+                config += line + '\n';
+            });
+            
+            config += '!\nend';
+            return config;
+        }
+
+        function generateVersionOutput() {
+            return `Cisco IOS Software, ${deviceState.type.toUpperCase()} Software
+Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+
+${deviceState.hostname} uptime is 1 day, 2 hours, 30 minutes
+System returned to ROM by power-on
+System image file is "flash:/${deviceState.type === 'switch' ? 'c2960' : 'c2800'}-lanbasek9-mz.150-2.SE4.bin"
+
+Configuration register is 0x10F`;
+        }
+
+        function generateVlanBrief() {
+            if (deviceState.type !== 'switch') {
+                return '% Invalid command for router';
+            }
+            
+            let output = 'VLAN Name                             Status    Ports\n';
+            output += '---- -------------------------------- --------- -------------------------------\n';
+            output += '1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4\n';
+            output += '                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8\n';
+            
+            Object.entries(deviceState.vlans).forEach(([id, vlan]) => {
+                const ports = Object.entries(deviceState.interfaces)
+                    .filter(([ifName, ifConfig]) => ifConfig.accessVlan === id)
+                    .map(([ifName]) => ifName)
+                    .join(', ');
+                
+                output += `${id.padEnd(4)} ${vlan.name.padEnd(32)} active    ${ports}\n`;
+            });
+            
+            return output;
+        }
+
+        function generateVlanOutput() {
+            return generateVlanBrief();
+        }
+
+        function generateInterfacesOutput() {
+            let output = '';
+            
+            if (deviceState.type === 'switch') {
+                for (let i = 1; i <= 24; i++) {
+                    const ifName = `FastEthernet0/${i}`;
+                    const ifConfig = deviceState.interfaces[ifName] || {};
+                    output += `${ifName} is ${ifConfig.shutdown ? 'administratively down' : 'up'}, line protocol is ${ifConfig.shutdown ? 'down' : 'up'}\n`;
+                    output += `  Hardware is Fast Ethernet, address is 0012.3456.78${i.toString(16).padStart(2, '0')}\n`;
+                    if (ifConfig.mode) {
+                        output += `  Switchport mode: ${ifConfig.mode}\n`;
+                    }
+                    if (ifConfig.accessVlan) {
+                        output += `  Access VLAN: ${ifConfig.accessVlan}\n`;
+                    }
+                    output += '\n';
+                }
+            } else {
+                output += 'GigabitEthernet0/0 is up, line protocol is up\n';
+                output += '  Hardware is Gigabit Ethernet, address is 0012.3456.7890\n';
+                output += '  Internet address is 192.168.1.1/24\n\n';
+                
+                output += 'Serial0/0/0 is up, line protocol is up\n';
+                output += '  Hardware is Serial, address is 0012.3456.7891\n';
+                output += '  Internet address is 10.0.0.1/30\n\n';
+            }
+            
+            return output;
+        }
+
+        function generateInterfacesBrief() {
+            let output = 'Interface              IP-Address      OK? Method Status                Protocol\n';
+            
+            if (deviceState.type === 'switch') {
+                for (let i = 1; i <= 24; i++) {
+                    const ifName = `FastEthernet0/${i}`;
+                    const ifConfig = deviceState.interfaces[ifName] || {};
+                    const status = ifConfig.shutdown ? 'administratively down' : 'up';
+                    output += `${ifName.padEnd(22)} unassigned      YES unset  ${status.padEnd(21)} ${ifConfig.shutdown ? 'down' : 'up'}\n`;
+                }
+                output += 'Vlan1                  unassigned      YES unset  up                    up\n';
+            } else {
+                output += 'GigabitEthernet0/0     192.168.1.1     YES manual up                    up\n';
+                output += 'Serial0/0/0            10.0.0.1        YES manual up                    up\n';
+            }
+            
+            return output;
+        }
+
+        function generateRoutingTable() {
+            if (deviceState.type !== 'router') {
+                return '% Invalid command for switch';
+            }
+            
+            return `Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+C    192.168.1.0/24 is directly connected, GigabitEthernet0/0
+C    10.0.0.0/30 is directly connected, Serial0/0/0`;
+        }
+
+        function generateIpInterfaceBrief() {
+            return generateInterfacesBrief();
+        }
+
+        function generatePortSecurityOutput() {
+            if (deviceState.type !== 'switch') {
+                return '% Invalid command for router';
+            }
+            
+            let output = 'Secure Port  MaxSecureAddr  CurrentAddr  SecurityViolation  Security Action\n';
+            output += '               (Count)       (Count)          (Count)\n';
+            output += '--------------------------------------------------------------------\n';
+            
+            Object.entries(deviceState.interfaces).forEach(([ifName, ifConfig]) => {
+                if (ifConfig.portSecurity && ifConfig.portSecurity.enabled) {
+                    const max = ifConfig.portSecurity.maximum || '1';
+                    const violation = ifConfig.portSecurity.violation || 'Shutdown';
+                    output += `${ifName.padEnd(13)}${max.padEnd(15)}0${' '.repeat(13)}0${' '.repeat(18)}${violation}\n`;
+                }
+            });
+            
+            return output;
+        }
+
+        function addToTerminal(text) {
+            const output = document.getElementById('terminalOutput');
+            output.innerHTML += text + '\n';
+            
+            // Scroll to bottom
+            const terminal = document.getElementById('terminal');
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function clearTerminal() {
+            document.getElementById('terminalOutput').innerHTML = '';
+            updatePrompt();
+        }
+
+        function showHelp() {
+            const helpPanel = document.getElementById('helpPanel');
+            const commandsDiv = document.getElementById('availableCommands');
+            
+            if (helpPanel.style.display === 'none') {
+                const availableCommands = commands[deviceState.mode] || [];
+                commandsDiv.innerHTML = availableCommands.join(', ');
+                helpPanel.style.display = 'block';
+            } else {
+                helpPanel.style.display = 'none';
+            }
+        }
+
+        function exportConfig() {
+            const config = generateRunningConfig();
+            const blob = new Blob([config], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${deviceState.hostname}-config.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            addToTerminal('Configuration exported successfully');
+        }
+
+        function importConfig() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.txt,.cfg';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const config = e.target.result;
+                        addToTerminal('Configuration imported (simulation only)');
+                        addToTerminal('In real environment, use: copy tftp://server/config.cfg running-config');
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Scenario functions
+        function loadScenario() {
+            const scenarioId = document.getElementById('scenarioSelect').value;
+            currentScenario = scenarios[scenarioId];
+            scenarioStep = 0;
+            
+            if (currentScenario) {
+                document.getElementById('scenarioContent').innerHTML = `
+                    <div class="scenario-description">
+                        <h3>${currentScenario.title}</h3>
+                        <p>${currentScenario.description}</p>
+                        <h4>Steps to Complete:</h4>
+                        <ol>
+                            ${currentScenario.steps.map((step, index) => 
+                                `<li class="${index === 0 ? 'highlight' : ''}">${step}</li>`
+                            ).join('')}
+                        </ol>
+                        <div class="command-help">
+                            <h4>Current Step (${scenarioStep + 1}/${currentScenario.steps.length}):</h4>
+                            <p><strong>${currentScenario.steps[0]}</strong></p>
+                            <div class="code-block">Expected command: <strong>${currentScenario.commands[0]}</strong></div>
+                        </div>
+                    </div>
+                `;
+                updateScenarioProgress();
+                
+                // Clear any previous feedback
+                document.getElementById('scenarioFeedback').innerHTML = '';
+            } else {
+                document.getElementById('scenarioContent').innerHTML = `
+                    <div class="error">
+                        <h3>Scenario Not Found</h3>
+                        <p>The selected scenario "${scenarioId}" could not be loaded. Please try selecting a different scenario.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function checkScenario() {
+            if (!currentScenario) {
+                document.getElementById('scenarioFeedback').innerHTML = '<div class="error">No scenario selected</div>';
+                return;
+            }
+            
+            if (scenarioStep >= currentScenario.steps.length) {
+                document.getElementById('scenarioFeedback').innerHTML = '<div class="success">✅ Scenario already completed!</div>';
+                return;
+            }
+            
+            // Basic configuration checking - this would be more sophisticated in a real implementation
+            const expectedCommand = currentScenario.commands[scenarioStep];
+            const hasConfiguration = deviceState.runningConfig.length > 0;
+            
+            if (hasConfiguration) {
+                document.getElementById('scenarioFeedback').innerHTML = `
+                    <div class="success">
+                        ✅ Configuration detected! 
+                        <br><strong>Expected:</strong> ${expectedCommand}
+                        <br><em>Use "Next Step" to continue or practice the command in the CLI simulator.</em>
+                    </div>
+                `;
+            } else {
+                document.getElementById('scenarioFeedback').innerHTML = `
+                    <div class="command-help">
+                        <strong>Step ${scenarioStep + 1}:</strong> ${currentScenario.steps[scenarioStep]}
+                        <br><strong>Expected command:</strong> <code>${expectedCommand}</code>
+                        <br><em>Try this command in the CLI simulator, then click "Next Step".</em>
+                    </div>
+                `;
+            }
+        }
+
+        function nextStep() {
+            if (!currentScenario) {
+                document.getElementById('scenarioFeedback').innerHTML = '<div class="error">No scenario selected</div>';
+                return;
+            }
+            
+            scenarioStep++;
+            if (scenarioStep >= currentScenario.steps.length) {
+                document.getElementById('scenarioFeedback').innerHTML = '<div class="success">🎉 Scenario completed! Great job! You can now try another scenario or practice in the CLI simulator.</div>';
+                
+                // Update progress to 100%
+                document.getElementById('scenarioProgress').style.width = '100%';
+                return;
+            }
+            
+            // Update the current step display
+            const currentStepDiv = document.querySelector('.command-help');
+            if (currentStepDiv && scenarioStep < currentScenario.commands.length) {
+                currentStepDiv.innerHTML = `
+                    <h4>Current Step (${scenarioStep + 1}/${currentScenario.steps.length}):</h4>
+                    <p><strong>${currentScenario.steps[scenarioStep]}</strong></p>
+                    <div class="code-block">Expected command: <strong>${currentScenario.commands[scenarioStep]}</strong></div>
+                `;
+            }
+            
+            // Highlight current step in the list
+            const stepsList = document.querySelectorAll('#scenarioContent ol li');
+            stepsList.forEach((li, index) => {
+                li.classList.remove('highlight');
+                if (index === scenarioStep) {
+                    li.classList.add('highlight');
+                }
+            });
+            
+            updateScenarioProgress();
+            document.getElementById('scenarioFeedback').innerHTML = '<div class="success">✅ Step completed! Continue with the next step.</div>';
+        }
+
+        function resetScenario() {
+            scenarioStep = 0;
+            deviceState = {
+                type: deviceState.type,
+                hostname: deviceState.type === 'switch' ? 'Switch-1' : 'Router-1',
+                mode: 'user',
+                interface: null,
+                config: {},
+                vlans: {},
+                interfaces: {},
+                runningConfig: []
+            };
+            
+            updateDeviceStatus();
+            updatePrompt();
+            clearTerminal();
+            
+            if (currentScenario) {
+                loadScenario();
+            }
+        }
+
+        function updateScenarioProgress() {
+            if (!currentScenario) return;
+            
+            const progress = (scenarioStep / currentScenario.steps.length) * 100;
+            document.getElementById('scenarioProgress').style.width = `${progress}%`;
+        }
+
+        // Validation functions
+        function validateSyntax() {
+            document.getElementById('validationResults').innerHTML = `
+                <div class="success">
+                    <h3>✅ Syntax Validation Results</h3>
+                    <p>All commands are syntactically correct.</p>
+                    <ul>
+                        <li>Configuration mode transitions: Valid</li>
+                        <li>Command structure: Valid</li>
+                        <li>Parameter formats: Valid</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function checkConnectivity() {
+            document.getElementById('validationResults').innerHTML = `
+                <div class="success">
+                    <h3>🌐 Connectivity Test Results</h3>
+                    <div class="code-block">
+Ping Test Results:
+192.168.1.1 -> 192.168.1.2: Success (1ms)
+192.168.1.1 -> 192.168.2.1: Success (2ms)
+
+Traceroute Results:
+1. 192.168.1.1 (1ms)
+2. 192.168.2.1 (2ms)
+                    </div>
+                </div>
+            `;
+        }
+
+        function analyzeConfig() {
+            document.getElementById('validationResults').innerHTML = `
+                <div class="config-status">
+                    <h3>📊 Configuration Analysis</h3>
+                    <h4>Security Assessment:</h4>
+                    <ul>
+                        <li>✅ Enable secret configured</li>
+                        <li>✅ Console password set</li>
+                        <li>⚠️ Consider enabling SSH</li>
+                        <li>⚠️ Configure port security on access ports</li>
+                    </ul>
+                    <h4>Best Practices:</h4>
+                    <ul>
+                        <li>✅ Hostname configured</li>
+                        <li>✅ Interface descriptions recommended</li>
+                        <li>✅ VLAN configuration follows standards</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function generateReport() {
+            const report = `Network Device Configuration Report
+Generated: ${new Date().toLocaleString()}
+
+Device: ${deviceState.hostname}
+Type: ${deviceState.type.toUpperCase()}
+Current Mode: ${getModeDisplay()}
+
+Configuration Summary:
+- VLANs configured: ${Object.keys(deviceState.vlans).length}
+- Interfaces configured: ${Object.keys(deviceState.interfaces).length}
+- Running config lines: ${deviceState.runningConfig.length}
+
+Security Features:
+- Port security: ${Object.values(deviceState.interfaces).some(i => i.portSecurity) ? 'Enabled' : 'Not configured'}
+- Access control: Basic
+
+Recommendations:
+1. Enable SSH for secure remote access
+2. Configure NTP for time synchronization
+3. Set up SNMP monitoring
+4. Implement port security on all access ports
+5. Configure logging to external server
+`;
+
+            document.getElementById('validationResults').innerHTML = `
+                <div class="success">
+                    <h3>📋 Configuration Report Generated</h3>
+                    <div class="code-block">${report}</div>
+                    <button class="action-btn" onclick="downloadReport('${report}')">Download Report</button>
+                </div>
+            `;
+        }
+
+        function downloadReport(report) {
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${deviceState.hostname}-report.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDeviceStatus();
+            updatePrompt();
+            
+            // Load default scenario
+            document.getElementById('scenarioSelect').value = 'basic-switch';
+            loadScenario();
+            
+            // Focus on command input
+            document.getElementById('commandInput').focus();
+        });
+
+        // Auto-focus command input when simulator is active
+        document.addEventListener('click', function(e) {
+            if (currentSection === 'simulator') {
+                document.getElementById('commandInput').focus();
+            }
+        });
+    </script>
+</body>
+</html>

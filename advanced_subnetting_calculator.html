@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Subnetting Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .input-section, .results-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2193b0;
+            border-bottom: 2px solid #6dd5ed;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+            position: relative;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            width: 16px;
+            height: 16px;
+            background: #6dd5ed;
+            border-radius: 50%;
+            color: white;
+            font-size: 10px;
+            line-height: 16px;
+            text-align: center;
+            cursor: help;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: 118%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #333;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tooltip:hover::after,
+        .tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-control:focus {
+            border-color: #6dd5ed;
+            box-shadow: 0 0 0 3px rgba(109, 213, 237, 0.2);
+            outline: none;
+        }
+
+        .form-control.error {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+        }
+
+        .ip-input-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ip-input {
+            text-align: center;
+        }
+
+        .ip-separator {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .subnet-requirements {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .subnet-requirement {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .subnet-requirement input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(33, 147, 176, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #6dd5ed;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: #2193b0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .result-table th {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .result-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #dee2e6;
+            font-family: 'Courier New', monospace;
+        }
+
+        .result-table tr:nth-child(even) {
+            background: rgba(109, 213, 237, 0.1);
+        }
+
+        .binary-display {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            margin-top: 10px;
+        }
+
+        .network-diagram {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .network-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .subnet-visual {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 150px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .subnet-visual:hover {
+            transform: scale(1.05);
+        }
+
+        .export-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #dee2e6;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .ip-input-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-container {
+                flex-direction: column;
+            }
+            
+            .network-visual {
+                flex-direction: column;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6dd5ed;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tutorial Styles */
+        .tutorial-section {
+            margin-bottom: 25px;
+        }
+
+        .tutorial-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6dd5ed;
+            transition: transform 0.2s ease;
+        }
+
+        .tutorial-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-card h4 {
+            color: #2193b0;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .tutorial-card h5 {
+            color: #495057;
+            margin: 15px 0 10px 0;
+            font-size: 1rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border: 1px solid #6dd5ed;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .example-item {
+            background: white;
+            border: 2px solid #6dd5ed;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(109, 213, 237, 0.3);
+        }
+
+        .cidr-examples {
+            margin: 15px 0;
+        }
+
+        .vlsm-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        .comparison-section {
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .comparison-section:first-child {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid #dc3545;
+        }
+
+        .comparison-section:last-child {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+        }
+
+        .steps-container {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content strong {
+            color: #2193b0;
+        }
+
+        .ipv6-structure {
+            margin: 15px 0;
+        }
+
+        .ipv6-benefits ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .ipv6-guidelines {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .guideline-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #6dd5ed;
+            font-family: 'Courier New', monospace;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            border-color: #6dd5ed;
+            transform: translateY(-2px);
+        }
+
+        .skill-item strong {
+            color: #2193b0;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .best-practices {
+            margin-top: 15px;
+        }
+
+        .practice-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .practice-item strong {
+            color: #2193b0;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .practice-item ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .calculation-tips {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .tip-item {
+            background: linear-gradient(135deg, #fff3cd, #f8d7da);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .tip-item strong {
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .practice-steps {
+            margin-top: 15px;
+        }
+
+        .practice-step {
+            background: rgba(109, 213, 237, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #6dd5ed;
+        }
+
+        .practice-step strong {
+            color: #2193b0;
+        }
+
+        @media (max-width: 768px) {
+            .vlsm-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Advanced Subnetting Calculator</h1>
+            <p>Professional IPv4 & IPv6 Network Design Tool with VLSM Support</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">
+                    ⚙️ Configuration
+                </h2>
+
+                <div class="tab-container">
+                    <button class="tab-button active" onclick="switchTab('tutorial')">📚 Tutorial</button>
+                    <button class="tab-button" onclick="switchTab('ipv4')">IPv4 Subnetting</button>
+                    <button class="tab-button" onclick="switchTab('ipv6')">IPv6 Subnetting</button>
+                    <button class="tab-button" onclick="switchTab('vlsm')">VLSM Design</button>
+                </div>
+
+                <!-- Tutorial Tab -->
+                <div id="tutorial" class="tab-content active">
+                    <div style="max-height: 70vh; overflow-y: auto; padding: 5px;">
+                        
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">🌟 Introduction to Subnetting</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>What is Subnetting?</h4>
+                                <p>Subnetting is the process of breaking down a single network into one or more smaller networks called "sub-networks" or "subnets". This technique serves three primary purposes:</p>
+                                <ul>
+                                    <li><strong>Organizational Efficiency:</strong> Allows logical network segmentation by department or function</li>
+                                    <li><strong>Network Security:</strong> Creates barriers between network segments to control access</li>
+                                    <li><strong>Operational Efficiency:</strong> Better utilization of IP address space and improved scalability</li>
+                                </ul>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>IP Address Structure</h4>
+                                <p>Every IP address consists of two parts:</p>
+                                <div class="example-box">
+                                    <strong>Example: 192.168.1.100/24</strong><br>
+                                    🔹 <strong>Network Portion:</strong> 192.168.1 (first 24 bits)<br>
+                                    🔹 <strong>Host Portion:</strong> 100 (last 8 bits)
+                                </div>
+                                <p>The subnet mask determines the boundary between network and host portions.</p>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">📡 CIDR (Classless Inter-Domain Routing)</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>CIDR Fundamentals</h4>
+                                <p>CIDR is an IP address allocation method that improves data routing efficiency. It provides flexibility in determining network and host identifier assignments.</p>
+                                
+                                <div class="cidr-examples">
+                                    <h5>Common CIDR Examples:</h5>
+                                    <div class="example-grid">
+                                        <div class="example-item">
+                                            <strong>/8</strong><br>
+                                            Class A<br>
+                                            255.0.0.0<br>
+                                            16,777,214 hosts
+                                        </div>
+                                        <div class="example-item">
+                                            <strong>/16</strong><br>
+                                            Class B<br>
+                                            255.255.0.0<br>
+                                            65,534 hosts
+                                        </div>
+                                        <div class="example-item">
+                                            <strong>/24</strong><br>
+                                            Class C<br>
+                                            255.255.255.0<br>
+                                            254 hosts
+                                        </div>
+                                        <div class="example-item">
+                                            <strong>/30</strong><br>
+                                            Point-to-Point<br>
+                                            255.255.255.252<br>
+                                            2 hosts
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>CIDR Benefits</h4>
+                                <ul>
+                                    <li>More efficient IP address allocation</li>
+                                    <li>Reduced routing table sizes</li>
+                                    <li>Flexible subnet mask lengths</li>
+                                    <li>Support for route aggregation (supernetting)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">🔄 VLSM (Variable Length Subnet Masking)</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>VLSM Overview</h4>
+                                <p>Variable Length Subnet Masking is a more efficient way of subnetting that allows different subnet sizes within the same network, eliminating IP address waste.</p>
+                                
+                                <div class="vlsm-comparison">
+                                    <div class="comparison-section">
+                                        <h5>❌ Traditional Subnetting (FLSM)</h5>
+                                        <p>All subnets must be the same size, leading to waste:</p>
+                                        <div class="example-box">
+                                            Network: 192.168.1.0/24<br>
+                                            Need: 120 hosts, 8 hosts, 8 hosts<br>
+                                            Result: Three /25 subnets (126 hosts each)<br>
+                                            <span style="color: #dc3545;">Waste: 106 + 118 + 118 = 242 addresses</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="comparison-section">
+                                        <h5>✅ VLSM Subnetting</h5>
+                                        <p>Different sized subnets based on actual needs:</p>
+                                        <div class="example-box">
+                                            Network: 192.168.1.0/24<br>
+                                            Subnet 1: 192.168.1.0/25 (126 hosts)<br>
+                                            Subnet 2: 192.168.1.128/28 (14 hosts)<br>
+                                            Subnet 3: 192.168.1.144/28 (14 hosts)<br>
+                                            <span style="color: #28a745;">Waste: 6 + 6 + 6 = 18 addresses</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>VLSM Implementation Steps</h4>
+                                <div class="steps-container">
+                                    <div class="step-item">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <strong>List Requirements</strong><br>
+                                            Sort subnet requirements from largest to smallest
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <strong>Start with Largest</strong><br>
+                                            Find the smallest subnet mask that accommodates the largest requirement
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <strong>Assign Consecutively</strong><br>
+                                            Allocate subnets in consecutive address blocks
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">
+                                            <strong>Continue Process</strong><br>
+                                            Repeat with remaining requirements and available space
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">🌐 IPv6 Subnetting</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>IPv6 Fundamentals</h4>
+                                <p>IPv6 uses 128-bit addresses compared to IPv4's 32-bit addresses, providing an enormous address space.</p>
+                                
+                                <div class="ipv6-structure">
+                                    <h5>IPv6 Address Structure:</h5>
+                                    <div class="example-box">
+                                        <strong>2001:db8:1234:5678::1/64</strong><br><br>
+                                        🔹 <strong>Network Prefix (48 bits):</strong> 2001:db8:1234<br>
+                                        🔹 <strong>Subnet ID (16 bits):</strong> 5678<br>
+                                        🔹 <strong>Interface ID (64 bits):</strong> ::1
+                                    </div>
+                                </div>
+
+                                <div class="ipv6-benefits">
+                                    <h5>Key IPv6 Differences:</h5>
+                                    <ul>
+                                        <li>128-bit addresses vs. IPv4's 32-bit</li>
+                                        <li>No broadcast addresses (uses multicast)</li>
+                                        <li>Simplified subnetting with standard /64 subnets</li>
+                                        <li>Abundant address space eliminates conservation concerns</li>
+                                        <li>Standard prefix delegation: /48 to organizations, /64 to subnets</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>IPv6 Subnetting Guidelines</h4>
+                                <div class="ipv6-guidelines">
+                                    <div class="guideline-item">
+                                        <strong>/48:</strong> Typically assigned to organizations
+                                    </div>
+                                    <div class="guideline-item">
+                                        <strong>/56:</strong> Often used for small sites or home networks
+                                    </div>
+                                    <div class="guideline-item">
+                                        <strong>/64:</strong> Standard subnet size for end networks
+                                    </div>
+                                    <div class="guideline-item">
+                                        <strong>Interface ID:</strong> Last 64 bits can be auto-configured
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">🎓 Network+ Certification Focus</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>Essential Skills for Network+ (N10-009)</h4>
+                                <p>The current Network+ exam emphasizes IPv4 addressing including public vs. private, APIPA, RFC1918, loopback, subnetting (VLSM, CIDR), and address classes.</p>
+                                
+                                <div class="skills-grid">
+                                    <div class="skill-item">
+                                        <strong>Binary/Decimal Conversion</strong><br>
+                                        Convert between binary and decimal notation for subnet calculations
+                                    </div>
+                                    <div class="skill-item">
+                                        <strong>Subnet Mask Calculations</strong><br>
+                                        Determine appropriate masks for different host requirements
+                                    </div>
+                                    <div class="skill-item">
+                                        <strong>VLSM Design</strong><br>
+                                        Create efficient variable-length subnet schemes
+                                    </div>
+                                    <div class="skill-item">
+                                        <strong>Troubleshooting</strong><br>
+                                        Identify and resolve subnet-related network issues
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>Common Exam Scenarios</h4>
+                                <ul>
+                                    <li>Calculating usable host ranges from given networks</li>
+                                    <li>Determining subnet boundaries and broadcast addresses</li>
+                                    <li>VLSM network design problems with multiple requirements</li>
+                                    <li>Identifying subnet mask errors and configuration issues</li>
+                                    <li>Route summarization and supernet calculations</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">💡 Best Practices & Tips</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>Subnet Planning Best Practices</h4>
+                                <div class="best-practices">
+                                    <div class="practice-item">
+                                        <strong>1. Requirements Analysis</strong>
+                                        <ul>
+                                            <li>Document current and projected host counts</li>
+                                            <li>Identify security and organizational boundaries</li>
+                                            <li>Plan for 20-30% growth capacity</li>
+                                            <li>Consider VLAN integration requirements</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="practice-item">
+                                        <strong>2. Hierarchical Design</strong>
+                                        <ul>
+                                            <li>Use consistent addressing schemes</li>
+                                            <li>Implement logical IP allocation patterns</li>
+                                            <li>Reserve address blocks for future expansion</li>
+                                            <li>Document all subnet assignments thoroughly</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="practice-item">
+                                        <strong>3. Security Considerations</strong>
+                                        <ul>
+                                            <li>Separate trusted and untrusted networks</li>
+                                            <li>Implement appropriate subnet boundaries</li>
+                                            <li>Consider firewall rule implications</li>
+                                            <li>Plan for network access control (NAC)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-card">
+                                <h4>Quick Calculation Tips</h4>
+                                <div class="calculation-tips">
+                                    <div class="tip-item">
+                                        <strong>Power of 2 Method:</strong><br>
+                                        Hosts needed → Find next power of 2 → Determine subnet size
+                                    </div>
+                                    <div class="tip-item">
+                                        <strong>Magic Number:</strong><br>
+                                        256 - subnet mask octet = block size for subnets
+                                    </div>
+                                    <div class="tip-item">
+                                        <strong>CIDR Quick Reference:</strong><br>
+                                        /24 = 254 hosts, /25 = 126 hosts, /26 = 62 hosts, /27 = 30 hosts
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3 style="color: #2193b0; border-bottom: 2px solid #6dd5ed; padding-bottom: 8px; margin-bottom: 15px;">🚀 Practice with the Calculator</h3>
+                            
+                            <div class="tutorial-card">
+                                <h4>Getting Started</h4>
+                                <p>Now that you understand the concepts, use the calculator tabs above to practice:</p>
+                                
+                                <div class="practice-steps">
+                                    <div class="practice-step">
+                                        <strong>IPv4 Subnetting:</strong> Start with basic subnet calculations using standard networks like 192.168.1.0/24
+                                    </div>
+                                    <div class="practice-step">
+                                        <strong>IPv6 Subnetting:</strong> Practice with modern IPv6 networks and understand the simplified subnetting process
+                                    </div>
+                                    <div class="practice-step">
+                                        <strong>VLSM Design:</strong> Create efficient variable-length subnet schemes for complex network requirements
+                                    </div>
+                                </div>
+                                
+                                <div style="text-align: center; margin-top: 20px; padding: 15px; background: linear-gradient(45deg, #2193b0, #6dd5ed); color: white; border-radius: 10px;">
+                                    <strong>Ready to practice? Click on the IPv4, IPv6, or VLSM tabs above!</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- IPv4 Tab -->
+                <div id="ipv4" class="tab-content active">
+                    <div class="form-group">
+                        <label>Network Address <span class="tooltip" data-tooltip="Enter the base network IP address">?</span></label>
+                        <div class="ip-input-group">
+                            <input type="number" id="ip1" class="form-control ip-input" min="0" max="255" value="192">
+                            <input type="number" id="ip2" class="form-control ip-input" min="0" max="255" value="168">
+                            <input type="number" id="ip3" class="form-control ip-input" min="0" max="255" value="1">
+                            <input type="number" id="ip4" class="form-control ip-input" min="0" max="255" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subnet Mask Format <span class="tooltip" data-tooltip="Choose between CIDR notation (/24) or dotted decimal (255.255.255.0)">?</span></label>
+                        <select id="maskFormat" class="form-control" onchange="toggleMaskInput()">
+                            <option value="cidr">CIDR Notation (/24)</option>
+                            <option value="decimal">Dotted Decimal (255.255.255.0)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="cidrGroup">
+                        <label>CIDR Prefix Length <span class="tooltip" data-tooltip="Number of network bits (8-30 for IPv4)">?</span></label>
+                        <input type="number" id="cidrPrefix" class="form-control" min="8" max="30" value="24">
+                    </div>
+
+                    <div class="form-group" id="decimalGroup" style="display: none;">
+                        <label>Subnet Mask</label>
+                        <div class="ip-input-group">
+                            <input type="number" id="mask1" class="form-control ip-input" min="0" max="255" value="255">
+                            <input type="number" id="mask2" class="form-control ip-input" min="0" max="255" value="255">
+                            <input type="number" id="mask3" class="form-control ip-input" min="0" max="255" value="255">
+                            <input type="number" id="mask4" class="form-control ip-input" min="0" max="255" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Number of Subnets Required <span class="tooltip" data-tooltip="How many subnets do you need to create?">?</span></label>
+                        <input type="number" id="subnetCount" class="form-control" min="2" max="1024" value="4">
+                    </div>
+                </div>
+
+                <!-- IPv6 Tab -->
+                <div id="ipv6" class="tab-content">
+                    <div class="form-group">
+                        <label>IPv6 Network Address <span class="tooltip" data-tooltip="Enter IPv6 network address (e.g., 2001:db8::/48)">?</span></label>
+                        <input type="text" id="ipv6Address" class="form-control" placeholder="2001:db8::" value="2001:db8::">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Prefix Length <span class="tooltip" data-tooltip="IPv6 prefix length (typically 48, 56, or 64)">?</span></label>
+                        <input type="number" id="ipv6Prefix" class="form-control" min="1" max="128" value="48">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subnet Prefix Length <span class="tooltip" data-tooltip="Desired subnet prefix (typically 64 for end networks)">?</span></label>
+                        <input type="number" id="ipv6SubnetPrefix" class="form-control" min="1" max="128" value="64">
+                    </div>
+                </div>
+
+                <!-- VLSM Tab -->
+                <div id="vlsm" class="tab-content">
+                    <div class="form-group">
+                        <label>Base Network <span class="tooltip" data-tooltip="Starting network for VLSM design">?</span></label>
+                        <div class="ip-input-group">
+                            <input type="number" id="vlsmIp1" class="form-control ip-input" min="0" max="255" value="192">
+                            <input type="number" id="vlsmIp2" class="form-control ip-input" min="0" max="255" value="168">
+                            <input type="number" id="vlsmIp3" class="form-control ip-input" min="0" max="255" value="10">
+                            <input type="number" id="vlsmIp4" class="form-control ip-input" min="0" max="255" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Base Network CIDR <span class="tooltip" data-tooltip="CIDR prefix of the base network">?</span></label>
+                        <input type="number" id="vlsmPrefix" class="form-control" min="8" max="30" value="24">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subnet Requirements <span class="tooltip" data-tooltip="Add each subnet with required number of hosts">?</span></label>
+                        <div id="subnetRequirements" class="subnet-requirements">
+                            <div class="subnet-requirement">
+                                <input type="text" placeholder="Subnet Name" class="form-control" value="LAN A">
+                                <input type="number" placeholder="Hosts Needed" class="form-control" min="1" value="60">
+                                <button type="button" class="btn btn-secondary" onclick="removeRequirement(this)">Remove</button>
+                            </div>
+                            <div class="subnet-requirement">
+                                <input type="text" placeholder="Subnet Name" class="form-control" value="LAN B">
+                                <input type="number" placeholder="Hosts Needed" class="form-control" min="1" value="30">
+                                <button type="button" class="btn btn-secondary" onclick="removeRequirement(this)">Remove</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addRequirement()" style="width: 100%; margin-top: 10px;">+ Add Subnet</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="calculateSubnets()">
+                    Calculate Subnets
+                </button>
+
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Calculating network configuration...</p>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">
+                    📊 Results
+                </h2>
+
+                <div id="results" class="results-grid">
+                    <div class="result-card">
+                        <div class="result-title">📚 Complete Subnetting Education & Calculator</div>
+                        <p>This comprehensive tool combines in-depth subnetting education with advanced calculation capabilities:</p>
+                        
+                        <div style="margin: 20px 0;">
+                            <h4 style="color: #2193b0; margin-bottom: 10px;">📖 Tutorial Features:</h4>
+                            <ul style="margin: 0 0 15px 20px;">
+                                <li>Complete IPv4 & IPv6 subnetting concepts</li>
+                                <li>CIDR and VLSM techniques explained</li>
+                                <li>Network+ certification focus areas</li>
+                                <li>Best practices and professional tips</li>
+                                <li>Interactive examples and visual aids</li>
+                            </ul>
+                            
+                            <h4 style="color: #2193b0; margin-bottom: 10px;">🛠️ Calculator Capabilities:</h4>
+                            <ul style="margin: 0 0 15px 20px;">
+                                <li>IPv4 standard and VLSM subnet calculations</li>
+                                <li>IPv6 modern network planning</li>
+                                <li>Visual network diagrams and layouts</li>
+                                <li>Binary representations for learning</li>
+                                <li>Professional export functionality</li>
+                                <li>Mobile-responsive design</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(45deg, #28a745, #20c997); color: white; border-radius: 10px; margin-top: 15px;">
+                            <strong>🚀 Start with the Tutorial tab to learn concepts, then practice with the calculator tabs!</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'tutorial';
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            currentTab = tabName;
+            
+            // Update results section based on selected tab
+            if (tabName === 'tutorial') {
+                document.getElementById('results').innerHTML = `
+                    <div class="result-card">
+                        <div class="result-title">📚 Learning Resources & Quick Reference</div>
+                        
+                        <div style="margin: 15px 0;">
+                            <h4 style="color: #2193b0;">🔢 Quick CIDR Reference:</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin: 10px 0; font-family: monospace; font-size: 12px;">
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/24<br>254 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/25<br>126 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/26<br>62 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/27<br>30 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/28<br>14 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/29<br>6 hosts</div>
+                                <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; text-align: center;">/30<br>2 hosts</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <h4 style="color: #2193b0;">🎯 Network+ Exam Tips:</h4>
+                            <ul style="margin: 0 0 10px 20px; font-size: 14px;">
+                                <li>Master binary-to-decimal conversion</li>
+                                <li>Practice VLSM scenarios with mixed requirements</li>
+                                <li>Understand IPv6 /64 standard subnet size</li>
+                                <li>Know common private IP ranges (RFC1918)</li>
+                                <li>Practice subnet boundary calculations</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                            <strong>💡 Pro Tip:</strong> Always start VLSM design with the largest subnet requirement first, then work your way down to smaller subnets to minimize waste.
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Reset to default calculator welcome message for other tabs
+                document.getElementById('results').innerHTML = `
+                    <div class="result-card">
+                        <div class="result-title">Ready to Calculate - ${tabName.toUpperCase()}</div>
+                        <p>Configure your network parameters and click "Calculate Subnets" to see detailed results including:</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Network and broadcast addresses</li>
+                            <li>Usable host ranges with binary representations</li>
+                            <li>Visual network diagrams</li>
+                            <li>${tabName === 'vlsm' ? 'Variable-length subnet allocation' : tabName === 'ipv6' ? 'IPv6 prefix delegation structure' : 'Complete subnet breakdown tables'}</li>
+                            <li>Professional export functionality</li>
+                        </ul>
+                        
+                        <div style="text-align: center; padding: 12px; background: rgba(109, 213, 237, 0.1); border-radius: 8px; margin-top: 15px;">
+                            <strong>🔍 Need help? Check the Tutorial tab for comprehensive explanations!</strong>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleMaskInput() {
+            const format = document.getElementById('maskFormat').value;
+            const cidrGroup = document.getElementById('cidrGroup');
+            const decimalGroup = document.getElementById('decimalGroup');
+            
+            if (format === 'cidr') {
+                cidrGroup.style.display = 'block';
+                decimalGroup.style.display = 'none';
+            } else {
+                cidrGroup.style.display = 'none';
+                decimalGroup.style.display = 'block';
+            }
+        }
+
+        function addRequirement() {
+            const container = document.getElementById('subnetRequirements');
+            const div = document.createElement('div');
+            div.className = 'subnet-requirement';
+            div.innerHTML = `
+                <input type="text" placeholder="Subnet Name" class="form-control" value="New Subnet">
+                <input type="number" placeholder="Hosts Needed" class="form-control" min="1" value="10">
+                <button type="button" class="btn btn-secondary" onclick="removeRequirement(this)">Remove</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeRequirement(button) {
+            button.parentElement.remove();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLoading(show) {
+            const loading = document.querySelector('.loading');
+            const button = document.querySelector('.btn-primary');
+            if (show) {
+                loading.style.display = 'block';
+                button.style.display = 'none';
+            } else {
+                loading.style.display = 'none';
+                button.style.display = 'block';
+            }
+        }
+
+        function validateIPv4(ip1, ip2, ip3, ip4) {
+            return ip1 >= 0 && ip1 <= 255 && 
+                   ip2 >= 0 && ip2 <= 255 && 
+                   ip3 >= 0 && ip3 <= 255 && 
+                   ip4 >= 0 && ip4 <= 255;
+        }
+
+        function validateIPv6(address) {
+            const ipv6Regex = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
+            return ipv6Regex.test(address + '::') || ipv6Regex.test(address);
+        }
+
+        function cidrToMask(cidr) {
+            const mask = [];
+            let bits = cidr;
+            for (let i = 0; i < 4; i++) {
+                if (bits >= 8) {
+                    mask.push(255);
+                    bits -= 8;
+                } else if (bits > 0) {
+                    mask.push(256 - Math.pow(2, 8 - bits));
+                    bits = 0;
+                } else {
+                    mask.push(0);
+                }
+            }
+            return mask;
+        }
+
+        function maskToCidr(mask) {
+            let cidr = 0;
+            for (let octet of mask) {
+                for (let i = 7; i >= 0; i--) {
+                    if ((octet >> i) & 1) cidr++;
+                    else return cidr;
+                }
+            }
+            return cidr;
+        }
+
+        function ipToBinary(ip) {
+            return ip.map(octet => 
+                octet.toString(2).padStart(8, '0')
+            ).join('.');
+        }
+
+        function getNetworkAddress(ip, mask) {
+            return ip.map((octet, i) => octet & mask[i]);
+        }
+
+        function getBroadcastAddress(networkAddr, mask) {
+            return networkAddr.map((octet, i) => octet | (255 ^ mask[i]));
+        }
+
+        function getSubnetInfo(networkAddr, mask) {
+            const broadcast = getBroadcastAddress(networkAddr, mask);
+            const firstHost = [...networkAddr];
+            firstHost[3]++;
+            const lastHost = [...broadcast];
+            lastHost[3]--;
+            
+            const hostBits = 32 - maskToCidr(mask);
+            const totalHosts = Math.pow(2, hostBits);
+            const usableHosts = totalHosts - 2;
+
+            return {
+                network: networkAddr.join('.'),
+                broadcast: broadcast.join('.'),
+                firstHost: firstHost.join('.'),
+                lastHost: lastHost.join('.'),
+                mask: mask.join('.'),
+                cidr: maskToCidr(mask),
+                totalHosts,
+                usableHosts,
+                networkBinary: ipToBinary(networkAddr),
+                maskBinary: ipToBinary(mask)
+            };
+        }
+
+        function calculateSubnets() {
+            if (currentTab === 'tutorial') {
+                showError('Please select IPv4, IPv6, or VLSM tab to perform calculations.');
+                return;
+            }
+            
+            showLoading(true);
+            
+            setTimeout(() => {
+                try {
+                    let results = '';
+                    
+                    if (currentTab === 'ipv4') {
+                        results = calculateIPv4Subnets();
+                    } else if (currentTab === 'ipv6') {
+                        results = calculateIPv6Subnets();
+                    } else if (currentTab === 'vlsm') {
+                        results = calculateVLSMSubnets();
+                    }
+                    
+                    document.getElementById('results').innerHTML = results;
+                    showLoading(false);
+                } catch (error) {
+                    showError(error.message);
+                    showLoading(false);
+                }
+            }, 1000);
+        }
+
+        function calculateIPv4Subnets() {
+            const ip1 = parseInt(document.getElementById('ip1').value);
+            const ip2 = parseInt(document.getElementById('ip2').value);
+            const ip3 = parseInt(document.getElementById('ip3').value);
+            const ip4 = parseInt(document.getElementById('ip4').value);
+            
+            if (!validateIPv4(ip1, ip2, ip3, ip4)) {
+                throw new Error('Invalid IPv4 address');
+            }
+
+            const baseIP = [ip1, ip2, ip3, ip4];
+            let mask;
+            
+            if (document.getElementById('maskFormat').value === 'cidr') {
+                const cidr = parseInt(document.getElementById('cidrPrefix').value);
+                if (cidr < 8 || cidr > 30) {
+                    throw new Error('CIDR prefix must be between 8 and 30');
+                }
+                mask = cidrToMask(cidr);
+            } else {
+                mask = [
+                    parseInt(document.getElementById('mask1').value),
+                    parseInt(document.getElementById('mask2').value),
+                    parseInt(document.getElementById('mask3').value),
+                    parseInt(document.getElementById('mask4').value)
+                ];
+            }
+
+            const subnetCount = parseInt(document.getElementById('subnetCount').value);
+            const subnetBits = Math.ceil(Math.log2(subnetCount));
+            const newMaskBits = maskToCidr(mask) + subnetBits;
+            
+            if (newMaskBits > 30) {
+                throw new Error('Too many subnets requested for this network size');
+            }
+
+            const newMask = cidrToMask(newMaskBits);
+            const networkAddr = getNetworkAddress(baseIP, mask);
+            const originalInfo = getSubnetInfo(networkAddr, mask);
+            
+            let results = `
+                <div class="result-card">
+                    <div class="result-title">📋 Original Network Information</div>
+                    <table class="result-table">
+                        <tr><td><strong>Network Address:</strong></td><td>${originalInfo.network}/${originalInfo.cidr}</td></tr>
+                        <tr><td><strong>Broadcast Address:</strong></td><td>${originalInfo.broadcast}</td></tr>
+                        <tr><td><strong>First Host:</strong></td><td>${originalInfo.firstHost}</td></tr>
+                        <tr><td><strong>Last Host:</strong></td><td>${originalInfo.lastHost}</td></tr>
+                        <tr><td><strong>Total Hosts:</strong></td><td>${originalInfo.totalHosts.toLocaleString()}</td></tr>
+                        <tr><td><strong>Usable Hosts:</strong></td><td>${originalInfo.usableHosts.toLocaleString()}</td></tr>
+                    </table>
+                    <div class="binary-display">
+                        <strong>Binary Representation:</strong><br>
+                        Network: ${originalInfo.networkBinary}<br>
+                        Mask: &nbsp;&nbsp;&nbsp;&nbsp;${originalInfo.maskBinary}
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">🔀 Subnet Breakdown</div>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>Subnet #</th>
+                                <th>Network Address</th>
+                                <th>First Host</th>
+                                <th>Last Host</th>
+                                <th>Broadcast</th>
+                                <th>Hosts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            const hostBits = 32 - newMaskBits;
+            const subnetSize = Math.pow(2, hostBits);
+            
+            for (let i = 0; i < subnetCount; i++) {
+                const subnetNetwork = [...networkAddr];
+                const offset = i * subnetSize;
+                
+                // Add offset to the appropriate octet
+                let carry = offset;
+                for (let j = 3; j >= 0; j--) {
+                    const octetValue = subnetNetwork[j] + (carry % 256);
+                    subnetNetwork[j] = octetValue;
+                    carry = Math.floor(carry / 256);
+                    if (carry === 0) break;
+                }
+                
+                const subnetInfo = getSubnetInfo(subnetNetwork, newMask);
+                
+                results += `
+                    <tr>
+                        <td>Subnet ${i}</td>
+                        <td>${subnetInfo.network}/${newMaskBits}</td>
+                        <td>${subnetInfo.firstHost}</td>
+                        <td>${subnetInfo.lastHost}</td>
+                        <td>${subnetInfo.broadcast}</td>
+                        <td>${subnetInfo.usableHosts}</td>
+                    </tr>
+                `;
+            }
+
+            results += `
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-title">📊 Visual Network Diagram</div>
+                    <div class="network-diagram">
+                        <h4>Subnet Layout</h4>
+                        <div class="network-visual">
+            `;
+
+            for (let i = 0; i < Math.min(subnetCount, 6); i++) {
+                const subnetNetwork = [...networkAddr];
+                const offset = i * subnetSize;
+                
+                let carry = offset;
+                for (let j = 3; j >= 0; j--) {
+                    const octetValue = subnetNetwork[j] + (carry % 256);
+                    subnetNetwork[j] = octetValue;
+                    carry = Math.floor(carry / 256);
+                    if (carry === 0) break;
+                }
+                
+                const subnetInfo = getSubnetInfo(subnetNetwork, newMask);
+                
+                results += `
+                    <div class="subnet-visual">
+                        <strong>Subnet ${i}</strong><br>
+                        ${subnetInfo.network}/${newMaskBits}<br>
+                        <small>${subnetInfo.usableHosts} hosts</small>
+                    </div>
+                `;
+            }
+
+            if (subnetCount > 6) {
+                results += `<div class="subnet-visual">... and ${subnetCount - 6} more subnets</div>`;
+            }
+
+            results += `
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <button class="btn btn-success" onclick="exportResults()">📄 Export Subnet Plan</button>
+                </div>
+            `;
+
+            return results;
+        }
+
+        function calculateIPv6Subnets() {
+            const ipv6Address = document.getElementById('ipv6Address').value.trim();
+            const prefix = parseInt(document.getElementById('ipv6Prefix').value);
+            const subnetPrefix = parseInt(document.getElementById('ipv6SubnetPrefix').value);
+
+            if (!validateIPv6(ipv6Address)) {
+                throw new Error('Invalid IPv6 address format');
+            }
+
+            if (prefix >= subnetPrefix) {
+                throw new Error('Subnet prefix must be larger than network prefix');
+            }
+
+            const subnetBits = subnetPrefix - prefix;
+            const maxSubnets = Math.pow(2, subnetBits);
+            const displaySubnets = Math.min(maxSubnets, 20); // Show max 20 for display
+
+            let results = `
+                <div class="result-card">
+                    <div class="result-title">🌐 IPv6 Network Information</div>
+                    <table class="result-table">
+                        <tr><td><strong>Base Network:</strong></td><td>${ipv6Address}/${prefix}</td></tr>
+                        <tr><td><strong>Subnet Prefix:</strong></td><td>/${subnetPrefix}</td></tr>
+                        <tr><td><strong>Subnet Bits:</strong></td><td>${subnetBits}</td></tr>
+                        <tr><td><strong>Total Possible Subnets:</strong></td><td>${maxSubnets.toLocaleString()}</td></tr>
+                        <tr><td><strong>Hosts per Subnet:</strong></td><td>2^${128 - subnetPrefix} (${Math.pow(2, 128 - subnetPrefix) > Number.MAX_SAFE_INTEGER ? 'Enormous' : Math.pow(2, 128 - subnetPrefix).toLocaleString()})</td></tr>
+                    </table>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">🔀 IPv6 Subnet Examples (First ${displaySubnets})</div>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>Subnet #</th>
+                                <th>Network Address</th>
+                                <th>Subnet ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            // Simplified IPv6 subnet calculation for common cases
+            const baseAddress = ipv6Address.replace('::', ':0000:');
+            
+            for (let i = 0; i < displaySubnets; i++) {
+                const subnetId = i.toString(16).toUpperCase().padStart(4, '0');
+                let subnetAddress;
+                
+                if (prefix === 48) {
+                    // Common case: /48 to /64
+                    subnetAddress = `${baseAddress}${subnetId}::/${subnetPrefix}`;
+                } else {
+                    // General case - simplified representation
+                    subnetAddress = `${baseAddress}${i.toString(16)}::/${subnetPrefix}`;
+                }
+
+                results += `
+                    <tr>
+                        <td>Subnet ${i}</td>
+                        <td>${subnetAddress}</td>
+                        <td>::${subnetId}</td>
+                    </tr>
+                `;
+            }
+
+            if (maxSubnets > displaySubnets) {
+                results += `
+                    <tr>
+                        <td colspan="3" style="text-align: center; font-style: italic;">
+                            ... and ${(maxSubnets - displaySubnets).toLocaleString()} more subnets
+                        </td>
+                    </tr>
+                `;
+            }
+
+            results += `
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">📊 IPv6 Addressing Guidelines</div>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>/48:</strong> Typically assigned to organizations</li>
+                        <li><strong>/56:</strong> Often used for small sites or home networks</li>
+                        <li><strong>/64:</strong> Standard subnet size for end networks</li>
+                        <li><strong>Interface ID:</strong> Last 64 bits can be auto-configured</li>
+                        <li><strong>No Broadcast:</strong> IPv6 uses multicast instead</li>
+                    </ul>
+                    
+                    <div class="network-diagram">
+                        <h4>IPv6 Hierarchy</h4>
+                        <div style="text-align: left; font-family: monospace; font-size: 12px;">
+                            Network Prefix (${prefix} bits) | Subnet ID (${subnetBits} bits) | Interface ID (${128 - subnetPrefix} bits)<br>
+                            ${ipv6Address.padEnd(20)} | Variable | Host Address
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <button class="btn btn-success" onclick="exportResults()">📄 Export IPv6 Plan</button>
+                </div>
+            `;
+
+            return results;
+        }
+
+        function calculateVLSMSubnets() {
+            const baseIP = [
+                parseInt(document.getElementById('vlsmIp1').value),
+                parseInt(document.getElementById('vlsmIp2').value),
+                parseInt(document.getElementById('vlsmIp3').value),
+                parseInt(document.getElementById('vlsmIp4').value)
+            ];
+            
+            const basePrefix = parseInt(document.getElementById('vlsmPrefix').value);
+            
+            if (!validateIPv4(baseIP[0], baseIP[1], baseIP[2], baseIP[3])) {
+                throw new Error('Invalid IPv4 address');
+            }
+
+            // Collect subnet requirements
+            const requirements = [];
+            const reqElements = document.querySelectorAll('#subnetRequirements .subnet-requirement');
+            
+            reqElements.forEach(req => {
+                const name = req.querySelector('input[type="text"]').value;
+                const hosts = parseInt(req.querySelector('input[type="number"]').value);
+                requirements.push({ name, hosts });
+            });
+
+            if (requirements.length === 0) {
+                throw new Error('Please add at least one subnet requirement');
+            }
+
+            // Sort requirements by hosts needed (largest first)
+            requirements.sort((a, b) => b.hosts - a.hosts);
+
+            // Calculate VLSM subnets
+            const vlsmSubnets = [];
+            const baseMask = cidrToMask(basePrefix);
+            const baseNetwork = getNetworkAddress(baseIP, baseMask);
+            let currentNetwork = [...baseNetwork];
+
+            let results = `
+                <div class="result-card">
+                    <div class="result-title">📋 VLSM Base Network</div>
+                    <table class="result-table">
+                        <tr><td><strong>Base Network:</strong></td><td>${baseNetwork.join('.')}/${basePrefix}</td></tr>
+                        <tr><td><strong>Available Address Space:</strong></td><td>${Math.pow(2, 32 - basePrefix).toLocaleString()} addresses</td></tr>
+                        <tr><td><strong>Subnet Requirements:</strong></td><td>${requirements.length} subnets</td></tr>
+                    </table>
+                    
+                    <div class="binary-display">
+                        <strong>Requirements (sorted by size):</strong><br>
+            `;
+
+            requirements.forEach((req, i) => {
+                results += `${i + 1}. ${req.name}: ${req.hosts} hosts<br>`;
+            });
+
+            results += `
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">🔀 VLSM Subnet Allocation</div>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>Subnet Name</th>
+                                <th>Hosts Needed</th>
+                                <th>Subnet Size</th>
+                                <th>Network Address</th>
+                                <th>Host Range</th>
+                                <th>Broadcast</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            for (let req of requirements) {
+                // Calculate required subnet size (power of 2)
+                const requiredBits = Math.ceil(Math.log2(req.hosts + 2)); // +2 for network and broadcast
+                const subnetSize = Math.pow(2, requiredBits);
+                const hostBits = requiredBits;
+                const subnetMaskBits = 32 - hostBits;
+                const subnetMask = cidrToMask(subnetMaskBits);
+
+                // Ensure current network is aligned to subnet boundary
+                const alignment = subnetSize;
+                let networkValue = (currentNetwork[3] + (currentNetwork[2] << 8) + (currentNetwork[1] << 16) + (currentNetwork[0] << 24)) >>> 0;
+                networkValue = Math.ceil(networkValue / alignment) * alignment;
+                
+                const alignedNetwork = [
+                    (networkValue >>> 24) & 255,
+                    (networkValue >>> 16) & 255,
+                    (networkValue >>> 8) & 255,
+                    networkValue & 255
+                ];
+
+                const subnetInfo = getSubnetInfo(alignedNetwork, subnetMask);
+                vlsmSubnets.push({
+                    name: req.name,
+                    hostsNeeded: req.hosts,
+                    ...subnetInfo
+                });
+
+                results += `
+                    <tr>
+                        <td><strong>${req.name}</strong></td>
+                        <td>${req.hosts}</td>
+                        <td>${subnetSize} (/${subnetMaskBits})</td>
+                        <td>${subnetInfo.network}/${subnetMaskBits}</td>
+                        <td>${subnetInfo.firstHost} - ${subnetInfo.lastHost}</td>
+                        <td>${subnetInfo.broadcast}</td>
+                    </tr>
+                `;
+
+                // Move to next available network
+                currentNetwork = [...alignedNetwork];
+                const nextNetworkValue = networkValue + subnetSize;
+                currentNetwork = [
+                    (nextNetworkValue >>> 24) & 255,
+                    (nextNetworkValue >>> 16) & 255,
+                    (nextNetworkValue >>> 8) & 255,
+                    nextNetworkValue & 255
+                ];
+            }
+
+            results += `
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">📊 VLSM Efficiency Analysis</div>
+                    <table class="result-table">
+            `;
+
+            let totalAllocated = 0;
+            let totalUsed = 0;
+
+            vlsmSubnets.forEach(subnet => {
+                totalAllocated += subnet.totalHosts;
+                totalUsed += subnet.hostsNeeded;
+            });
+
+            const efficiency = ((totalUsed / totalAllocated) * 100).toFixed(1);
+            const totalAvailable = Math.pow(2, 32 - basePrefix);
+
+            results += `
+                        <tr><td><strong>Total Available Addresses:</strong></td><td>${totalAvailable.toLocaleString()}</td></tr>
+                        <tr><td><strong>Total Allocated:</strong></td><td>${totalAllocated.toLocaleString()}</td></tr>
+                        <tr><td><strong>Total Actually Needed:</strong></td><td>${totalUsed.toLocaleString()}</td></tr>
+                        <tr><td><strong>Remaining Available:</strong></td><td>${(totalAvailable - totalAllocated).toLocaleString()}</td></tr>
+                        <tr><td><strong>VLSM Efficiency:</strong></td><td>${efficiency}%</td></tr>
+                    </table>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">📊 Visual VLSM Layout</div>
+                    <div class="network-diagram">
+                        <h4>Subnet Allocation</h4>
+                        <div class="network-visual">
+            `;
+
+            vlsmSubnets.forEach((subnet, i) => {
+                results += `
+                    <div class="subnet-visual">
+                        <strong>${subnet.name}</strong><br>
+                        ${subnet.network}/${subnet.cidr}<br>
+                        <small>${subnet.hostsNeeded} hosts needed</small><br>
+                        <small>${subnet.usableHosts} available</small>
+                    </div>
+                `;
+            });
+
+            results += `
+                        </div>
+                        <p style="margin-top: 15px; font-size: 14px;">
+                            VLSM Efficiency: ${efficiency}% | Remaining Space: ${(totalAvailable - totalAllocated).toLocaleString()} addresses
+                        </p>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <button class="btn btn-success" onclick="exportResults()">📄 Export VLSM Plan</button>
+                </div>
+            `;
+
+            return results;
+        }
+
+        function exportResults() {
+            const results = document.getElementById('results');
+            let exportData = 'Advanced Subnetting Calculator - Results Export\n';
+            exportData += '=' + '='.repeat(50) + '\n\n';
+            
+            // Extract text content from results
+            const tables = results.querySelectorAll('.result-table');
+            const titles = results.querySelectorAll('.result-title');
+            
+            titles.forEach((title, index) => {
+                exportData += title.textContent + '\n';
+                exportData += '-'.repeat(title.textContent.length) + '\n';
+                
+                if (tables[index]) {
+                    const rows = tables[index].querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td, th');
+                        const rowData = Array.from(cells).map(cell => cell.textContent).join('\t');
+                        exportData += rowData + '\n';
+                    });
+                }
+                exportData += '\n';
+            });
+
+            exportData += '\nGenerated on: ' + new Date().toLocaleString();
+            exportData += '\nTool: Advanced Subnetting Calculator';
+
+            // Create and download file
+            const blob = new Blob([exportData], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `subnet-plan-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for input validation
+            document.querySelectorAll('.ip-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = parseInt(this.value);
+                    if (value < 0 || value > 255 || isNaN(value)) {
+                        this.classList.add('error');
+                    } else {
+                        this.classList.remove('error');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
