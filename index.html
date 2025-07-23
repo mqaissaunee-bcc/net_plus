@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network+ Study Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cert-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .tool-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .tool-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tool-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .study-tips {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .study-tips h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tip-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌐 Network+ Study Hub</h1>
+            <p>Master networking fundamentals with interactive tools and simulators</p>
+            <div class="cert-badge">CompTIA Network+ (N10-008) Preparation</div>
+        </header>
+
+        <div class="study-tips">
+            <h2>📚 Study Strategy</h2>
+            <div class="tips-list">
+                <div class="tip-item">
+                    <strong>Practice Regularly:</strong> Use these tools daily to reinforce concepts
+                </div>
+                <div class="tip-item">
+                    <strong>Hands-On Learning:</strong> Simulate real-world scenarios
+                </div>
+                <div class="tip-item">
+                    <strong>Track Progress:</strong> Focus on areas that need improvement
+                </div>
+                <div class="tip-item">
+                    <strong>Apply Knowledge:</strong> Test theories with practical exercises
+                </div>
+            </div>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🔢</div>
+                <h3>Advanced Subnetting Calculator</h3>
+                <p>Master CIDR notation, subnet masks, and IP address calculations. Practice variable-length subnet masking (VLSM) and supernetting techniques essential for the Network+ exam.</p>
+                <a href="advanced_subnetting_calculator.html" class="tool-link">Launch Calculator</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">⚡</div>
+                <h3>Network Command Center</h3>
+                <p>Practice essential networking commands like ping, traceroute, nslookup, and netstat. Learn command-line troubleshooting techniques used by network professionals.</p>
+                <a href="network_command_center.html" class="tool-link">Open Command Center</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🔧</div>
+                <h3>Network Device Simulator</h3>
+                <p>Simulate routers, switches, firewalls, and other network devices. Configure VLANs, routing protocols, and security settings in a virtual environment.</p>
+                <a href="network_device_simulator.html" class="tool-link">Start Simulator</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🔍</div>
+                <h3>Network Troubleshooting Simulator</h3>
+                <p>Practice systematic network troubleshooting using the OSI model. Diagnose connectivity issues, performance problems, and security breaches step-by-step.</p>
+                <a href="network_troubleshooting_simulator.html" class="tool-link">Begin Troubleshooting</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">📊</div>
+                <h3>Port & Protocol Reference</h3>
+                <p>Comprehensive reference for common ports, protocols, and services. Study TCP/UDP port numbers, protocol functions, and security implications for the exam.</p>
+                <a href="port_protocol_reference.html" class="tool-link">View Reference</a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>💡 <strong>Pro Tip:</strong> Combine these tools with official CompTIA study materials for the best exam preparation experience.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Good luck with your Network+ certification journey! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add subtle animations on page load
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+
+        // Add click tracking for tools (could be useful for analytics)
+        document.querySelectorAll('.tool-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const toolName = this.closest('.tool-card').querySelector('h3').textContent;
+                console.log(`Accessed tool: ${toolName}`);
+            });
+        });
+    </script>
+</body>
+</html>
