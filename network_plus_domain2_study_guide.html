@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network+ Domain 2.0: Network Implementation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .domain-overview {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .content-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .topic-card {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .topic-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .topic-title {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .subsection {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ecf0f1;
+        }
+        
+        .subsection h4 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .key-points {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .key-points li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .key-points li:before {
+            content: "→";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .interactive-element {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-element:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(116, 185, 255, 0.3);
+        }
+        
+        .quiz-container {
+            background: #f1f2f6;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .quiz-options li {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .quiz-options li:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .quiz-options li.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+        }
+        
+        .quiz-options li.incorrect {
+            background: #ffcdd2;
+            border-color: #f44336;
+        }
+        
+        .diagram-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #bdc3c7;
+        }
+        
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .protocol-table th,
+        .protocol-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .protocol-table th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .protocol-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .progress-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b894, #00a085);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .exam-tip {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #e17055;
+        }
+        
+        .exam-tip strong {
+            color: #d63031;
+        }
+
+        .lab-exercise {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .toggle-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .toggle-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .toggle-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CompTIA Network+ Domain 2.0</h1>
+            <div class="subtitle">Network Implementation Study Guide</div>
+            <div class="domain-overview">
+                <strong>Domain Weight:</strong> 20% of the exam | 
+                <strong>Focus Areas:</strong> Routing Technologies, Switching Technologies, Wireless Implementation, Physical Installations
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <h3>Study Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span id="progressText">0% Complete</span>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+            <button class="nav-btn" onclick="showSection('routing')">2.1 Routing</button>
+            <button class="nav-btn" onclick="showSection('switching')">2.2 Switching</button>
+            <button class="nav-btn" onclick="showSection('wireless')">2.3 Wireless</button>
+            <button class="nav-btn" onclick="showSection('physical')">2.4 Physical</button>
+            <button class="nav-btn" onclick="showSection('quiz')">Practice Quiz</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="content-section active">
+            <h2>Domain 2.0: Network Implementation Overview</h2>
+            
+            <div class="topic-card">
+                <div class="topic-title">What You'll Learn in This Domain</div>
+                <p>Domain 2.0 focuses on the practical implementation of network technologies. This is where theory meets practice, covering how to actually deploy, configure, and manage network infrastructure.</p>
+                
+                <div class="subsection">
+                    <h4>Core Learning Objectives:</h4>
+                    <ul class="key-points">
+                        <li><strong>2.1 Routing Technologies:</strong> Static/dynamic routing, NAT, FHRP, and routing protocols</li>
+                        <li><strong>2.2 Switching Technologies:</strong> VLANs, spanning tree, interface configuration</li>
+                        <li><strong>2.3 Wireless Technologies:</strong> Channel configuration, encryption, authentication</li>
+                        <li><strong>2.4 Physical Installations:</strong> Rack design, power, environmental factors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exam-tip">
+                <strong>Exam Tip:</strong> Domain 2.0 heavily emphasizes hands-on skills. Practice configuring actual network devices or use network simulators to reinforce theoretical knowledge.
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent('implementationApproach')">
+                <h3>📋 Click to View: Implementation Best Practices</h3>
+                <div id="implementationApproach" class="toggle-content">
+                    <h4>Network Implementation Methodology:</h4>
+                    <ol>
+                        <li><strong>Planning Phase:</strong> Design network topology, select appropriate technologies</li>
+                        <li><strong>Preparation Phase:</strong> Gather equipment, prepare documentation</li>
+                        <li><strong>Implementation Phase:</strong> Configure devices, establish connectivity</li>
+                        <li><strong>Testing Phase:</strong> Verify functionality, performance testing</li>
+                        <li><strong>Documentation Phase:</strong> Update network diagrams, create runbooks</li>
+                        <li><strong>Monitoring Phase:</strong> Ongoing maintenance and optimization</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Routing Section -->
+        <div id="routing" class="content-section">
+            <h2>2.1 Routing Technologies</h2>
+            
+            <div class="topic-card">
+                <div class="topic-title">Static vs. Dynamic Routing</div>
+                
+                <div class="subsection">
+                    <h4>Static Routing</h4>
+                    <p>Manually configured routes that don't change unless administratively modified.</p>
+                    <ul class="key-points">
+                        <li>Predictable and secure - routes don't change automatically</li>
+                        <li>Low resource usage - no routing protocol overhead</li>
+                        <li>Best for small networks or specific route requirements</li>
+                        <li>Requires manual updates when topology changes</li>
+                    </ul>
+                    
+                    <div class="code-block">
+# Example static route configuration
+ip route 192.168.2.0 255.255.255.0 10.1.1.1
+# Destination network | Subnet mask | Next hop
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>Dynamic Routing Protocols</h4>
+                    
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Protocol</th>
+                                <th>Type</th>
+                                <th>Metric</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>BGP</strong></td>
+                                <td>Exterior Gateway (EGP)</td>
+                                <td>AS Path, Policy</td>
+                                <td>Internet routing between ISPs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EIGRP</strong></td>
+                                <td>Advanced Distance Vector</td>
+                                <td>Composite (BW, Delay)</td>
+                                <td>Cisco networks, fast convergence</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OSPF</strong></td>
+                                <td>Link State</td>
+                                <td>Cost (based on bandwidth)</td>
+                                <td>Large enterprise networks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Route Selection Process</div>
+                <p>When multiple routes exist to the same destination, routers use the following hierarchy:</p>
+                
+                <div class="subsection">
+                    <h4>1. Administrative Distance (AD)</h4>
+                    <ul class="key-points">
+                        <li>Connected: 0 (highest priority)</li>
+                        <li>Static: 1</li>
+                        <li>EIGRP: 90</li>
+                        <li>OSPF: 110</li>
+                        <li>RIP: 120 (lowest priority)</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>2. Prefix Length (Longest Match)</h4>
+                    <p>More specific routes (longer subnet masks) are preferred.</p>
+                    <div class="code-block">
+/24 network (255.255.255.0) preferred over
+/16 network (255.255.0.0) for the same destination
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>3. Metric</h4>
+                    <p>Used when routes have the same AD and prefix length. Lower metric = better route.</p>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Network Address Translation (NAT)</div>
+                
+                <div class="subsection">
+                    <h4>NAT Types</h4>
+                    <ul class="key-points">
+                        <li><strong>Static NAT:</strong> One-to-one mapping between private and public IP</li>
+                        <li><strong>Dynamic NAT:</strong> Pool of public IPs assigned dynamically</li>
+                        <li><strong>PAT (Port Address Translation):</strong> Many private IPs share one public IP using different ports</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>NAT Operation Example</h4>
+                    <p>Private Network (192.168.1.0/24) ← NAT Router → Internet (Public IPs)</p>
+                    <p>192.168.1.10:1024 → 203.0.113.1:5000 → Web Server</p>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">First Hop Redundancy Protocol (FHRP)</div>
+                <p>Provides gateway redundancy by allowing multiple routers to share a virtual IP address.</p>
+                
+                <div class="subsection">
+                    <h4>Common FHRP Protocols</h4>
+                    <ul class="key-points">
+                        <li><strong>HSRP (Hot Standby Router Protocol):</strong> Cisco proprietary</li>
+                        <li><strong>VRRP (Virtual Router Redundancy Protocol):</strong> Industry standard</li>
+                        <li><strong>GLBP (Gateway Load Balancing Protocol):</strong> Cisco, provides load balancing</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Virtual IP (VIP) Concept</h4>
+                    <p>Clients use the VIP as their default gateway. Active router responds to VIP traffic.</p>
+                </div>
+            </div>
+
+            <div class="lab-exercise">
+                <h3>🔬 Lab Exercise: Routing Configuration</h3>
+                <p><strong>Scenario:</strong> Configure static and dynamic routing between three routers.</p>
+                <button class="toggle-btn" onclick="toggleContent('routingLab')">Show Lab Steps</button>
+                <div id="routingLab" class="toggle-content">
+                    <ol>
+                        <li>Set up three routers in a triangle topology</li>
+                        <li>Configure IP addresses on all interfaces</li>
+                        <li>Add static routes for one network segment</li>
+                        <li>Configure OSPF for the remaining segments</li>
+                        <li>Test connectivity using ping and traceroute</li>
+                        <li>Verify routing tables on each router</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Switching Section -->
+        <div id="switching" class="content-section">
+            <h2>2.2 Switching Technologies and Features</h2>
+            
+            <div class="topic-card">
+                <div class="topic-title">Virtual Local Area Networks (VLANs)</div>
+                
+                <div class="subsection">
+                    <h4>VLAN Fundamentals</h4>
+                    <p>VLANs logically segment a physical network into multiple broadcast domains.</p>
+                    <ul class="key-points">
+                        <li>Reduces broadcast traffic and improves security</li>
+                        <li>Allows flexible network design independent of physical layout</li>
+                        <li>Each VLAN operates as a separate subnet</li>
+                        <li>Inter-VLAN communication requires Layer 3 routing</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>VLAN Database and Configuration</h4>
+                    <div class="code-block">
+# Creating VLANs on a switch
+vlan 10
+ name Sales
+vlan 20
+ name Engineering
+vlan 30
+ name Management
+
+# Assigning ports to VLANs
+interface fastethernet 0/1
+ switchport mode access
+ switchport access vlan 10
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>Switch Virtual Interface (SVI)</h4>
+                    <p>Logical interface that represents a VLAN on a Layer 3 switch.</p>
+                    <ul class="key-points">
+                        <li>Allows the switch to route between VLANs</li>
+                        <li>Provides a management interface for the VLAN</li>
+                        <li>Can be assigned an IP address for remote management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Interface Configuration</div>
+                
+                <div class="subsection">
+                    <h4>Native VLAN</h4>
+                    <ul class="key-points">
+                        <li>Untagged VLAN on trunk ports</li>
+                        <li>Default is VLAN 1, should be changed for security</li>
+                        <li>Must match on both ends of trunk link</li>
+                        <li>Used for management traffic in many implementations</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Voice VLAN</h4>
+                    <p>Special VLAN configuration for VoIP phones.</p>
+                    <div class="code-block">
+interface fastethernet 0/5
+ switchport mode access
+ switchport access vlan 10      # Data VLAN
+ switchport voice vlan 20       # Voice VLAN
+ spanning-tree portfast         # Immediate forwarding
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>802.1Q VLAN Tagging</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Size</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TPID</td>
+                                <td>2 bytes</td>
+                                <td>Tag Protocol Identifier (0x8100)</td>
+                            </tr>
+                            <tr>
+                                <td>Priority</td>
+                                <td>3 bits</td>
+                                <td>Class of Service (CoS)</td>
+                            </tr>
+                            <tr>
+                                <td>DEI</td>
+                                <td>1 bit</td>
+                                <td>Drop Eligible Indicator</td>
+                            </tr>
+                            <tr>
+                                <td>VLAN ID</td>
+                                <td>12 bits</td>
+                                <td>VLAN identifier (1-4094)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h4>Link Aggregation</h4>
+                    <p>Combines multiple physical links into one logical link.</p>
+                    <ul class="key-points">
+                        <li><strong>LACP (802.3ad):</strong> Dynamic link aggregation protocol</li>
+                        <li><strong>Static LAG:</strong> Manually configured, no protocol negotiation</li>
+                        <li>Provides increased bandwidth and redundancy</li>
+                        <li>Load balancing across member links</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Speed and Duplex Settings</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Description</th>
+                                <th>Best Practice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Auto</td>
+                                <td>Automatic negotiation</td>
+                                <td>Recommended for most scenarios</td>
+                            </tr>
+                            <tr>
+                                <td>10/100/1000</td>
+                                <td>Fixed speed</td>
+                                <td>Use when auto-negotiation fails</td>
+                            </tr>
+                            <tr>
+                                <td>Full/Half Duplex</td>
+                                <td>Communication direction</td>
+                                <td>Full duplex for modern networks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Spanning Tree Protocol (STP)</div>
+                
+                <div class="subsection">
+                    <h4>STP Purpose and Operation</h4>
+                    <p>Prevents Layer 2 loops in redundant network topologies.</p>
+                    <ul class="key-points">
+                        <li>Creates loop-free topology by blocking redundant paths</li>
+                        <li>Automatically activates backup paths when primary fails</li>
+                        <li>Uses Bridge Protocol Data Units (BPDUs) for communication</li>
+                        <li>Election process determines root bridge and port roles</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>STP Port States</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>State</th>
+                                <th>Duration</th>
+                                <th>Function</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Disabled</td>
+                                <td>-</td>
+                                <td>Port is shut down</td>
+                            </tr>
+                            <tr>
+                                <td>Blocking</td>
+                                <td>20 seconds</td>
+                                <td>Receives BPDUs only</td>
+                            </tr>
+                            <tr>
+                                <td>Listening</td>
+                                <td>15 seconds</td>
+                                <td>Processes BPDUs</td>
+                            </tr>
+                            <tr>
+                                <td>Learning</td>
+                                <td>15 seconds</td>
+                                <td>Builds MAC table</td>
+                            </tr>
+                            <tr>
+                                <td>Forwarding</td>
+                                <td>-</td>
+                                <td>Normal operation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h4>STP Variants</h4>
+                    <ul class="key-points">
+                        <li><strong>STP (802.1D):</strong> Original, 50-second convergence</li>
+                        <li><strong>RSTP (802.1w):</strong> Rapid convergence, 6 seconds max</li>
+                        <li><strong>MSTP (802.1s):</strong> Multiple instances for VLAN groups</li>
+                        <li><strong>PVST+:</strong> Cisco proprietary, per-VLAN spanning tree</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Maximum Transmission Unit (MTU)</div>
+                
+                <div class="subsection">
+                    <h4>MTU Fundamentals</h4>
+                    <p>Maximum size of a data packet that can be transmitted over a network.</p>
+                    <ul class="key-points">
+                        <li>Standard Ethernet MTU: 1500 bytes</li>
+                        <li>Larger packets require fragmentation</li>
+                        <li>Path MTU Discovery determines smallest MTU in path</li>
+                        <li>Mismatched MTUs can cause connectivity issues</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Jumbo Frames</h4>
+                    <p>Ethernet frames larger than standard 1500-byte MTU.</p>
+                    <ul class="key-points">
+                        <li>Typically 9000 bytes (9216 bytes including headers)</li>
+                        <li>Reduces CPU overhead for large data transfers</li>
+                        <li>Must be supported end-to-end</li>
+                        <li>Common in storage networks and data centers</li>
+                    </ul>
+                    
+                    <div class="exam-tip">
+                        <strong>Exam Tip:</strong> Remember that all devices in the path must support jumbo frames, or fragmentation will occur.
+                    </div>
+                </div>
+            </div>
+
+            <div class="lab-exercise">
+                <h3>🔬 Lab Exercise: VLAN and Trunking Configuration</h3>
+                <p><strong>Scenario:</strong> Configure VLANs across multiple switches with trunk links.</p>
+                <button class="toggle-btn" onclick="toggleContent('switchingLab')">Show Lab Steps</button>
+                <div id="switchingLab" class="toggle-content">
+                    <ol>
+                        <li>Create VLANs 10, 20, and 30 on both switches</li>
+                        <li>Configure access ports for different VLANs</li>
+                        <li>Set up 802.1Q trunk between switches</li>
+                        <li>Configure native VLAN (not VLAN 1)</li>
+                        <li>Test connectivity within and between VLANs</li>
+                        <li>Verify VLAN database and port assignments</li>
+                        <li>Monitor STP operation and port states</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wireless Section -->
+        <div id="wireless" class="content-section">
+            <h2>2.3 Wireless Devices and Technologies</h2>
+            
+            <div class="topic-card">
+                <div class="topic-title">Wireless Channels and Frequency Management</div>
+                
+                <div class="subsection">
+                    <h4>Channel Configuration</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Frequency Band</th>
+                                <th>Available Channels</th>
+                                <th>Non-Overlapping</th>
+                                <th>Channel Width</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2.4 GHz</td>
+                                <td>1-11 (US), 1-13 (EU)</td>
+                                <td>1, 6, 11</td>
+                                <td>20/40 MHz</td>
+                            </tr>
+                            <tr>
+                                <td>5 GHz</td>
+                                <td>36, 40, 44, 48, 149, 153, 157, 161</td>
+                                <td>Multiple options</td>
+                                <td>20/40/80/160 MHz</td>
+                            </tr>
+                            <tr>
+                                <td>6 GHz</td>
+                                <td>1-233 (WiFi 6E)</td>
+                                <td>Many options</td>
+                                <td>20/40/80/160 MHz</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h4>Channel Width Considerations</h4>
+                    <ul class="key-points">
+                        <li><strong>20 MHz:</strong> Maximum compatibility, more channels available</li>
+                        <li><strong>40 MHz:</strong> Higher throughput, fewer non-overlapping channels</li>
+                        <li><strong>80 MHz:</strong> Maximum throughput, limited channel availability</li>
+                        <li><strong>160 MHz:</strong> WiFi 6, requires compatible devices</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Regulatory Impacts (802.11h)</h4>
+                    <p>Dynamic Frequency Selection (DFS) and Transmit Power Control (TPC)</p>
+                    <ul class="key-points">
+                        <li>Required in 5 GHz band to avoid radar interference</li>
+                        <li>DFS scans for radar signals before using channels</li>
+                        <li>TPC automatically adjusts transmission power</li>
+                        <li>May cause brief disconnections during channel changes</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Band Steering</h4>
+                    <p>Technology that encourages dual-band devices to use optimal frequency.</p>
+                    <ul class="key-points">
+                        <li>Directs capable devices to 5 GHz band</li>
+                        <li>Reduces congestion on 2.4 GHz</li>
+                        <li>Uses techniques like delayed probe responses</li>
+                        <li>May cause connection issues with some devices</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Service Set Identifiers (SSIDs)</div>
+                
+                <div class="subsection">
+                    <h4>SSID Types</h4>
+                    <ul class="key-points">
+                        <li><strong>SSID:</strong> Network name broadcast to clients (up to 32 characters)</li>
+                        <li><strong>BSSID:</strong> MAC address of individual access point</li>
+                        <li><strong>ESSID:</strong> Extended SSID for multiple APs with same network name</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>SSID Relationship Diagram</h4>
+                    <p>ESSID: "Corporate_WiFi"</p>
+                    <p>├── AP1 (BSSID: 00:11:22:33:44:55)</p>
+                    <p>├── AP2 (BSSID: 00:11:22:33:44:66)</p>
+                    <p>└── AP3 (BSSID: 00:11:22:33:44:77)</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>SSID Best Practices</h4>
+                    <ul class="key-points">
+                        <li>Use descriptive but not revealing names</li>
+                        <li>Avoid default manufacturer SSIDs</li>
+                        <li>Consider hiding SSIDs for security (security through obscurity)</li>
+                        <li>Use different SSIDs for guest and corporate networks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Wireless Network Types</div>
+                
+                <div class="subsection">
+                    <h4>Infrastructure Mode</h4>
+                    <p>Most common wireless deployment with central access point.</p>
+                    <ul class="key-points">
+                        <li>All communication goes through access point</li>
+                        <li>Provides connection to wired network</li>
+                        <li>Centralized management and security</li>
+                        <li>Scalable with multiple APs</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Ad Hoc (IBSS)</h4>
+                    <p>Direct device-to-device communication without infrastructure.</p>
+                    <ul class="key-points">
+                        <li>Independent Basic Service Set (IBSS)</li>
+                        <li>No access point required</li>
+                        <li>Limited range and scalability</li>
+                        <li>Used for temporary connections</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Mesh Networks</h4>
+                    <p>Multiple access points work together to provide seamless coverage.</p>
+                    <ul class="key-points">
+                        <li>Self-healing network topology</li>
+                        <li>Automatic path optimization</li>
+                        <li>Extended range without wired backhaul</li>
+                        <li>Common protocols: 802.11s, proprietary solutions</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Point-to-Point Links</h4>
+                    <p>Dedicated wireless connection between two locations.</p>
+                    <ul class="key-points">
+                        <li>High-gain directional antennas</li>
+                        <li>Long-distance connectivity</li>
+                        <li>Building-to-building links</li>
+                        <li>Requires line-of-sight</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Wireless Encryption and Security</div>
+                
+                <div class="subsection">
+                    <h4>WiFi Protected Access (WPA) Evolution</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Encryption</th>
+                                <th>Key Management</th>
+                                <th>Security Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>WEP</td>
+                                <td>RC4</td>
+                                <td>Static keys</td>
+                                <td>Broken - Do not use</td>
+                            </tr>
+                            <tr>
+                                <td>WPA</td>
+                                <td>TKIP</td>
+                                <td>PSK or 802.1X</td>
+                                <td>Legacy - Deprecated</td>
+                            </tr>
+                            <tr>
+                                <td>WPA2</td>
+                                <td>AES-CCMP</td>
+                                <td>PSK or 802.1X</td>
+                                <td>Good - Current standard</td>
+                            </tr>
+                            <tr>
+                                <td>WPA3</td>
+                                <td>AES-GCMP</td>
+                                <td>SAE or 802.1X</td>
+                                <td>Best - Latest standard</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h4>WPA3 Improvements</h4>
+                    <ul class="key-points">
+                        <li><strong>SAE (Simultaneous Authentication of Equals):</strong> Replaces PSK, resistant to offline attacks</li>
+                        <li><strong>Enhanced Open:</strong> Encryption even on open networks</li>
+                        <li><strong>192-bit Security:</strong> For enterprise networks (WPA3-Enterprise)</li>
+                        <li><strong>Easy Connect:</strong> QR code-based device onboarding</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Authentication Methods</div>
+                
+                <div class="subsection">
+                    <h4>Pre-Shared Key (PSK) vs. Enterprise</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Use Case</th>
+                                <th>Pros</th>
+                                <th>Cons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PSK (Personal)</td>
+                                <td>Home, Small Office</td>
+                                <td>Simple setup, no infrastructure</td>
+                                <td>Shared password, no user tracking</td>
+                            </tr>
+                            <tr>
+                                <td>Enterprise (802.1X)</td>
+                                <td>Corporate Networks</td>
+                                <td>Individual credentials, centralized</td>
+                                <td>Complex setup, requires RADIUS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h4>Guest Networks and Captive Portals</h4>
+                    <ul class="key-points">
+                        <li><strong>Guest Networks:</strong> Isolated SSID for visitors</li>
+                        <li><strong>Captive Portals:</strong> Web-based authentication/acceptance</li>
+                        <li>VLAN isolation from corporate network</li>
+                        <li>Bandwidth limitations and time restrictions</li>
+                        <li>Legal compliance (terms of service acceptance)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Antenna Types and Access Point Management</div>
+                
+                <div class="subsection">
+                    <h4>Antenna Patterns</h4>
+                    <ul class="key-points">
+                        <li><strong>Omnidirectional:</strong> 360-degree coverage, general purpose</li>
+                        <li><strong>Directional:</strong> Focused beam, point-to-point links</li>
+                        <li><strong>Sector:</strong> 120-degree coverage, outdoor deployments</li>
+                        <li><strong>Patch:</strong> High-gain directional, wall mounting</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Access Point Types</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Management</th>
+                                <th>Use Case</th>
+                                <th>Scalability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Autonomous</td>
+                                <td>Individual configuration</td>
+                                <td>Small deployments</td>
+                                <td>Limited</td>
+                            </tr>
+                            <tr>
+                                <td>Lightweight (Thin)</td>
+                                <td>Controller-based</td>
+                                <td>Enterprise networks</td>
+                                <td>Highly scalable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="lab-exercise">
+                <h3>🔬 Lab Exercise: Wireless Network Deployment</h3>
+                <p><strong>Scenario:</strong> Design and configure a wireless network for a small office.</p>
+                <button class="toggle-btn" onclick="toggleContent('wirelessLab')">Show Lab Steps</button>
+                <div id="wirelessLab" class="toggle-content">
+                    <ol>
+                        <li>Perform site survey to determine AP placement</li>
+                        <li>Configure corporate SSID with WPA3-Enterprise</li>
+                        <li>Set up guest network with captive portal</li>
+                        <li>Configure channel assignments to avoid interference</li>
+                        <li>Test roaming between access points</li>
+                        <li>Verify security settings and isolation</li>
+                        <li>Monitor wireless performance and coverage</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physical Installation Section -->
+        <div id="physical" class="content-section">
+            <h2>2.4 Physical Installation Factors</h2>
+            
+            <div class="topic-card">
+                <div class="topic-title">Installation Locations and Infrastructure</div>
+                
+                <div class="subsection">
+                    <h4>Distribution Frame Hierarchy</h4>
+                    <ul class="key-points">
+                        <li><strong>MDF (Main Distribution Frame):</strong> Central wiring point, houses core network equipment</li>
+                        <li><strong>IDF (Intermediate Distribution Frame):</strong> Floor or department wiring closets</li>
+                        <li>Hierarchical design reduces cable runs and improves organization</li>
+                        <li>Fiber connections typically used between MDF and IDFs</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Typical Distribution Frame Layout</h4>
+                    <p>MDF (Building Core)</p>
+                    <p>├── IDF Floor 1 ←→ Horizontal Cabling to Workstations</p>
+                    <p>├── IDF Floor 2 ←→ Horizontal Cabling to Workstations</p>
+                    <p>└── IDF Floor 3 ←→ Horizontal Cabling to Workstations</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>Rack Sizing and Organization</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Rack Unit (RU)</th>
+                                <th>Height</th>
+                                <th>Common Equipment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1U</td>
+                                <td>1.75 inches</td>
+                                <td>Switches, patch panels</td>
+                            </tr>
+                            <tr>
+                                <td>2U</td>
+                                <td>3.5 inches</td>
+                                <td>Routers, servers</td>
+                            </tr>
+                            <tr>
+                                <td>4U</td>
+                                <td>7 inches</td>
+                                <td>Large switches, servers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <ul class="key-points">
+                        <li>Standard rack width: 19 inches</li>
+                        <li>Common heights: 42U, 45U, 48U</li>
+                        <li>Leave space for cable management and airflow</li>
+                        <li>Consider weight distribution and center of gravity</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Airflow Management</h4>
+                    <ul class="key-points">
+                        <li><strong>Port-side Exhaust:</strong> Hot air exits through ports (front-to-back)</li>
+                        <li><strong>Port-side Intake:</strong> Cool air enters through ports (back-to-front)</li>
+                        <li>Match equipment airflow direction with rack design</li>
+                        <li>Use blanking panels to prevent air recirculation</li>
+                        <li>Maintain hot aisle/cold aisle configuration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Cabling Infrastructure</div>
+                
+                <div class="subsection">
+                    <h4>Patch Panels</h4>
+                    <p>Organized termination points for horizontal cabling.</p>
+                    <ul class="key-points">
+                        <li>24-port and 48-port configurations most common</li>
+                        <li>Provides organization and easy moves/adds/changes</li>
+                        <li>Protects equipment ports from wear</li>
+                        <li>Allows for testing and documentation</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Fiber Distribution Panels</h4>
+                    <p>Specialized panels for fiber optic terminations.</p>
+                    <ul class="key-points">
+                        <li>Accommodate various connector types (LC, SC, ST)</li>
+                        <li>Provide splice enclosures for fusion splicing</li>
+                        <li>Include cable management for bend radius protection</li>
+                        <li>Often include adapter panels for different connector types</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Lockable Enclosures</h4>
+                    <ul class="key-points">
+                        <li>Physical security for network equipment</li>
+                        <li>Prevents unauthorized access to devices</li>
+                        <li>Protects against tampering and theft</li>
+                        <li>Required in public or semi-public areas</li>
+                    </ul>
+                </div>
+
+                <div class="exam-tip">
+                    <strong>Exam Tip:</strong> Remember the importance of cable management - proper organization prevents outages and makes troubleshooting much easier.
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Power Systems</div>
+                
+                <div class="subsection">
+                    <h4>Uninterruptible Power Supply (UPS)</h4>
+                    <p>Provides backup power and power conditioning.</p>
+                    <ul class="key-points">
+                        <li><strong>Online UPS:</strong> Continuous power conversion, best protection</li>
+                        <li><strong>Line-Interactive:</strong> Switches to battery during outages</li>
+                        <li><strong>Standby:</strong> Basic protection, cheapest option</li>
+                        <li>Provides graceful shutdown time for equipment</li>
+                        <li>Protects against power surges and sags</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Power Distribution Unit (PDU)</h4>
+                    <p>Distributes power to multiple devices in rack.</p>
+                    <ul class="key-points">
+                        <li><strong>Basic PDU:</strong> Simple power strip with multiple outlets</li>
+                        <li><strong>Metered PDU:</strong> Displays power consumption</li>
+                        <li><strong>Switched PDU:</strong> Remote control of individual outlets</li>
+                        <li><strong>Intelligent PDU:</strong> Full monitoring and environmental sensors</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Power Load Calculations</h4>
+                    <div class="code-block">
+Power Planning Formula:
+Total Watts = Sum of all device power consumption
+Add 20% safety margin
+Consider redundancy requirements (N+1)
+
+Example:
+- 24-port switch: 45W
+- 48-port PoE switch: 740W
+- Router: 85W
+- Server: 350W
+Total: 1,220W + 20% = 1,464W minimum UPS capacity
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>Voltage Considerations</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Standard Voltage</th>
+                                <th>Frequency</th>
+                                <th>Plug Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>North America</td>
+                                <td>120V/240V</td>
+                                <td>60 Hz</td>
+                                <td>NEMA 5-15, 5-20</td>
+                            </tr>
+                            <tr>
+                                <td>Europe</td>
+                                <td>230V</td>
+                                <td>50 Hz</td>
+                                <td>CEE 7/7 (Schuko)</td>
+                            </tr>
+                            <tr>
+                                <td>Data Center</td>
+                                <td>208V (3-phase)</td>
+                                <td>60 Hz</td>
+                                <td>NEMA L15-30</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">Environmental Factors</div>
+                
+                <div class="subsection">
+                    <h4>Temperature Management</h4>
+                    <ul class="key-points">
+                        <li><strong>Operating Range:</strong> Typically 10°C to 35°C (50°F to 95°F)</li>
+                        <li><strong>ASHRAE Guidelines:</strong> 18°C to 27°C (64°F to 81°F) recommended</li>
+                        <li>Higher temperatures reduce equipment lifespan</li>
+                        <li>Thermal monitoring and automatic shutdown protection</li>
+                        <li>Consider heat generated by equipment when sizing HVAC</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Humidity Control</h4>
+                    <ul class="key-points">
+                        <li><strong>Optimal Range:</strong> 45% to 55% relative humidity</li>
+                        <li><strong>Acceptable Range:</strong> 20% to 80% relative humidity</li>
+                        <li>Low humidity increases static electricity risk</li>
+                        <li>High humidity can cause condensation and corrosion</li>
+                        <li>Use humidification and dehumidification systems</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>Fire Suppression Systems</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>System Type</th>
+                                <th>Agent</th>
+                                <th>Pros</th>
+                                <th>Cons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Water Sprinkler</td>
+                                <td>Water</td>
+                                <td>Effective, inexpensive</td>
+                                <td>Damages equipment</td>
+                            </tr>
+                            <tr>
+                                <td>Pre-Action</td>
+                                <td>Water (delayed)</td>
+                                <td>Reduces false discharge</td>
+                                <td>Complex system</td>
+                            </tr>
+                            <tr>
+                                <td>Clean Agent</td>
+                                <td>Inert gas/chemicals</td>
+                                <td>No equipment damage</td>
+                                <td>Expensive, ventilation needed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="exam-tip">
+                    <strong>Exam Tip:</strong> Clean agent fire suppression (like FM-200 or Inergen) is preferred in data centers because it doesn't damage electronic equipment.
+                </div>
+            </div>
+
+            <div class="lab-exercise">
+                <h3>🔬 Lab Exercise: Data Center Planning</h3>
+                <p><strong>Scenario:</strong> Design the physical infrastructure for a small data center.</p>
+                <button class="toggle-btn" onclick="toggleContent('physicalLab')">Show Lab Steps</button>
+                <div id="physicalLab" class="toggle-content">
+                    <ol>
+                        <li>Calculate power requirements for all equipment</li>
+                        <li>Design rack layout with proper airflow</li>
+                        <li>Plan cable management and patch panel organization</li>
+                        <li>Specify UPS and PDU requirements</li>
+                        <li>Design environmental monitoring system</li>
+                        <li>Plan fire suppression and security measures</li>
+                        <li>Create documentation and labeling scheme</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz" class="content-section">
+            <h2>Practice Quiz - Domain 2.0 Network Implementation</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">1. Which routing protocol uses administrative distance of 90 by default?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) OSPF</li>
+                    <li onclick="selectAnswer(this, true)">B) EIGRP</li>
+                    <li onclick="selectAnswer(this, false)">C) RIP</li>
+                    <li onclick="selectAnswer(this, false)">D) BGP</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">2. What is the native VLAN in an 802.1Q trunk by default?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, true)">A) VLAN 1</li>
+                    <li onclick="selectAnswer(this, false)">B) VLAN 0</li>
+                    <li onclick="selectAnswer(this, false)">C) VLAN 999</li>
+                    <li onclick="selectAnswer(this, false)">D) VLAN 4094</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">3. Which wireless frequency band has the most non-overlapping channels?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) 2.4 GHz</li>
+                    <li onclick="selectAnswer(this, true)">B) 5 GHz</li>
+                    <li onclick="selectAnswer(this, false)">C) 900 MHz</li>
+                    <li onclick="selectAnswer(this, false)">D) 6 GHz</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">4. What is the standard Ethernet MTU size?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) 1400 bytes</li>
+                    <li onclick="selectAnswer(this, true)">B) 1500 bytes</li>
+                    <li onclick="selectAnswer(this, false)">C) 1600 bytes</li>
+                    <li onclick="selectAnswer(this, false)">D) 9000 bytes</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">5. Which fire suppression system is best for data centers?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) Water sprinkler</li>
+                    <li onclick="selectAnswer(this, false)">B) Foam suppression</li>
+                    <li onclick="selectAnswer(this, true)">C) Clean agent gas</li>
+                    <li onclick="selectAnswer(this, false)">D) Carbon dioxide</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">6. What protocol does WPA3 use instead of pre-shared keys?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) TKIP</li>
+                    <li onclick="selectAnswer(this, false)">B) AES</li>
+                    <li onclick="selectAnswer(this, true)">C) SAE</li>
+                    <li onclick="selectAnswer(this, false)">D) EAP</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">7. Which spanning tree port state allows MAC address learning but no frame forwarding?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) Blocking</li>
+                    <li onclick="selectAnswer(this, false)">B) Listening</li>
+                    <li onclick="selectAnswer(this, true)">C) Learning</li>
+                    <li onclick="selectAnswer(this, false)">D) Forwarding</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">8. What is the purpose of First Hop Redundancy Protocol (FHRP)?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, true)">A) Provide gateway redundancy</li>
+                    <li onclick="selectAnswer(this, false)">B) Load balance traffic</li>
+                    <li onclick="selectAnswer(this, false)">C) Prevent routing loops</li>
+                    <li onclick="selectAnswer(this, false)">D) Encrypt traffic</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">9. In a rack installation, what does 1U represent?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) 1 inch height</li>
+                    <li onclick="selectAnswer(this, true)">B) 1.75 inches height</li>
+                    <li onclick="selectAnswer(this, false)">C) 1 foot height</li>
+                    <li onclick="selectAnswer(this, false)">D) 1 meter height</li>
+                </ul>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">10. Which wireless authentication method requires a RADIUS server?</div>
+                <ul class="quiz-options">
+                    <li onclick="selectAnswer(this, false)">A) WPA2-PSK</li>
+                    <li onclick="selectAnswer(this, true)">B) WPA2-Enterprise</li>
+                    <li onclick="selectAnswer(this, false)">C) WEP</li>
+                    <li onclick="selectAnswer(this, false)">D) Open authentication</li>
+                </ul>
+            </div>
+
+            <div id="quizResults" style="display: none; margin-top: 20px; padding: 20px; background: #e8f5e8; border-radius: 10px;">
+                <h3>Quiz Complete!</h3>
+                <p>Your Score: <span id="scoreDisplay"></span></p>
+                <p>Review the sections where you missed questions to improve your understanding.</p>
+            </div>
+
+            <button onclick="resetQuiz()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; cursor: pointer;">Reset Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'overview';
+        let visitedSections = new Set(['overview']);
+        let quizScore = 0;
+        let quizTotal = 10;
+        let answeredQuestions = 0;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Track visited sections
+            visitedSections.add(sectionId);
+            currentSection = sectionId;
+            
+            // Update progress
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalSections = 6; // overview, routing, switching, wireless, physical, quiz
+            const progressPercent = (visitedSections.size / totalSections) * 100;
+            
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = Math.round(progressPercent) + '% Complete';
+        }
+
+        function toggleContent(elementId) {
+            const element = document.getElementById(elementId);
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+
+        function selectAnswer(selectedElement, isCorrect) {
+            // Prevent multiple selections for the same question
+            const questionContainer = selectedElement.parentElement;
+            const options = questionContainer.querySelectorAll('li');
+            
+            // Check if already answered
+            let alreadyAnswered = false;
+            options.forEach(option => {
+                if (option.classList.contains('correct') || option.classList.contains('incorrect')) {
+                    alreadyAnswered = true;
+                }
+            });
+            
+            if (alreadyAnswered) return;
+
+            // Mark all options to show correct/incorrect
+            options.forEach(option => {
+                if (option === selectedElement) {
+                    if (isCorrect) {
+                        option.classList.add('correct');
+                        quizScore++;
+                    } else {
+                        option.classList.add('incorrect');
+                    }
+                } else {
+                    // Find and mark the correct answer
+                    const optionText = option.textContent.trim();
+                    if ((optionText.includes('EIGRP') && questionContainer.querySelector('.quiz-question').textContent.includes('administrative distance of 90')) ||
+                        (optionText.includes('VLAN 1') && questionContainer.querySelector('.quiz-question').textContent.includes('native VLAN')) ||
+                        (optionText.includes('5 GHz') && questionContainer.querySelector('.quiz-question').textContent.includes('most non-overlapping channels')) ||
+                        (optionText.includes('1500 bytes') && questionContainer.querySelector('.quiz-question').textContent.includes('standard Ethernet MTU')) ||
+                        (optionText.includes('Clean agent gas') && questionContainer.querySelector('.quiz-question').textContent.includes('best for data centers')) ||
+                        (optionText.includes('SAE') && questionContainer.querySelector('.quiz-question').textContent.includes('WPA3')) ||
+                        (optionText.includes('Learning') && questionContainer.querySelector('.quiz-question').textContent.includes('MAC address learning')) ||
+                        (optionText.includes('Provide gateway redundancy') && questionContainer.querySelector('.quiz-question').textContent.includes('FHRP')) ||
+                        (optionText.includes('1.75 inches') && questionContainer.querySelector('.quiz-question').textContent.includes('1U represent')) ||
+                        (optionText.includes('WPA2-Enterprise') && questionContainer.querySelector('.quiz-question').textContent.includes('RADIUS server'))) {
+                        option.classList.add('correct');
+                    }
+                }
+            });
+            
+            answeredQuestions++;
+            
+            // Show results when all questions are answered
+            if (answeredQuestions === quizTotal) {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            const percentage = Math.round((quizScore / quizTotal) * 100);
+            document.getElementById('scoreDisplay').textContent = `${quizScore}/${quizTotal} (${percentage}%)`;
+            document.getElementById('quizResults').style.display = 'block';
+            
+            // Add to visited sections if not already there
+            visitedSections.add('quiz');
+            updateProgress();
+        }
+
+        function resetQuiz() {
+            // Reset all quiz options
+            document.querySelectorAll('.quiz-options li').forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // Reset counters
+            quizScore = 0;
+            answeredQuestions = 0;
+            
+            // Hide results
+            document.getElementById('quizResults').style.display = 'none';
+        }
+
+        // Interactive elements for enhanced learning
+        function createNetworkDiagram() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw simple network topology
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(50, 50, 100, 60);
+            ctx.fillStyle = 'white';
+            ctx.font = '12px Arial';
+            ctx.fillText('Router', 75, 85);
+            
+            ctx.fillStyle = '#2ecc71';
+            ctx.fillRect(250, 50, 100, 60);
+            ctx.fillStyle = 'white';
+            ctx.fillText('Switch', 275, 85);
+            
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(450, 50, 100, 60);
+            ctx.fillStyle = 'white';
+            ctx.fillText('Firewall', 470, 85);
+            
+            // Draw connections
+            ctx.strokeStyle = '#34495e';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(150, 80);
+            ctx.lineTo(250, 80);
+            ctx.moveTo(350, 80);
+            ctx.lineTo(450, 80);
+            ctx.stroke();
+            
+            return canvas;
+        }
+
+        // Add interactivity for better engagement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects for better UX
+            document.querySelectorAll('.topic-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0) scale(1)';
+                });
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    navigateToNextSection();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateToPreviousSection();
+                }
+            });
+
+            // Initialize progress
+            updateProgress();
+        });
+
+        function navigateToNextSection() {
+            const sections = ['overview', 'routing', 'switching', 'wireless', 'physical', 'quiz'];
+            const currentIndex = sections.indexOf(currentSection);
+            if (currentIndex < sections.length - 1) {
+                const nextSection = sections[currentIndex + 1];
+                showSection(nextSection);
+                document.querySelector(`[onclick="showSection('${nextSection}')"]`).click();
+            }
+        }
+
+        function navigateToPreviousSection() {
+            const sections = ['overview', 'routing', 'switching', 'wireless', 'physical', 'quiz'];
+            const currentIndex = sections.indexOf(currentSection);
+            if (currentIndex > 0) {
+                const prevSection = sections[currentIndex - 1];
+                showSection(prevSection);
+                document.querySelector(`[onclick="showSection('${prevSection}')"]`).click();
+            }
+        }
+
+        // Additional study tools
+        function generateStudyNotes() {
+            const notes = {
+                'Routing': [
+                    'Administrative Distance determines route priority',
+                    'Static routes have AD of 1',
+                    'EIGRP uses composite metric (bandwidth + delay)',
+                    'OSPF uses cost based on bandwidth',
+                    'NAT translates private to public IP addresses',
+                    'PAT allows multiple devices to share one public IP'
+                ],
+                'Switching': [
+                    'VLANs create logical network segments',
+                    'Trunk ports carry multiple VLANs with 802.1Q tags',
+                    'Native VLAN is untagged on trunk ports',
+                    'STP prevents Layer 2 loops',
+                    'Link aggregation combines multiple physical links',
+                    'Jumbo frames are larger than 1500 bytes'
+                ],
+                'Wireless': [
+                    '2.4 GHz has 3 non-overlapping channels (1, 6, 11)',
+                    '5 GHz provides more channels and higher bandwidth',
+                    'WPA3 uses SAE instead of PSK for better security',
+                    'Enterprise authentication requires RADIUS server',
+                    'Mesh networks provide self-healing connectivity',
+                    'Channel width affects throughput and interference'
+                ],
+                'Physical': [
+                    'MDF is the main wiring distribution point',
+                    'IDFs serve individual floors or departments',
+                    '1U = 1.75 inches of rack space',
+                    'UPS provides backup power and protection',
+                    'Clean agent fire suppression protects equipment',
+                    'Proper airflow prevents overheating'
+                ]
+            };
+            return notes;
+        }
+
+        // Memory aids and mnemonics
+        const studyAids = {
+            'OSI_Layers': 'Please Do Not Throw Sausage Pizza Away (Physical, Data Link, Network, Transport, Session, Presentation, Application)',
+            'STP_States': 'Disabled, Blocking, Listening, Learning, Forwarding',
+            'EIGRP_AD': 'EIGRP = 90 (Easy to remember: EIGRP sounds like "Eighty" + "RP")',
+            'Wireless_Channels': '2.4 GHz non-overlapping: 1, 6, 11 (remember as 1-6-11)',
+            'UPS_Types': 'Standby (cheapest), Line-Interactive (middle), Online (best protection)'
+        };
+
+        // Exam preparation tips
+        const examTips = [
+            'Focus on hands-on scenarios - Domain 2.0 is very practical',
+            'Understand the differences between routing protocols',
+            'Know VLAN configuration and troubleshooting',
+            'Memorize wireless channel assignments and security methods',
+            'Practice calculating power requirements for installations',
+            'Understand the purpose of each network device type',
+            'Know when to use static vs. dynamic routing',
+            'Understand spanning tree operation and port states',
+            'Know the differences between wireless security protocols',
+            'Understand environmental requirements for equipment'
+        ];
+
+        // Create flashcards for key concepts
+        function createFlashcard(front, back) {
+            return {
+                front: front,
+                back: back,
+                show: function() {
+                    console.log(`Q: ${this.front}\nA: ${this.back}`);
+                }
+            };
+        }
+
+        // Key flashcards for Domain 2.0
+        const flashcards = [
+            createFlashcard('What is the administrative distance of EIGRP?', '90'),
+            createFlashcard('What is the default native VLAN?', 'VLAN 1'),
+            createFlashcard('How many non-overlapping channels in 2.4 GHz?', '3 channels (1, 6, 11)'),
+            createFlashcard('What is standard Ethernet MTU?', '1500 bytes'),
+            createFlashcard('What protocol does WPA3 use instead of PSK?', 'SAE (Simultaneous Authentication of Equals)'),
+            createFlashcard('What does 1U represent in rack sizing?', '1.75 inches of height'),
+            createFlashcard('Which STP state allows MAC learning but no forwarding?', 'Learning state'),
+            createFlashcard('What is the purpose of FHRP?', 'Provide gateway redundancy using virtual IP'),
+            createFlashcard('What fire suppression is best for data centers?', 'Clean agent gas systems'),
+            createFlashcard('What wireless auth method requires RADIUS?', 'Enterprise authentication (WPA2/WPA3-Enterprise)')
+        ];
+
+        // Study schedule recommendations
+        const studySchedule = {
+            'Week 1': 'Focus on routing technologies and protocols',
+            'Week 2': 'Master switching concepts and VLANs',
+            'Week 3': 'Learn wireless technologies and security',
+            'Week 4': 'Study physical installation factors',
+            'Week 5': 'Practice labs and hands-on configurations',
+            'Week 6': 'Review and take practice exams'
+        };
+
+        console.log('Network+ Domain 2.0 Study Guide Loaded Successfully!');
+        console.log('Use arrow keys to navigate between sections');
+        console.log('Study aids, flashcards, and tips are available in the console');
+    </script>
+</body>
+</html>
+                

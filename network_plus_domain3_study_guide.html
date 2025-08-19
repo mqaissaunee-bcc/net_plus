@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA Network+ Domain 3.0: Network Operations - Interactive Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            min-height: 600px;
+        }
+
+        .topic-section {
+            display: none;
+        }
+
+        .topic-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+        }
+
+        .subsection h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .concept-box h4 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-left: 5px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .quiz-container {
+            background: #f0f8ff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .interactive-demo {
+            background: #e8f5e8;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #45a049;
+        }
+
+        .network-diagram {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .diagram-element {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .connection-line {
+            width: 50px;
+            height: 2px;
+            background: #333;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+
+        .study-tip {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 5px solid #f39c12;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .study-tip h4 {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+
+        .exam-objective {
+            background: #e1f5fe;
+            border-left: 5px solid #03a9f4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .flashcard {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            min-height: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            perspective: 1000px;
+        }
+
+        .flashcard:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background: #f0f8ff;
+        }
+
+        .lab-exercise {
+            background: #f5f5f5;
+            border: 2px solid #666;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .lab-exercise h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .command-output {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                margin: 5px 0;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CompTIA Network+ Domain 3.0</h1>
+            <p>Network Operations - Interactive Study Guide</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p><strong>Domain Weight:</strong> 19% of the N10-009 Exam | <strong>15-Week Course Material</strong></p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showSection('overview')">Overview</button>
+            <button class="tab-btn" onclick="showSection('documentation')">Documentation & Processes</button>
+            <button class="tab-btn" onclick="showSection('monitoring')">Network Monitoring</button>
+            <button class="tab-btn" onclick="showSection('disaster-recovery')">Disaster Recovery</button>
+            <button class="tab-btn" onclick="showSection('network-services')">Network Services</button>
+            <button class="tab-btn" onclick="showSection('remote-access')">Remote Access</button>
+            <button class="tab-btn" onclick="showSection('labs')">Hands-on Labs</button>
+            <button class="tab-btn" onclick="showSection('quiz')">Practice Quiz</button>
+            <button class="tab-btn" onclick="showSection('flashcards')">Flashcards</button>
+        </div>
+
+        <div class="content-area">
+            <!-- Overview Section -->
+            <div id="overview" class="topic-section active">
+                <div class="section-header">
+                    <h2>Domain 3.0: Network Operations Overview</h2>
+                    <p>Master the essential skills for managing, monitoring, and maintaining network infrastructure</p>
+                </div>
+
+                <div class="exam-objective">
+                    <h4>Exam Objectives Covered in Domain 3.0:</h4>
+                    <ul>
+                        <li><strong>3.1</strong> Explain the purpose of organizational processes and procedures</li>
+                        <li><strong>3.2</strong> Given a scenario, use network monitoring technologies</li>
+                        <li><strong>3.3</strong> Explain disaster recovery (DR) concepts</li>
+                        <li><strong>3.4</strong> Given a scenario, implement IPv4 and IPv6 network services</li>
+                        <li><strong>3.5</strong> Compare and contrast network access and management methods</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>Learning Objectives</h3>
+                    <div class="concept-box">
+                        <p>By the end of this domain study, you will be able to:</p>
+                        <ul>
+                            <li>Create and maintain comprehensive network documentation</li>
+                            <li>Implement effective network monitoring strategies</li>
+                            <li>Design and execute disaster recovery plans</li>
+                            <li>Configure essential network services (DHCP, DNS, NTP)</li>
+                            <li>Manage remote network access securely</li>
+                            <li>Apply change management and configuration management practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Real-World Applications</h3>
+                    <div class="concept-box">
+                        <h4>Network Operations Center (NOC) Technician</h4>
+                        <p>Monitor network performance, respond to alerts, and maintain network documentation to ensure 99.9% uptime.</p>
+                    </div>
+                    <div class="concept-box">
+                        <h4>Systems Administrator</h4>
+                        <p>Implement backup strategies, configure network services, and manage remote access for distributed teams.</p>
+                    </div>
+                    <div class="concept-box">
+                        <h4>Network Support Specialist</h4>
+                        <p>Troubleshoot connectivity issues, maintain IP address management, and ensure business continuity.</p>
+                    </div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Study Strategy</h4>
+                    <p>This domain represents 19% of the exam. Focus on hands-on practice with monitoring tools, documentation creation, and service configuration. The interactive labs in this guide will help reinforce theoretical concepts.</p>
+                </div>
+            </div>
+
+            <!-- Documentation & Processes Section -->
+            <div id="documentation" class="topic-section">
+                <div class="section-header">
+                    <h2>3.1 Organizational Processes and Procedures</h2>
+                    <p>Master documentation, lifecycle management, and change control</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Network Documentation Types</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Physical vs. Logical Diagrams</h4>
+                        <p><strong>Physical Diagrams:</strong> Show actual physical layout of equipment, cables, and connections</p>
+                        <p><strong>Logical Diagrams:</strong> Show network topology, IP addresses, VLANs, and logical relationships</p>
+                        
+                        <div class="network-diagram">
+                            <div class="diagram-element">Router</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Switch</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Workstation</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Rack Diagrams</h4>
+                        <p>Detailed documentation showing:</p>
+                        <ul>
+                            <li>Equipment placement in racks (1U, 2U, 4U spacing)</li>
+                            <li>Power requirements and connections</li>
+                            <li>Cable management and airflow considerations</li>
+                            <li>Asset tags and serial numbers</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Asset Inventory Management</h4>
+                        <ul>
+                            <li><strong>Hardware:</strong> Servers, switches, routers, access points</li>
+                            <li><strong>Software:</strong> Operating systems, applications, firmware versions</li>
+                            <li><strong>Licensing:</strong> Software licenses, support contracts, expiration dates</li>
+                            <li><strong>Warranty Support:</strong> Hardware warranties, replacement schedules</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>IP Address Management (IPAM)</h4>
+                        <p>Centralized management of IP address allocation including:</p>
+                        <ul>
+                            <li>Subnet allocation and utilization tracking</li>
+                            <li>Static IP reservations and assignments</li>
+                            <li>DHCP scope management</li>
+                            <li>DNS record correlation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lifecycle Management</h3>
+                    
+                    <div class="concept-box">
+                        <h4>End-of-Life (EOL) and End-of-Support (EOS)</h4>
+                        <p><strong>EOL:</strong> Vendor stops manufacturing/selling the product</p>
+                        <p><strong>EOS:</strong> Vendor stops providing technical support and updates</p>
+                        
+                        <div class="highlight-box">
+                            <strong>Critical:</strong> Plan replacements 12-18 months before EOS dates to avoid security vulnerabilities and compliance issues.
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Software Management</h4>
+                        <ul>
+                            <li><strong>Patches and Bug Fixes:</strong> Regular security updates and functionality improvements</li>
+                            <li><strong>Operating System Updates:</strong> Major version upgrades and feature updates</li>
+                            <li><strong>Firmware Management:</strong> Device firmware updates for stability and security</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Change Management</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Change Management Process</h4>
+                        <ol>
+                            <li><strong>Request Submission:</strong> Formal change request with justification</li>
+                            <li><strong>Impact Assessment:</strong> Analyze potential risks and benefits</li>
+                            <li><strong>Approval Process:</strong> Review by change advisory board (CAB)</li>
+                            <li><strong>Implementation Planning:</strong> Detailed implementation and rollback plans</li>
+                            <li><strong>Testing:</strong> Validation in non-production environment</li>
+                            <li><strong>Implementation:</strong> Scheduled execution with monitoring</li>
+                            <li><strong>Post-Change Review:</strong> Verification of success and lessons learned</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Configuration Management</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Configuration Types</h4>
+                        <ul>
+                            <li><strong>Production Configuration:</strong> Live, active network device configurations</li>
+                            <li><strong>Backup Configuration:</strong> Saved copies for disaster recovery</li>
+                            <li><strong>Baseline/Golden Configuration:</strong> Standard, approved configurations for device types</li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Configuration Backup Simulation</h4>
+                        <button class="demo-button" onclick="showLabSolution(3)">Show Verification Commands</button>
+                        <div id="labSolution3" style="display: none; margin-top: 15px;">
+                            <div class="code-block">
+# Verify DHCP operation
+show ip dhcp binding
+show ip dhcp pool
+show ip dhcp conflict
+show ip dhcp statistics
+
+# Debug DHCP (use carefully in production)
+debug ip dhcp server events
+debug ip dhcp server packet
+
+# Release and renew from Windows client
+ipconfig /release
+ipconfig /renew
+ipconfig /all
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lab Exercise 4: Disaster Recovery Testing</h3>
+                    
+                    <div class="lab-exercise">
+                        <h4>Objective: Conduct tabletop exercise and backup validation</h4>
+                        
+                        <p><strong>Scenario:</strong> Primary data center experiences power outage</p>
+                        
+                        <p><strong>Tabletop Exercise Steps:</strong></p>
+                        <ol>
+                            <li>Incident notification and escalation</li>
+                            <li>Assessment of impact and scope</li>
+                            <li>Decision to activate DR procedures</li>
+                            <li>Communication to stakeholders</li>
+                            <li>Implementation of workarounds</li>
+                            <li>Progress monitoring and reporting</li>
+                            <li>Return to normal operations</li>
+                        </ol>
+                        
+                        <button class="demo-button" onclick="showLabSolution(4)">Show DR Checklist</button>
+                        <div id="labSolution4" style="display: none; margin-top: 15px;">
+                            <div class="concept-box">
+                                <h4>Disaster Recovery Checklist:</h4>
+                                <pre>
+DISASTER RECOVERY ACTIVATION CHECKLIST
+======================================
+
+IMMEDIATE RESPONSE (0-30 minutes):
+□ Confirm nature and scope of outage
+□ Notify DR team members
+□ Activate emergency communications
+□ Assess safety of personnel
+
+ASSESSMENT PHASE (30-60 minutes):
+□ Estimate duration of outage
+□ Identify affected systems and users
+□ Determine if DR site activation needed
+□ Document incident in log
+
+ACTIVATION PHASE (1-4 hours):
+□ Notify management and stakeholders
+□ Activate DR site if required
+□ Begin data restoration procedures
+□ Implement network rerouting
+□ Test critical applications
+
+OPERATION PHASE:
+□ Monitor system performance
+□ Provide user support
+□ Update stakeholders hourly
+□ Document all actions taken
+
+RECOVERY PHASE:
+□ Plan return to primary site
+□ Test primary systems
+□ Migrate users back
+□ Conduct post-incident review
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Lab Practice Tips</h4>
+                    <p>Set up a home lab using GNS3, EVE-NG, or Packet Tracer to practice these configurations. Focus on understanding the commands and their outputs, not just memorizing syntax.</p>
+                </div>
+            </div>
+
+            <!-- Practice Quiz Section -->
+            <div id="quiz" class="topic-section">
+                <div class="section-header">
+                    <h2>Practice Quiz - Domain 3.0</h2>
+                    <p>Test your knowledge with realistic exam-style questions</p>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question1">
+                        1. A network administrator needs to implement a monitoring solution that can collect performance data from multiple vendors' network devices. Which protocol would be MOST appropriate?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(1, 'A')">A) Telnet</div>
+                        <div class="quiz-option" onclick="selectAnswer(1, 'B')">B) SNMP</div>
+                        <div class="quiz-option" onclick="selectAnswer(1, 'C')">C) SSH</div>
+                        <div class="quiz-option" onclick="selectAnswer(1, 'D')">D) HTTP</div>
+                    </div>
+                    <div id="explanation1" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: B) SNMP</strong><br>
+                        SNMP (Simple Network Management Protocol) is the standard protocol for network monitoring and management across multiple vendor platforms. It provides a standardized way to collect performance metrics, configuration data, and receive alerts from network devices.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question2">
+                        2. An organization requires a disaster recovery solution with an RTO of 2 hours and minimal data loss. Which type of DR site would be MOST appropriate?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(2, 'A')">A) Cold site</div>
+                        <div class="quiz-option" onclick="selectAnswer(2, 'B')">B) Warm site</div>
+                        <div class="quiz-option" onclick="selectAnswer(2, 'C')">C) Hot site</div>
+                        <div class="quiz-option" onclick="selectAnswer(2, 'D')">D) Cloud backup</div>
+                    </div>
+                    <div id="explanation2" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: C) Hot site</strong><br>
+                        A hot site provides the fastest recovery time (minutes to hours) and minimal data loss through real-time replication. It's fully equipped and ready to take over operations immediately, making it ideal for organizations with strict RTO requirements.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question3">
+                        3. Which DHCP process step involves the client broadcasting a request for an IP address?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(3, 'A')">A) Offer</div>
+                        <div class="quiz-option" onclick="selectAnswer(3, 'B')">B) Request</div>
+                        <div class="quiz-option" onclick="selectAnswer(3, 'C')">C) Discover</div>
+                        <div class="quiz-option" onclick="selectAnswer(3, 'D')">D) Acknowledge</div>
+                    </div>
+                    <div id="explanation3" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: C) Discover</strong><br>
+                        The DHCP process follows DORA: Discover (client broadcasts request), Offer (server responds with available IP), Request (client requests the offered IP), Acknowledge (server confirms assignment).
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question4">
+                        4. In an IPv6 network using SLAAC, what mechanism ensures that automatically configured addresses are unique?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(4, 'A')">A) Router Advertisement (RA)</div>
+                        <div class="quiz-option" onclick="selectAnswer(4, 'B')">B) Neighbor Discovery (ND)</div>
+                        <div class="quiz-option" onclick="selectAnswer(4, 'C')">C) Duplicate Address Detection (DAD)</div>
+                        <div class="quiz-option" onclick="selectAnswer(4, 'D')">D) DHCPv6</div>
+                    </div>
+                    <div id="explanation4" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: C) Duplicate Address Detection (DAD)</strong><br>
+                        DAD is the process used in IPv6 SLAAC to verify that an automatically configured address is unique on the network segment. It sends Neighbor Solicitation messages to check if any other device is using the same address.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question5">
+                        5. A network administrator wants to ensure that management traffic is available even when the production network fails. Which approach should be implemented?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(5, 'A')">A) In-band management</div>
+                        <div class="quiz-option" onclick="selectAnswer(5, 'B')">B) Out-of-band management</div>
+                        <div class="quiz-option" onclick="selectAnswer(5, 'C')">C) SNMP monitoring</div>
+                        <div class="quiz-option" onclick="selectAnswer(5, 'D')">D) SSH access</div>
+                    </div>
+                    <div id="explanation5" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: B) Out-of-band management</strong><br>
+                        Out-of-band management uses a separate network path for management traffic, ensuring that device management remains available even when the production network fails. This typically involves console servers or dedicated management networks.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question6">
+                        6. Which DNS record type is used to specify the mail server for a domain?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(6, 'A')">A) A record</div>
+                        <div class="quiz-option" onclick="selectAnswer(6, 'B')">B) CNAME record</div>
+                        <div class="quiz-option" onclick="selectAnswer(6, 'C')">C) MX record</div>
+                        <div class="quiz-option" onclick="selectAnswer(6, 'D')">D) PTR record</div>
+                    </div>
+                    <div id="explanation6" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: C) MX record</strong><br>
+                        MX (Mail Exchange) records specify the mail server responsible for accepting email messages on behalf of a domain. They include a priority value to support multiple mail servers.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question7">
+                        7. In a split tunnel VPN configuration, which traffic is routed through the VPN tunnel?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(7, 'A')">A) All traffic</div>
+                        <div class="quiz-option" onclick="selectAnswer(7, 'B')">B) Only corporate network traffic</div>
+                        <div class="quiz-option" onclick="selectAnswer(7, 'C')">C) Only internet traffic</div>
+                        <div class="quiz-option" onclick="selectAnswer(7, 'D')">D) Only encrypted traffic</div>
+                    </div>
+                    <div id="explanation7" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: B) Only corporate network traffic</strong><br>
+                        In split tunneling, only traffic destined for the corporate network is routed through the VPN tunnel, while internet traffic goes directly from the client to the internet. This reduces bandwidth usage on the corporate connection.
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" id="question8">
+                        8. Which metric defines the maximum acceptable amount of data loss in a disaster recovery plan?
+                    </div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(8, 'A')">A) RTO (Recovery Time Objective)</div>
+                        <div class="quiz-option" onclick="selectAnswer(8, 'B')">B) RPO (Recovery Point Objective)</div>
+                        <div class="quiz-option" onclick="selectAnswer(8, 'C')">C) MTTR (Mean Time to Repair)</div>
+                        <div class="quiz-option" onclick="selectAnswer(8, 'D')">D) MTBF (Mean Time Between Failures)</div>
+                    </div>
+                    <div id="explanation8" style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Correct Answer: B) RPO (Recovery Point Objective)</strong><br>
+                        RPO defines the maximum acceptable amount of data loss measured in time. For example, an RPO of 1 hour means the organization can tolerate losing up to 1 hour of data in a disaster scenario.
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="demo-button" onclick="showAllAnswers()" style="background: #e74c3c;">Show All Answers</button>
+                    <button class="demo-button" onclick="resetQuiz()" style="background: #95a5a6;">Reset Quiz</button>
+                </div>
+
+                <div id="quizScore" style="text-align: center; margin-top: 20px; font-size: 1.2em; font-weight: bold;"></div>
+            </div>
+
+            <!-- Flashcards Section -->
+            <div id="flashcards" class="topic-section">
+                <div class="section-header">
+                    <h2>Interactive Flashcards</h2>
+                    <p>Reinforce key concepts with these interactive study cards</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>SNMP Versions</h4>
+                                <p>What are the three main SNMP versions and their key differences?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>SNMPv1:</strong> Original, community strings<br>
+                                <strong>SNMPv2c:</strong> Improved performance, community-based<br>
+                                <strong>SNMPv3:</strong> Authentication & encryption</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>DHCP Process</h4>
+                                <p>What does DORA stand for in DHCP?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>D</strong>iscover - Client broadcasts request<br>
+                                <strong>O</strong>ffer - Server offers IP address<br>
+                                <strong>R</strong>equest - Client requests the IP<br>
+                                <strong>A</strong>cknowledge - Server confirms assignment</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>DR Site Types</h4>
+                                <p>Compare Cold, Warm, and Hot DR sites</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>Cold:</strong> Basic infrastructure, days-weeks RTO<br>
+                                <strong>Warm:</strong> Partial equipment, hours-days RTO<br>
+                                <strong>Hot:</strong> Full duplicate, minutes-hours RTO</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>IPv6 SLAAC</h4>
+                                <p>What does SLAAC stand for and how does it work?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>Stateless Address Auto-Configuration</strong><br>
+                                Uses Router Advertisements + EUI-64/Random Interface ID.<br>
+                                DAD ensures address uniqueness.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>DNS Record Types</h4>
+                                <p>Name the main DNS record types and their purposes</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>A:</strong> IPv4 address<br>
+                                <strong>AAAA:</strong> IPv6 address<br>
+                                <strong>CNAME:</strong> Alias<br>
+                                <strong>MX:</strong> Mail server<br>
+                                <strong>NS:</strong> Name server<br>
+                                <strong>PTR:</strong> Reverse lookup</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>VPN Tunnel Types</h4>
+                                <p>Difference between Split Tunnel and Full Tunnel VPN?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>Split Tunnel:</strong> Corporate traffic through VPN, internet direct<br>
+                                <strong>Full Tunnel:</strong> All traffic through VPN tunnel</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>RTO vs RPO</h4>
+                                <p>What's the difference between RTO and RPO?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>RTO:</strong> Recovery Time Objective - Max downtime<br>
+                                <strong>RPO:</strong> Recovery Point Objective - Max data loss</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>SNMP Operations</h4>
+                                <p>What are the main SNMP operations?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>GET:</strong> Retrieve object value<br>
+                                <strong>SET:</strong> Modify object value<br>
+                                <strong>GET-NEXT:</strong> Walk MIB tree<br>
+                                <strong>TRAP:</strong> Unsolicited alert</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>Configuration Management</h4>
+                                <p>Types of network device configurations?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>Production:</strong> Live, active configs<br>
+                                <strong>Backup:</strong> Saved for recovery<br>
+                                <strong>Baseline/Golden:</strong> Standard approved configs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>Network Management</h4>
+                                <p>In-band vs Out-of-band management?</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p><strong>In-band:</strong> Uses production network<br>
+                                <strong>Out-of-band:</strong> Separate management network/console</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <p><em>Click on any flashcard to reveal the answer. Use these to test your recall of key concepts.</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>CompTIA Network+ Domain 3.0: Network Operations Study Guide</strong></p>
+            <p>This comprehensive guide covers 19% of the N10-009 exam content. Continue practicing with hands-on labs and additional resources.</p>
+            <p><em>Remember: Practice makes perfect. The more you work with these concepts in real environments, the better prepared you'll be for both the exam and your career.</em></p>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'overview';
+        let completedSections = new Set(['overview']);
+        let quizAnswers = {};
+        let totalQuestions = 8;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.topic-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section and activate tab
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+
+            // Add to completed sections
+            completedSections.add(sectionId);
+            currentSection = sectionId;
+
+            // Update progress
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalSections = 9; // Total number of sections
+            const progress = (completedSections.size / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function simulateBackup() {
+            const output = document.getElementById('configOutput');
+            output.style.display = 'block';
+            output.textContent = `Router-01# copy running-config tftp://192.168.1.100/backup-config-${new Date().toISOString().split('T')[0]}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+12847 bytes copied in 2.15 secs (5974 bytes/sec)
+
+Backup completed successfully.
+Configuration saved to: backup-config-${new Date().toISOString().split('T')[0]}`;
+        }
+
+        function simulateRestore() {
+            const output = document.getElementById('configOutput');
+            output.style.display = 'block';
+            output.textContent = `Router-01# copy tftp://192.168.1.100/backup-config-2024-01-15 running-config
+Accessing tftp://192.168.1.100/backup-config-2024-01-15...
+Loading backup-config-2024-01-15 from 192.168.1.100 (via GigabitEthernet0/0): !
+[OK - 12847 bytes]
+
+12847 bytes copied in 1.98 secs (6488 bytes/sec)
+
+Configuration restored successfully.
+Warning: Some configuration changes require a reboot to take effect.`;
+        }
+
+        function simulateSNMPGet() {
+            const output = document.getElementById('snmpOutput');
+            output.style.display = 'block';
+            output.textContent = `$ snmpget -v2c -c public 192.168.1.1 1.3.6.1.2.1.1.5.0
+SNMPv2-MIB::sysName.0 = STRING: "Switch-Core-01"
+
+$ snmpget -v2c -c public 192.168.1.1 1.3.6.1.2.1.1.3.0
+SNMPv2-MIB::sysUpTime.0 = Timeticks: (145834567) 16 days, 21:05:45.67
+
+$ snmpwalk -v2c -c public 192.168.1.1 1.3.6.1.2.1.2.2.1.10
+IF-MIB::ifInOctets.1 = Counter32: 2847562341
+IF-MIB::ifInOctets.2 = Counter32: 1928374658
+IF-MIB::ifInOctets.3 = Counter32: 847293756`;
+        }
+
+        function simulateTrap() {
+            const output = document.getElementById('snmpOutput');
+            output.style.display = 'block';
+            output.textContent = `SNMP Trap Received:
+===================
+Source: 192.168.1.1
+Community: public
+Time: ${new Date().toLocaleString()}
+OID: 1.3.6.1.6.3.1.1.5.4 (linkUp)
+Interface: GigabitEthernet1/0/24
+Status: Interface Up
+Description: Connection to Access-Switch-05 restored`;
+        }
+
+        function calculateAvailability() {
+            const mtbf = parseFloat(document.getElementById('mtbf').value);
+            const mttr = parseFloat(document.getElementById('mttr').value);
+            
+            if (mtbf > 0 && mttr > 0) {
+                const availability = (mtbf / (mtbf + mttr)) * 100;
+                const uptime = availability.toFixed(4);
+                const downtime = (100 - availability).toFixed(4);
+                
+                document.getElementById('availabilityResult').innerHTML = `
+                    <div style="background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                        <strong>Availability: ${uptime}%</strong><br>
+                        Downtime: ${downtime}%<br>
+                        Annual Downtime: ${((365 * 24 * downtime) / 100).toFixed(2)} hours
+                    </div>
+                `;
+            }
+        }
+
+        function simulateDHCP() {
+            const output = document.getElementById('dhcpOutput');
+            output.style.display = 'block';
+            output.textContent = `DHCP Process Simulation:
+=======================
+
+Step 1: DISCOVER
+Client (00:1A:2B:3C:4D:5E) broadcasts DHCP Discover on network 192.168.20.0/24
+
+Step 2: OFFER  
+Server 192.168.20.1 offers IP 192.168.20.75
+Lease time: 8 hours
+Default gateway: 192.168.20.1
+DNS servers: 8.8.8.8, 8.8.4.4
+
+Step 3: REQUEST
+Client requests IP 192.168.20.75 from server 192.168.20.1
+
+Step 4: ACKNOWLEDGE
+Server acknowledges assignment of 192.168.20.75
+Lease expires: ${new Date(Date.now() + 8 * 60 * 60 * 1000).toLocaleString()}
+
+DHCP binding created successfully.`;
+        }
+
+        function showDHCPPool() {
+            const output = document.getElementById('dhcpOutput');
+            output.style.display = 'block';
+            output.textContent = `DHCP Pool Status:
+================
+
+Pool: LAN_POOL
+Network: 192.168.20.0/24
+Available addresses: 192.168.20.50 - 192.168.20.150 (101 addresses)
+
+Current bindings: 23/101 (22.8% utilization)
+Available: 78 addresses
+Excluded: 192.168.20.1-49, 192.168.20.151-254
+
+Recent leases:
+192.168.20.75 -> 00:1A:2B:3C:4D:5E (expires in 7h 59m)
+192.168.20.76 -> 00:2B:3C:4D:5E:6F (expires in 6h 45m)
+192.168.20.77 -> 00:3C:4D:5E:6F:7A (expires in 5h 32m)
+
+Conflicts: 0
+Declined addresses: 0`;
+        }
+
+        function simulateSSH() {
+            const host = document.getElementById('sshHost').value;
+            const user = document.getElementById('sshUser').value;
+            const output = document.getElementById('sshOutput');
+            output.style.display = 'block';
+            output.textContent = `$ ssh ${user}@${host}
+The authenticity of host '${host}' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '${host}' (RSA) to the list of known hosts.
+Password: 
+
+${host}> show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(7)E3
+System uptime is 2 weeks, 3 days, 14 hours, 25 minutes
+
+${host}> enable
+Password:
+${host}# show running-config
+Building configuration...
+
+Current configuration : 12847 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Switch-Core-01
+!
+Connection established successfully.`;
+        }
+
+        function showLabSolution(labNumber) {
+            const solution = document.getElementById(`labSolution${labNumber}`);
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+            } else {
+                solution.style.display = 'none';
+            }
+        }
+
+        function selectAnswer(questionNum, answer) {
+            // Store the answer
+            quizAnswers[questionNum] = answer;
+            
+            // Remove previous selections
+            const options = document.querySelectorAll(`#question${questionNum}`).parentNode.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark the selected answer
+            event.target.classList.add('selected');
+            
+            // Show explanation after a short delay
+            setTimeout(() => {
+                document.getElementById(`explanation${questionNum}`).style.display = 'block';
+                
+                // Mark correct/incorrect
+                const correctAnswers = {1: 'B', 2: 'C', 3: 'C', 4: 'C', 5: 'B', 6: 'C', 7: 'B', 8: 'B'};
+                if (answer === correctAnswers[questionNum]) {
+                    event.target.classList.add('correct');
+                } else {
+                    event.target.classList.add('incorrect');
+                    // Also highlight the correct answer
+                    options.forEach(option => {
+                        if (option.textContent.startsWith(correctAnswers[questionNum])) {
+                            option.classList.add('correct');
+                        }
+                    });
+                }
+                
+                updateQuizScore();
+            }, 500);
+        }
+
+        function updateQuizScore() {
+            const correctAnswers = {1: 'B', 2: 'C', 3: 'C', 4: 'C', 5: 'B', 6: 'C', 7: 'B', 8: 'B'};
+            let correct = 0;
+            let answered = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (quizAnswers[i]) {
+                    answered++;
+                    if (quizAnswers[i] === correctAnswers[i]) {
+                        correct++;
+                    }
+                }
+            }
+            
+            if (answered > 0) {
+                const percentage = Math.round((correct / answered) * 100);
+                document.getElementById('quizScore').innerHTML = `
+                    Score: ${correct}/${answered} (${percentage}%)
+                    ${answered === totalQuestions ? '<br><strong>Quiz Complete!</strong>' : ''}
+                `;
+            }
+        }
+
+        function showAllAnswers() {
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(`explanation${i}`).style.display = 'block';
+            }
+        }
+
+        function resetQuiz() {
+            quizAnswers = {};
+            
+            // Hide all explanations
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(`explanation${i}`).style.display = 'none';
+                
+                // Remove all answer styling
+                const questionContainer = document.getElementById(`question${i}`).parentNode;
+                const options = questionContainer.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.classList.remove('correct', 'incorrect', 'selected');
+                });
+            }
+            
+            document.getElementById('quizScore').innerHTML = '';
+        }
+
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Initialize progress on page load
+        updateProgress();
+    </script> class="demo-button" onclick="simulateBackup()">Backup Router Config</button>
+                        <button class="demo-button" onclick="simulateRestore()">Restore Config</button>
+                        <div id="configOutput" class="command-output" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Exam Tip</h4>
+                    <p>Focus on understanding the difference between physical and logical diagrams, and memorize the change management process steps. Know when to use each type of configuration backup.</p>
+                </div>
+            </div>
+
+            <!-- Network Monitoring Section -->
+            <div id="monitoring" class="topic-section">
+                <div class="section-header">
+                    <h2>3.2 Network Monitoring Technologies</h2>
+                    <p>Implement comprehensive network monitoring and performance management</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Simple Network Management Protocol (SNMP)</h3>
+                    
+                    <div class="concept-box">
+                        <h4>SNMP Components</h4>
+                        <ul>
+                            <li><strong>SNMP Manager:</strong> Monitoring system that collects data</li>
+                            <li><strong>SNMP Agent:</strong> Software on monitored devices</li>
+                            <li><strong>Management Information Base (MIB):</strong> Database of manageable objects</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>SNMP Versions</h4>
+                        <ul>
+                            <li><strong>SNMPv1:</strong> Original version, basic functionality, security via community strings</li>
+                            <li><strong>SNMPv2c:</strong> Improved performance, bulk transfers, community-based security</li>
+                            <li><strong>SNMPv3:</strong> Enhanced security with authentication and encryption</li>
+                        </ul>
+                        
+                        <div class="code-block">
+snmp-server community public ro
+snmp-server community private rw
+snmp-server host 192.168.1.100 version 2c public
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>SNMP Operations</h4>
+                        <ul>
+                            <li><strong>GET:</strong> Retrieve specific object values</li>
+                            <li><strong>SET:</strong> Modify object values</li>
+                            <li><strong>GET-NEXT:</strong> Retrieve next object in MIB tree</li>
+                            <li><strong>TRAP:</strong> Unsolicited alert from agent to manager</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Flow Data and Packet Capture</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Flow Monitoring Technologies</h4>
+                        <ul>
+                            <li><strong>NetFlow:</strong> Cisco's flow monitoring protocol</li>
+                            <li><strong>sFlow:</strong> Statistical packet sampling</li>
+                            <li><strong>IPFIX:</strong> Internet Protocol Flow Information Export (standard)</li>
+                        </ul>
+                        
+                        <p>Flow data provides insights into:</p>
+                        <ul>
+                            <li>Traffic patterns and volume</li>
+                            <li>Application usage</li>
+                            <li>Security threat detection</li>
+                            <li>Bandwidth utilization</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Packet Capture Methods</h4>
+                        <ul>
+                            <li><strong>Port Mirroring (SPAN):</strong> Copy traffic from one port to analyzer</li>
+                            <li><strong>Network TAPs:</strong> Physical devices that split signals</li>
+                            <li><strong>Software Captures:</strong> Wireshark, tcpdump, tshark</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Baseline Metrics and Alerting</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Key Performance Metrics</h4>
+                        <ul>
+                            <li><strong>Bandwidth Utilization:</strong> Current vs. available capacity</li>
+                            <li><strong>Latency:</strong> Round-trip time for packets</li>
+                            <li><strong>Packet Loss:</strong> Percentage of lost packets</li>
+                            <li><strong>Jitter:</strong> Variation in packet delivery times</li>
+                            <li><strong>Error Rates:</strong> CRC errors, collisions, runts</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Anomaly Detection</h4>
+                        <p>Automated alerting when metrics exceed baseline thresholds:</p>
+                        <ul>
+                            <li>CPU utilization > 80% for 5 minutes</li>
+                            <li>Interface utilization > 90%</li>
+                            <li>Memory usage > 85%</li>
+                            <li>Temperature above device limits</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Log Aggregation and SIEM</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Syslog Protocol</h4>
+                        <p>Standard protocol for collecting and forwarding log messages:</p>
+                        <ul>
+                            <li><strong>Facility:</strong> Source of the message (mail, kernel, security)</li>
+                            <li><strong>Severity:</strong> Importance level (0=Emergency to 7=Debug)</li>
+                            <li><strong>Timestamp:</strong> When the event occurred</li>
+                            <li><strong>Hostname:</strong> Source device</li>
+                            <li><strong>Message:</strong> Actual log content</li>
+                        </ul>
+                        
+                        <div class="code-block">
+logging host 192.168.1.10
+logging trap informational
+logging facility local0
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Security Information and Event Management (SIEM)</h4>
+                        <p>Centralized platform that:</p>
+                        <ul>
+                            <li>Collects logs from multiple sources</li>
+                            <li>Correlates events across systems</li>
+                            <li>Provides real-time alerting</li>
+                            <li>Supports forensic analysis</li>
+                            <li>Generates compliance reports</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>SNMP Monitoring Simulation</h4>
+                    <button class="demo-button" onclick="simulateSNMPGet()">SNMP GET Request</button>
+                    <button class="demo-button" onclick="simulateTrap()">Generate SNMP Trap</button>
+                    <div id="snmpOutput" class="command-output" style="display: none;"></div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Exam Focus</h4>
+                    <p>Understand SNMP versions and their security differences. Know the difference between flow data and packet capture. Memorize common syslog severity levels (0-7).</p>
+                </div>
+            </div>
+
+            <!-- Disaster Recovery Section -->
+            <div id="disaster-recovery" class="topic-section">
+                <div class="section-header">
+                    <h2>3.3 Disaster Recovery Concepts</h2>
+                    <p>Design and implement comprehensive disaster recovery strategies</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Disaster Recovery Metrics</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Recovery Point Objective (RPO)</h4>
+                        <p>Maximum acceptable amount of data loss measured in time:</p>
+                        <ul>
+                            <li><strong>Zero RPO:</strong> No data loss acceptable (real-time replication)</li>
+                            <li><strong>1 Hour RPO:</strong> Maximum 1 hour of data loss acceptable</li>
+                            <li><strong>24 Hour RPO:</strong> Daily backups acceptable</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Recovery Time Objective (RTO)</h4>
+                        <p>Maximum acceptable downtime before operations must be restored:</p>
+                        <ul>
+                            <li><strong>Critical Systems:</strong> RTO = 1 hour</li>
+                            <li><strong>Important Systems:</strong> RTO = 4 hours</li>
+                            <li><strong>Non-Critical Systems:</strong> RTO = 24-72 hours</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Mean Time Metrics</h4>
+                        <ul>
+                            <li><strong>Mean Time to Repair (MTTR):</strong> Average time to fix a failed component</li>
+                            <li><strong>Mean Time Between Failures (MTBF):</strong> Average operational time between failures</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <strong>Formula:</strong> Availability = MTBF / (MTBF + MTTR)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Disaster Recovery Site Types</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Cold Site</h4>
+                        <ul>
+                            <li><strong>Description:</strong> Backup facility with basic infrastructure (power, cooling, network)</li>
+                            <li><strong>RTO:</strong> Days to weeks</li>
+                            <li><strong>Cost:</strong> Lowest</li>
+                            <li><strong>Use Case:</strong> Non-critical systems, small organizations</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Warm Site</h4>
+                        <ul>
+                            <li><strong>Description:</strong> Partially equipped facility with some hardware and software</li>
+                            <li><strong>RTO:</strong> Hours to days</li>
+                            <li><strong>Cost:</strong> Medium</li>
+                            <li><strong>Use Case:</strong> Balanced cost and recovery time requirements</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Hot Site</h4>
+                        <ul>
+                            <li><strong>Description:</strong> Fully equipped duplicate facility with real-time data replication</li>
+                            <li><strong>RTO:</strong> Minutes to hours</li>
+                            <li><strong>Cost:</strong> Highest</li>
+                            <li><strong>Use Case:</strong> Mission-critical systems requiring minimal downtime</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>High Availability Approaches</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Active-Active Configuration</h4>
+                        <ul>
+                            <li>Multiple systems handle traffic simultaneously</li>
+                            <li>Load is distributed across all active systems</li>
+                            <li>If one system fails, others continue operating</li>
+                            <li>Provides both redundancy and increased capacity</li>
+                        </ul>
+                        
+                        <div class="network-diagram">
+                            <div class="diagram-element">Load Balancer</div><br>
+                            <div class="diagram-element">Server 1 (Active)</div>
+                            <div class="diagram-element">Server 2 (Active)</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Active-Passive Configuration</h4>
+                        <ul>
+                            <li>One system handles all traffic (active)</li>
+                            <li>Backup system remains on standby (passive)</li>
+                            <li>Automatic failover when active system fails</li>
+                            <li>Standby system must be capable of handling full load</li>
+                        </ul>
+                        
+                        <div class="network-diagram">
+                            <div class="diagram-element">Primary Server (Active)</div><br>
+                            <div class="diagram-element">Backup Server (Passive)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Disaster Recovery Testing</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Tabletop Exercises</h4>
+                        <ul>
+                            <li>Discussion-based testing of DR procedures</li>
+                            <li>No actual system disruption</li>
+                            <li>Identifies gaps in procedures and communication</li>
+                            <li>Cost-effective and low-risk</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Validation Tests</h4>
+                        <ul>
+                            <li><strong>Backup Validation:</strong> Verify backup integrity and restorability</li>
+                            <li><strong>Failover Testing:</strong> Test automatic switching to backup systems</li>
+                            <li><strong>Full DR Test:</strong> Complete system failover to alternate site</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>DR Metrics Calculator</h4>
+                    <div style="text-align: left; margin: 20px;">
+                        <label>MTBF (hours): <input type="number" id="mtbf" value="8760"></label><br><br>
+                        <label>MTTR (hours): <input type="number" id="mttr" value="4"></label><br><br>
+                        <button class="demo-button" onclick="calculateAvailability()">Calculate Availability</button>
+                        <div id="availabilityResult" style="margin-top: 10px; font-weight: bold;"></div>
+                    </div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Exam Strategy</h4>
+                    <p>Remember the cost and RTO relationship for DR sites: Cold (cheapest, longest RTO), Warm (medium), Hot (expensive, shortest RTO). Understand the difference between active-active and active-passive configurations.</p>
+                </div>
+            </div>
+
+            <!-- Network Services Section -->
+            <div id="network-services" class="topic-section">
+                <div class="section-header">
+                    <h2>3.4 IPv4 and IPv6 Network Services</h2>
+                    <p>Configure and manage essential network services</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Dynamic Host Configuration Protocol (DHCP)</h3>
+                    
+                    <div class="concept-box">
+                        <h4>DHCP Components</h4>
+                        <ul>
+                            <li><strong>DHCP Server:</strong> Assigns IP addresses and configuration</li>
+                            <li><strong>DHCP Client:</strong> Requests IP configuration</li>
+                            <li><strong>DHCP Relay Agent:</strong> Forwards DHCP requests across subnets</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DHCP Process (DORA)</h4>
+                        <ol>
+                            <li><strong>Discover:</strong> Client broadcasts request for IP address</li>
+                            <li><strong>Offer:</strong> Server responds with available IP address</li>
+                            <li><strong>Request:</strong> Client requests the offered address</li>
+                            <li><strong>Acknowledge:</strong> Server confirms the assignment</li>
+                        </ol>
+                        
+                        <div class="code-block">
+ip dhcp pool LAN_POOL
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+ dns-server 8.8.8.8 8.8.4.4
+ lease 7
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DHCP Options</h4>
+                        <ul>
+                            <li><strong>Reservations:</strong> Static IP assignments based on MAC address</li>
+                            <li><strong>Scope:</strong> Range of IP addresses available for assignment</li>
+                            <li><strong>Lease Time:</strong> Duration of IP address assignment</li>
+                            <li><strong>Exclusions:</strong> IP addresses not available for dynamic assignment</li>
+                            <li><strong>Relay/IP Helper:</strong> Forward DHCP across router boundaries</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>IPv6 Address Configuration</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Stateless Address Autoconfiguration (SLAAC)</h4>
+                        <p>Automatic IPv6 address configuration using Router Advertisements:</p>
+                        <ul>
+                            <li>Router sends periodic Router Advertisements (RA)</li>
+                            <li>Contains network prefix and configuration flags</li>
+                            <li>Host generates Interface ID using EUI-64 or random</li>
+                            <li>Duplicate Address Detection (DAD) ensures uniqueness</li>
+                        </ul>
+                        
+                        <div class="code-block">
+interface GigabitEthernet0/0
+ ipv6 address 2001:db8:1::1/64
+ ipv6 nd prefix default no-autoconfig
+ ipv6 dhcp server DHCPv6_POOL
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DHCPv6 vs SLAAC</h4>
+                        <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <th>Aspect</th>
+                                <th>SLAAC</th>
+                                <th>DHCPv6</th>
+                            </tr>
+                            <tr>
+                                <td>Address Assignment</td>
+                                <td>Automatic (prefix + interface ID)</td>
+                                <td>Server-managed pool</td>
+                            </tr>
+                            <tr>
+                                <td>DNS Configuration</td>
+                                <td>Router Advertisement (RDNSS)</td>
+                                <td>DHCPv6 options</td>
+                            </tr>
+                            <tr>
+                                <td>Management Overhead</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Address Tracking</td>
+                                <td>None</td>
+                                <td>Full logging</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Domain Name System (DNS)</h3>
+                    
+                    <div class="concept-box">
+                        <h4>DNS Record Types</h4>
+                        <ul>
+                            <li><strong>A (Address):</strong> Maps hostname to IPv4 address</li>
+                            <li><strong>AAAA:</strong> Maps hostname to IPv6 address</li>
+                            <li><strong>CNAME (Canonical Name):</strong> Alias for another domain name</li>
+                            <li><strong>MX (Mail Exchange):</strong> Mail server for domain</li>
+                            <li><strong>NS (Name Server):</strong> Authoritative name server for domain</li>
+                            <li><strong>PTR (Pointer):</strong> Reverse DNS lookup (IP to hostname)</li>
+                            <li><strong>TXT (Text):</strong> Arbitrary text data</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DNS Zone Types</h4>
+                        <ul>
+                            <li><strong>Forward Zone:</strong> Resolves hostnames to IP addresses</li>
+                            <li><strong>Reverse Zone:</strong> Resolves IP addresses to hostnames</li>
+                            <li><strong>Primary Zone:</strong> Master copy of zone data</li>
+                            <li><strong>Secondary Zone:</strong> Read-only copy from primary</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DNS Security Extensions (DNSSEC)</h4>
+                        <p>Provides authentication and data integrity:</p>
+                        <ul>
+                            <li>Digital signatures for DNS records</li>
+                            <li>Chain of trust from root to authoritative servers</li>
+                            <li>Prevents DNS spoofing and cache poisoning</li>
+                            <li>Uses public key cryptography</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>DNS over HTTPS (DoH) and DNS over TLS (DoT)</h4>
+                        <ul>
+                            <li><strong>DoH:</strong> DNS queries over HTTPS (port 443)</li>
+                            <li><strong>DoT:</strong> DNS queries over TLS (port 853)</li>
+                            <li>Both provide encryption and privacy</li>
+                            <li>Prevent eavesdropping on DNS queries</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Time Protocols</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Network Time Protocol (NTP)</h4>
+                        <ul>
+                            <li>Synchronizes system clocks across network</li>
+                            <li>Hierarchical structure with stratum levels</li>
+                            <li>Stratum 0: Reference clocks (GPS, atomic)</li>
+                            <li>Stratum 1: Primary time servers</li>
+                            <li>Uses UDP port 123</li>
+                        </ul>
+                        
+                        <div class="code-block">
+ntp server 0.pool.ntp.org
+ntp server 1.pool.ntp.org
+ntp authenticate
+ntp trusted-key 1
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Precision Time Protocol (PTP)</h4>
+                        <ul>
+                            <li>Higher precision than NTP (nanosecond accuracy)</li>
+                            <li>Used in industrial and financial applications</li>
+                            <li>Master-slave hierarchy</li>
+                            <li>Hardware timestamping support</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Network Time Security (NTS)</h4>
+                        <ul>
+                            <li>Security extension for NTP</li>
+                            <li>Provides authentication and integrity</li>
+                            <li>Prevents time spoofing attacks</li>
+                            <li>Uses TLS for secure key exchange</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>DHCP Lease Simulator</h4>
+                    <button class="demo-button" onclick="simulateDHCP()">Start DHCP Process</button>
+                    <button class="demo-button" onclick="showDHCPPool()">View DHCP Pool</button>
+                    <div id="dhcpOutput" class="command-output" style="display: none;"></div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Key Concepts</h4>
+                    <p>Understand the DHCP DORA process and SLAAC operation. Know the differences between IPv4 DHCP and IPv6 DHCPv6/SLAAC. Memorize common DNS record types and their purposes.</p>
+                </div>
+            </div>
+
+            <!-- Remote Access Section -->
+            <div id="remote-access" class="topic-section">
+                <div class="section-header">
+                    <h2>3.5 Network Access and Management Methods</h2>
+                    <p>Configure secure remote access and network management</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Virtual Private Networks (VPNs)</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Site-to-Site VPN</h4>
+                        <ul>
+                            <li>Connects entire networks across public internet</li>
+                            <li>Gateway-to-gateway connection</li>
+                            <li>Transparent to end users</li>
+                            <li>Common protocols: IPSec, L2TP, GRE</li>
+                        </ul>
+                        
+                        <div class="network-diagram">
+                            <div class="diagram-element">Site A Gateway</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Internet</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Site B Gateway</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Client-to-Site VPN</h4>
+                        <ul>
+                            <li>Individual devices connect to corporate network</li>
+                            <li>Remote worker access solution</li>
+                            <li>Client software required</li>
+                            <li>Two main types: Clientless and Client-based</li>
+                        </ul>
+                        
+                        <p><strong>Clientless VPN:</strong></p>
+                        <ul>
+                            <li>Web browser-based access</li>
+                            <li>No software installation required</li>
+                            <li>Limited application support</li>
+                            <li>SSL/TLS tunnel</li>
+                        </ul>
+                        
+                        <p><strong>Client-based VPN:</strong></p>
+                        <ul>
+                            <li>Dedicated VPN client software</li>
+                            <li>Full network layer access</li>
+                            <li>Supports all applications</li>
+                            <li>More secure and feature-rich</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Split Tunnel vs Full Tunnel</h4>
+                        <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Split Tunnel</th>
+                                <th>Full Tunnel</th>
+                            </tr>
+                            <tr>
+                                <td>Internet Traffic</td>
+                                <td>Direct to internet</td>
+                                <td>Through corporate gateway</td>
+                            </tr>
+                            <tr>
+                                <td>Corporate Traffic</td>
+                                <td>Through VPN tunnel</td>
+                                <td>Through VPN tunnel</td>
+                            </tr>
+                            <tr>
+                                <td>Bandwidth Usage</td>
+                                <td>Lower</td>
+                                <td>Higher</td>
+                            </tr>
+                            <tr>
+                                <td>Security</td>
+                                <td>Lower (some traffic unmonitored)</td>
+                                <td>Higher (all traffic monitored)</td>
+                            </tr>
+                            <tr>
+                                <td>Performance</td>
+                                <td>Better for internet access</td>
+                                <td>May be slower</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Network Management Connection Methods</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Secure Shell (SSH)</h4>
+                        <ul>
+                            <li>Encrypted command-line access</li>
+                            <li>Replaces insecure Telnet</li>
+                            <li>Uses TCP port 22</li>
+                            <li>Supports public key authentication</li>
+                        </ul>
+                        
+                        <div class="code-block">
+ssh -l admin 192.168.1.1
+ssh -i ~/.ssh/id_rsa admin@switch01
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Graphical User Interface (GUI)</h4>
+                        <ul>
+                            <li>Web-based management interfaces</li>
+                            <li>Point-and-click configuration</li>
+                            <li>Usually HTTPS-based (port 443)</li>
+                            <li>Good for initial setup and basic management</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Application Programming Interface (API)</h4>
+                        <ul>
+                            <li>Programmatic access to device functions</li>
+                            <li>RESTful APIs common in modern devices</li>
+                            <li>JSON or XML data formats</li>
+                            <li>Enables automation and scripting</li>
+                        </ul>
+                        
+                        <div class="code-block">
+curl -X GET "https://switch01/api/v1/interfaces" \
+     -H "Authorization: Bearer token123" \
+     -H "Content-Type: application/json"
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>Console Access</h4>
+                        <ul>
+                            <li>Direct physical connection to device</li>
+                            <li>Serial cable (RS-232) or USB</li>
+                            <li>Out-of-band management</li>
+                            <li>Works even when network is down</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Jump Box/Host and Management Methods</h3>
+                    
+                    <div class="concept-box">
+                        <h4>Jump Box/Bastion Host</h4>
+                        <ul>
+                            <li>Secure intermediary system for network access</li>
+                            <li>Single point of entry to secure network segments</li>
+                            <li>Detailed logging and auditing</li>
+                            <li>Multi-factor authentication</li>
+                        </ul>
+                        
+                        <div class="network-diagram">
+                            <div class="diagram-element">Administrator</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Jump Box</div>
+                            <div class="connection-line"></div>
+                            <div class="diagram-element">Internal Network</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>In-band vs Out-of-band Management</h4>
+                        
+                        <p><strong>In-band Management:</strong></p>
+                        <ul>
+                            <li>Uses production network for management traffic</li>
+                            <li>SSH, SNMP, HTTP/HTTPS over main network</li>
+                            <li>Lower cost, easier to implement</li>
+                            <li>Management unavailable if network fails</li>
+                        </ul>
+                        
+                        <p><strong>Out-of-band Management:</strong></p>
+                        <ul>
+                            <li>Separate network for management traffic</li>
+                            <li>Console servers, dedicated management network</li>
+                            <li>Available even when production network fails</li>
+                            <li>Higher cost but more reliable</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>SSH Connection Simulator</h4>
+                    <div style="text-align: left; margin: 20px;">
+                        <label>Target Host: <input type="text" id="sshHost" value="192.168.1.1"></label><br><br>
+                        <label>Username: <input type="text" id="sshUser" value="admin"></label><br><br>
+                        <button class="demo-button" onclick="simulateSSH()">Connect via SSH</button>
+                        <div id="sshOutput" class="command-output" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <div class="study-tip">
+                    <h4>Security Focus</h4>
+                    <p>Understand the security implications of different VPN tunnel types. Know when to use in-band vs out-of-band management. Remember that SSH should replace Telnet for secure management.</p>
+                </div>
+            </div>
+
+            <!-- Hands-on Labs Section -->
+            <div id="labs" class="topic-section">
+                <div class="section-header">
+                    <h2>Hands-on Laboratory Exercises</h2>
+                    <p>Practice real-world network operations scenarios</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lab Exercise 1: Network Documentation Creation</h3>
+                    
+                    <div class="lab-exercise">
+                        <h4>Objective: Create comprehensive network documentation for a small office</h4>
+                        
+                        <p><strong>Scenario:</strong> You're the new network administrator for a 50-person office. Create documentation for the existing network.</p>
+                        
+                        <p><strong>Network Details:</strong></p>
+                        <ul>
+                            <li>Cisco 2960X switch (24 ports)</li>
+                            <li>Cisco 2811 router</li>
+                            <li>SonicWall NSA 2650 firewall</li>
+                            <li>Network: 192.168.10.0/24</li>
+                            <li>DHCP Pool: 192.168.10.100-200</li>
+                        </ul>
+                        
+                        <p><strong>Tasks:</strong></p>
+                        <ol>
+                            <li>Create a logical network diagram</li>
+                            <li>Document IP address assignments</li>
+                            <li>Create rack diagram</li>
+                            <li>Document cable connections</li>
+                        </ol>
+                        
+                        <button class="demo-button" onclick="showLabSolution(1)">Show Solution</button>
+                        <div id="labSolution1" style="display: none; margin-top: 15px;">
+                            <div class="concept-box">
+                                <h4>Sample Documentation Structure:</h4>
+                                <pre>
+Network Documentation - Main Office
+=====================================
+
+1. LOGICAL NETWORK DIAGRAM
+   Internet → Firewall → Router → Switch → Workstations
+   
+2. IP ADDRESS PLAN
+   Network: 192.168.10.0/24
+   Gateway: 192.168.10.1 (Router)
+   Firewall: 192.168.10.2
+   Switch: 192.168.10.3
+   Server: 192.168.10.10
+   DHCP Pool: 192.168.10.100-200
+   Reserved: 192.168.10.201-254
+
+3. RACK LAYOUT (42U Rack)
+   U42-U40: Cable Management
+   U39: Cisco 2811 Router (1U)
+   U38: Cisco 2960X Switch (1U)
+   U37: SonicWall NSA 2650 (1U)
+   U36-U35: UPS System (2U)
+   ...remaining for future expansion
+
+4. CABLE DOCUMENTATION
+   Router Gi0/0 → Firewall X1 (CAT6, Red)
+   Router Gi0/1 → Switch Gi1/0/1 (CAT6, Blue)
+   Switch Ports 2-24 → Patch Panel (CAT6, Yellow)
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lab Exercise 2: SNMP Monitoring Setup</h3>
+                    
+                    <div class="lab-exercise">
+                        <h4>Objective: Configure SNMP monitoring for network devices</h4>
+                        
+                        <p><strong>Equipment:</strong> Cisco switch and monitoring server</p>
+                        
+                        <p><strong>Configuration Tasks:</strong></p>
+                        <ol>
+                            <li>Enable SNMP on Cisco switch</li>
+                            <li>Configure community strings</li>
+                            <li>Set up SNMP traps</li>
+                            <li>Test monitoring connectivity</li>
+                        </ol>
+                        
+                        <div class="code-block">
+! Enable SNMP configuration
+configure terminal
+snmp-server community public ro
+snmp-server community private rw
+snmp-server location "Main Office - Rack A"
+snmp-server contact "admin@company.com"
+snmp-server host 192.168.1.100 version 2c public
+snmp-server enable traps snmp linkdown linkup
+snmp-server enable traps config
+exit
+                        </div>
+                        
+                        <button class="demo-button" onclick="showLabSolution(2)">Show Testing Commands</button>
+                        <div id="labSolution2" style="display: none; margin-top: 15px;">
+                            <div class="code-block">
+# Test SNMP connectivity from monitoring server
+snmpwalk -v2c -c public 192.168.1.1 system
+
+# Get specific system information
+snmpget -v2c -c public 192.168.1.1 1.3.6.1.2.1.1.5.0
+
+# Monitor interface status
+snmpwalk -v2c -c public 192.168.1.1 1.3.6.1.2.1.2.2.1.8
+
+# Test trap generation
+configure terminal
+interface gigabitethernet1/0/5
+shutdown
+no shutdown
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lab Exercise 3: DHCP Service Configuration</h3>
+                    
+                    <div class="lab-exercise">
+                        <h4>Objective: Configure DHCP service with reservations and options</h4>
+                        
+                        <p><strong>Requirements:</strong></p>
+                        <ul>
+                            <li>Network: 192.168.20.0/24</li>
+                            <li>Pool: 192.168.20.50-150</li>
+                            <li>DNS Servers: 8.8.8.8, 8.8.4.4</li>
+                            <li>Lease time: 8 hours</li>
+                            <li>Server reservation: 192.168.20.10</li>
+                        </ul>
+                        
+                        <div class="code-block">
+! DHCP Configuration on Cisco Router
+configure terminal
+
+! Create DHCP pool
+ip dhcp pool LAN_POOL
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8 8.8.4.4
+ domain-name company.local
+ lease 0 8
+
+! Exclude static addresses
+ip dhcp excluded-address 192.168.20.1 192.168.20.49
+ip dhcp excluded-address 192.168.20.151 192.168.20.254
+
+! Create reservation for server
+ip dhcp pool SERVER_RESERVATION
+ host 192.168.20.10 255.255.255.0
+ client-identifier 01aa.bbcc.ddee.ff
+ default-router 192.168.20.1
+ dns-server 8.8.8.8 8.8.4.4
+
+exit
+                        </div>
+                        
+                        <button

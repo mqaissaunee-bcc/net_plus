@@ -1,0 +1,3167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA Network+ Domain 1.0: Networking Concepts - Interactive Study Guide</title>
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #1e3f66;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --background-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --border-color: #dee2e6;
+            --header-bg: linear-gradient(135deg, #2c5aa0, #1e3f66);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .header {
+            background: var(--header-bg);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-tabs {
+            background: white;
+            border-bottom: 3px solid var(--primary-color);
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tabs button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tabs button:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+        }
+
+        .nav-tabs button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+
+        .content {
+            padding: 2rem 0;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .objective-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .objective-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .objective-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .sub-objective {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .sub-objective h4 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .protocol-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .protocol-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .protocol-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .interactive-element {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .quiz-options li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+            border-color: var(--primary-color);
+        }
+
+        .quiz-options li.selected {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .quiz-options li.correct {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .quiz-options li.incorrect {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--warning-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e67e22;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .osi-layer {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .osi-layer:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .osi-layer.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+        }
+
+        .layer-number {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .layer-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .layer-details.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .network-diagram {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .device {
+            display: inline-block;
+            padding: 1rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            margin: 1rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .connection {
+            border-top: 3px solid var(--accent-color);
+            width: 60px;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .study-tips {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .study-tips h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .study-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .study-tips li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .study-tips li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .search-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .topology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .topology-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .topology-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .topology-visual {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                padding: 0 10px;
+            }
+            
+            .nav-tabs button {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .objective-card {
+                padding: 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topology-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>CompTIA Network+ Domain 1.0</h1>
+            <p>Networking Concepts - Interactive Study Guide</p>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <button class="active" onclick="showTab('overview')">Overview</button>
+        <button onclick="showTab('osi-model')">1.1 OSI Model</button>
+        <button onclick="showTab('appliances')">1.2 Network Appliances</button>
+        <button onclick="showTab('cloud-concepts')">1.3 Cloud Concepts</button>
+        <button onclick="showTab('protocols')">1.4 Protocols & Ports</button>
+        <button onclick="showTab('transmission')">1.5 Transmission Media</button>
+        <button onclick="showTab('topologies')">1.6 Network Topologies</button>
+        <button onclick="showTab('addressing')">1.7 IPv4 Addressing</button>
+        <button onclick="showTab('modern-networks')">1.8 Modern Networks</button>
+        <button onclick="showTab('quiz')">Practice Quiz</button>
+    </nav>
+
+    <main class="content">
+        <div class="container">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search study guide content..." id="searchInput" onkeyup="searchContent()">
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">23%</div>
+                        <div class="stat-label">Exam Weight</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Objectives</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Week Course</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">N10-009</div>
+                        <div class="stat-label">Exam Version</div>
+                    </div>
+                </div>
+
+                <div class="objective-card">
+                    <h2 class="objective-title">Domain 1.0: Networking Concepts Overview</h2>
+                    <div class="objective-content">
+                        <p>Welcome to the comprehensive study guide for <span class="highlight">CompTIA Network+ Domain 1.0: Networking Concepts</span>. This domain represents 23% of the N10-009 exam and establishes the foundational knowledge required for network professionals.</p>
+                        
+                        <h3>Learning Objectives</h3>
+                        <p>Upon completion of this domain, you will be able to:</p>
+                        <ul>
+                            <li>Explain the OSI reference model and its seven layers</li>
+                            <li>Compare and contrast networking appliances and their functions</li>
+                            <li>Summarize cloud concepts and connectivity options</li>
+                            <li>Identify common networking protocols, ports, and services</li>
+                            <li>Understand transmission media and transceiver technologies</li>
+                            <li>Analyze network topologies and architectures</li>
+                            <li>Implement IPv4 addressing schemes and subnetting</li>
+                            <li>Explore modern networking technologies and use cases</li>
+                        </ul>
+
+                        <h3>Course Structure (15-Week Format)</h3>
+                        <div class="sub-objective">
+                            <h4>Weeks 1-2: OSI Model Fundamentals</h4>
+                            <p>Deep dive into the seven-layer OSI model, understanding each layer's function, protocols, and practical applications in modern networking.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 3-4: Network Infrastructure</h4>
+                            <p>Comprehensive study of networking appliances, their functions, and how they operate within network infrastructures.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 5-6: Cloud and Virtualization</h4>
+                            <p>Modern cloud concepts, service models, deployment models, and network virtualization technologies.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 7-8: Protocols and Services</h4>
+                            <p>Essential networking protocols, port numbers, traffic types, and network services that enable communication.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 9-10: Transmission Technologies</h4>
+                            <p>Physical layer technologies, transmission media, transceivers, and connector types for various networking scenarios.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 11-12: Network Design</h4>
+                            <p>Network topologies, architectures, traffic flow patterns, and design considerations for different environments.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Weeks 13-14: IP Addressing</h4>
+                            <p>IPv4 addressing, subnetting techniques, VLSM, CIDR notation, and practical subnet planning exercises.</p>
+                        </div>
+
+                        <div class="sub-objective">
+                            <h4>Week 15: Modern Networking</h4>
+                            <p>Software-defined networking, zero trust architecture, IPv6 transition strategies, and emerging technologies.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Study Tips for Success</h3>
+                    <ul>
+                        <li>Practice subnetting calculations daily until they become second nature</li>
+                        <li>Create flashcards for port numbers and protocol functions</li>
+                        <li>Set up a home lab to practice configuring network devices</li>
+                        <li>Use network simulation software like Packet Tracer or GNS3</li>
+                        <li>Join online communities and study groups for peer support</li>
+                        <li>Take practice exams regularly to assess your progress</li>
+                        <li>Focus on understanding concepts, not just memorizing facts</li>
+                        <li>Relate theoretical knowledge to real-world scenarios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- OSI Model Tab -->
+            <div id="osi-model" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.1 OSI Reference Model</h2>
+                    <div class="objective-content">
+                        <p>The <span class="highlight">Open Systems Interconnection (OSI) model</span> is a conceptual framework that standardizes the functions of a telecommunication or computing system into seven abstraction layers. Understanding the OSI model is crucial for network troubleshooting, design, and implementation.</p>
+                        
+                        <h3>Historical Context</h3>
+                        <p>Developed by the International Organization for Standardization (ISO) in 1984, the OSI model was created to provide a universal framework for different computer systems to communicate effectively. While modern networks primarily use the TCP/IP model, the OSI model remains essential for education and troubleshooting.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Interactive OSI Model Explorer</h3>
+                    <p>Click on each layer to explore its functions, protocols, and real-world applications</p>
+                </div>
+
+                <!-- Layer 7 - Application -->
+                <div class="osi-layer" onclick="toggleLayer(7)">
+                    <div class="layer-number">Layer 7</div>
+                    <h3>Application Layer</h3>
+                    <p>The interface between network services and end-user applications</p>
+                    <div class="layer-details" id="layer7">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Network Process to Application:</strong> Provides network services directly to applications</li>
+                            <li><strong>User Interface:</strong> Enables user interaction with network services</li>
+                            <li><strong>Resource Sharing:</strong> Facilitates sharing of network resources</li>
+                            <li><strong>Remote File Access:</strong> Enables access to files on remote systems</li>
+                        </ul>
+                        
+                        <h4>Common Protocols:</h4>
+                        <ul>
+                            <li><strong>HTTP/HTTPS:</strong> Web browsing and secure web communication</li>
+                            <li><strong>FTP/SFTP:</strong> File transfer protocols</li>
+                            <li><strong>SMTP:</strong> Email transmission</li>
+                            <li><strong>DNS:</strong> Domain name resolution</li>
+                            <li><strong>DHCP:</strong> Dynamic IP address assignment</li>
+                            <li><strong>SNMP:</strong> Network management</li>
+                        </ul>
+                        
+                        <h4>Real-World Examples:</h4>
+                        <ul>
+                            <li>Web browsers (Chrome, Firefox, Safari)</li>
+                            <li>Email clients (Outlook, Thunderbird)</li>
+                            <li>File transfer applications</li>
+                            <li>Network management tools</li>
+                        </ul>
+                        
+                        <h4>Troubleshooting at Layer 7:</h4>
+                        <ul>
+                            <li>Application crashes or failures</li>
+                            <li>Incorrect application configuration</li>
+                            <li>Authentication and authorization issues</li>
+                            <li>Protocol-specific problems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 6 - Presentation -->
+                <div class="osi-layer" onclick="toggleLayer(6)">
+                    <div class="layer-number">Layer 6</div>
+                    <h3>Presentation Layer</h3>
+                    <p>Data translation, encryption, and compression services</p>
+                    <div class="layer-details" id="layer6">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Data Translation:</strong> Converts data between different formats</li>
+                            <li><strong>Encryption/Decryption:</strong> Secures data for transmission</li>
+                            <li><strong>Compression/Decompression:</strong> Reduces data size for efficient transmission</li>
+                            <li><strong>Character Set Conversion:</strong> Handles different character encodings</li>
+                        </ul>
+                        
+                        <h4>Data Formats:</h4>
+                        <ul>
+                            <li><strong>ASCII:</strong> American Standard Code for Information Interchange</li>
+                            <li><strong>JPEG/PNG:</strong> Image compression formats</li>
+                            <li><strong>MP3/WAV:</strong> Audio compression formats</li>
+                            <li><strong>HTML/XML:</strong> Markup languages</li>
+                            <li><strong>JSON:</strong> JavaScript Object Notation</li>
+                        </ul>
+                        
+                        <h4>Encryption Protocols:</h4>
+                        <ul>
+                            <li><strong>SSL/TLS:</strong> Secure communication protocols</li>
+                            <li><strong>AES:</strong> Advanced Encryption Standard</li>
+                            <li><strong>DES/3DES:</strong> Data Encryption Standard</li>
+                            <li><strong>RSA:</strong> Public-key cryptography</li>
+                        </ul>
+                        
+                        <h4>Practical Applications:</h4>
+                        <ul>
+                            <li>HTTPS encryption for secure web browsing</li>
+                            <li>File compression utilities (ZIP, RAR)</li>
+                            <li>Media codecs for audio/video</li>
+                            <li>Character encoding for international text</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 5 - Session -->
+                <div class="osi-layer" onclick="toggleLayer(5)">
+                    <div class="layer-number">Layer 5</div>
+                    <h3>Session Layer</h3>
+                    <p>Establishes, manages, and terminates communication sessions</p>
+                    <div class="layer-details" id="layer5">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Session Establishment:</strong> Sets up communication sessions between applications</li>
+                            <li><strong>Session Management:</strong> Maintains ongoing sessions</li>
+                            <li><strong>Session Termination:</strong> Properly closes communication sessions</li>
+                            <li><strong>Dialog Control:</strong> Manages full-duplex, half-duplex, or simplex communication</li>
+                            <li><strong>Synchronization:</strong> Provides checkpointing and recovery mechanisms</li>
+                        </ul>
+                        
+                        <h4>Session Types:</h4>
+                        <ul>
+                            <li><strong>Full-Duplex:</strong> Simultaneous two-way communication</li>
+                            <li><strong>Half-Duplex:</strong> Alternating two-way communication</li>
+                            <li><strong>Simplex:</strong> One-way communication</li>
+                        </ul>
+                        
+                        <h4>Common Protocols:</h4>
+                        <ul>
+                            <li><strong>NetBIOS:</strong> Network Basic Input/Output System</li>
+                            <li><strong>SMB:</strong> Server Message Block</li>
+                            <li><strong>NFS:</strong> Network File System</li>
+                            <li><strong>SQL Sessions:</strong> Database communication sessions</li>
+                            <li><strong>RPC:</strong> Remote Procedure Call</li>
+                        </ul>
+                        
+                        <h4>Practical Examples:</h4>
+                        <ul>
+                            <li>Database connections and transactions</li>
+                            <li>File sharing sessions</li>
+                            <li>Video conferencing sessions</li>
+                            <li>Terminal sessions (SSH, Telnet)</li>
+                            <li>Web application sessions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 4 - Transport -->
+                <div class="osi-layer" onclick="toggleLayer(4)">
+                    <div class="layer-number">Layer 4</div>
+                    <h3>Transport Layer</h3>
+                    <p>End-to-end data delivery, error correction, and flow control</p>
+                    <div class="layer-details" id="layer4">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Segmentation:</strong> Breaks large messages into smaller segments</li>
+                            <li><strong>Reassembly:</strong> Reconstructs original messages from segments</li>
+                            <li><strong>Error Detection and Correction:</strong> Ensures data integrity</li>
+                            <li><strong>Flow Control:</strong> Manages data transmission rate</li>
+                            <li><strong>Port Addressing:</strong> Identifies specific applications/services</li>
+                        </ul>
+                        
+                        <h4>Transport Protocols:</h4>
+                        <div class="sub-objective">
+                            <h4>TCP (Transmission Control Protocol)</h4>
+                            <ul>
+                                <li><strong>Connection-oriented:</strong> Establishes reliable connections</li>
+                                <li><strong>Reliable delivery:</strong> Guarantees packet delivery and order</li>
+                                <li><strong>Error correction:</strong> Automatic retransmission of lost packets</li>
+                                <li><strong>Flow control:</strong> Windowing mechanism</li>
+                                <li><strong>Use cases:</strong> Web browsing, email, file transfer, database access</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="sub-objective">
+                            <h4>UDP (User Datagram Protocol)</h4>
+                            <ul>
+                                <li><strong>Connectionless:</strong> No connection establishment required</li>
+                                <li><strong>Unreliable delivery:</strong> Best-effort delivery, no guarantees</li>
+                                <li><strong>Low overhead:</strong> Minimal header information</li>
+                                <li><strong>Fast transmission:</strong> No connection setup or teardown</li>
+                                <li><strong>Use cases:</strong> DNS queries, DHCP, video streaming, online gaming</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Port Numbers:</h4>
+                        <ul>
+                            <li><strong>Well-known ports:</strong> 0-1023 (system/privileged services)</li>
+                            <li><strong>Registered ports:</strong> 1024-49151 (user/application services)</li>
+                            <li><strong>Dynamic/Private ports:</strong> 49152-65535 (client connections)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 3 - Network -->
+                <div class="osi-layer" onclick="toggleLayer(3)">
+                    <div class="layer-number">Layer 3</div>
+                    <h3>Network Layer</h3>
+                    <p>Routing, logical addressing, and path determination</p>
+                    <div class="layer-details" id="layer3">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Logical Addressing:</strong> IP address assignment and management</li>
+                            <li><strong>Routing:</strong> Path determination through internetworks</li>
+                            <li><strong>Packet Forwarding:</strong> Moving packets between networks</li>
+                            <li><strong>Fragmentation:</strong> Breaking packets for different MTU sizes</li>
+                            <li><strong>Quality of Service:</strong> Traffic prioritization and management</li>
+                        </ul>
+                        
+                        <h4>Network Protocols:</h4>
+                        <ul>
+                            <li><strong>IPv4:</strong> Internet Protocol version 4 (32-bit addressing)</li>
+                            <li><strong>IPv6:</strong> Internet Protocol version 6 (128-bit addressing)</li>
+                            <li><strong>ICMP:</strong> Internet Control Message Protocol (error reporting)</li>
+                            <li><strong>ARP:</strong> Address Resolution Protocol (MAC address discovery)</li>
+                            <li><strong>RARP:</strong> Reverse Address Resolution Protocol</li>
+                        </ul>
+                        
+                        <h4>Routing Protocols:</h4>
+                        <ul>
+                            <li><strong>Static Routing:</strong> Manually configured routes</li>
+                            <li><strong>Dynamic Routing:</strong> Automatically learned routes</li>
+                            <li><strong>RIP:</strong> Routing Information Protocol (distance vector)</li>
+                            <li><strong>OSPF:</strong> Open Shortest Path First (link state)</li>
+                            <li><strong>EIGRP:</strong> Enhanced Interior Gateway Routing Protocol (hybrid)</li>
+                            <li><strong>BGP:</strong> Border Gateway Protocol (exterior gateway)</li>
+                        </ul>
+                        
+                        <h4>Network Devices:</h4>
+                        <ul>
+                            <li><strong>Routers:</strong> Layer 3 devices that forward packets between networks</li>
+                            <li><strong>Layer 3 Switches:</strong> Switches with routing capabilities</li>
+                            <li><strong>Firewalls:</strong> Security devices that filter traffic based on rules</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 2 - Data Link -->
+                <div class="osi-layer" onclick="toggleLayer(2)">
+                    <div class="layer-number">Layer 2</div>
+                    <h3>Data Link Layer</h3>
+                    <p>Frame formatting, error detection, and local delivery</p>
+                    <div class="layer-details" id="layer2">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Frame Formation:</strong> Encapsulates data into frames</li>
+                            <li><strong>Physical Addressing:</strong> MAC address identification</li>
+                            <li><strong>Error Detection:</strong> Frame check sequences (FCS)</li>
+                            <li><strong>Flow Control:</strong> Manages data flow between adjacent nodes</li>
+                            <li><strong>Media Access Control:</strong> Manages access to shared media</li>
+                        </ul>
+                        
+                        <h4>Sublayers:</h4>
+                        <div class="sub-objective">
+                            <h4>LLC (Logical Link Control)</h4>
+                            <ul>
+                                <li>Interface between Layer 2 and Layer 3</li>
+                                <li>Flow control and error checking</li>
+                                <li>Protocol identification</li>
+                                <li>Frame sequencing</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="sub-objective">
+                            <h4>MAC (Media Access Control)</h4>
+                            <ul>
+                                <li>Physical address management</li>
+                                <li>Media access control methods</li>
+                                <li>Frame transmission timing</li>
+                                <li>Collision detection and avoidance</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Common Protocols:</h4>
+                        <ul>
+                            <li><strong>Ethernet:</strong> Most common LAN technology</li>
+                            <li><strong>Wi-Fi (802.11):</strong> Wireless LAN technology</li>
+                            <li><strong>PPP:</strong> Point-to-Point Protocol</li>
+                            <li><strong>Frame Relay:</strong> WAN technology</li>
+                            <li><strong>ATM:</strong> Asynchronous Transfer Mode</li>
+                        </ul>
+                        
+                        <h4>Network Devices:</h4>
+                        <ul>
+                            <li><strong>Switches:</strong> Forward frames based on MAC addresses</li>
+                            <li><strong>Bridges:</strong> Connect network segments</li>
+                            <li><strong>Access Points:</strong> Wireless network connectivity</li>
+                            <li><strong>NICs:</strong> Network Interface Cards</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Layer 1 - Physical -->
+                <div class="osi-layer" onclick="toggleLayer(1)">
+                    <div class="layer-number">Layer 1</div>
+                    <h3>Physical Layer</h3>
+                    <p>Raw bit transmission over physical media</p>
+                    <div class="layer-details" id="layer1">
+                        <h4>Primary Functions:</h4>
+                        <ul>
+                            <li><strong>Bit Transmission:</strong> Converting data to electrical, optical, or radio signals</li>
+                            <li><strong>Physical Topology:</strong> Defining the physical layout of the network</li>
+                            <li><strong>Synchronization:</strong> Timing and clocking of data transmission</li>
+                            <li><strong>Signal Encoding:</strong> Representing binary data as physical signals</li>
+                            <li><strong>Media Specifications:</strong> Defining cable types, connectors, and standards</li>
+                        </ul>
+                        
+                        <h4>Transmission Media:</h4>
+                        <div class="sub-objective">
+                            <h4>Copper Cable</h4>
+                            <ul>
+                                <li><strong>Twisted Pair:</strong> Cat5e, Cat6, Cat6A, Cat7, Cat8</li>
+                                <li><strong>Coaxial:</strong> RG-58, RG-59, RG-6</li>
+                                <li><strong>Considerations:</strong> EMI susceptibility, distance limitations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="sub-objective">
+                            <h4>Fiber Optic Cable</h4>
+                            <ul>
+                                <li><strong>Single-mode:</strong> Long-distance, laser transmission</li>
+                                <li><strong>Multi-mode:</strong> Short-distance, LED transmission</li>
+                                <li><strong>Advantages:</strong> Immunity to EMI, high bandwidth, long distance</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="sub-objective">
+                            <h4>Wireless Media</h4>
+                            <ul>
+                                <li><strong>Radio Waves:</strong> Wi-Fi, Bluetooth, cellular</li>
+                                <li><strong>Microwaves:</strong> Point-to-point links</li>
+                                <li><strong>Infrared:</strong> Short-range communication</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Network Devices:</h4>
+                        <ul>
+                            <li><strong>Hubs:</strong> Physical layer repeaters (obsolete)</li>
+                            <li><strong>Repeaters:</strong> Signal amplification</li>
+                            <li><strong>Transceivers:</strong> Signal conversion</li>
+                            <li><strong>Cables and Connectors:</strong> Physical connectivity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>OSI Model Study Tips</h3>
+                    <ul>
+                        <li>Remember the layers with "All People Seem To Need Data Processing" (top-down)</li>
+                        <li>Or "Please Do Not Throw Sausage Pizza Away" (bottom-up)</li>
+                        <li>Focus on understanding the purpose of each layer, not just memorizing</li>
+                        <li>Practice identifying which layer protocols operate at</li>
+                        <li>Understand how troubleshooting relates to specific layers</li>
+                        <li>Study real-world examples of each layer's functionality</li>
+                        <li>Practice with network scenarios and identify which layers are involved</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Network Appliances Tab -->
+            <div id="appliances" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.2 Network Appliances, Applications, and Functions</h2>
+                    <div class="objective-content">
+                        <p>Modern networks rely on various specialized devices and appliances to provide connectivity, security, and performance. Understanding the function and placement of these devices is crucial for network design and troubleshooting.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Physical and Virtual Appliances</h4>
+                    <p>Network appliances can be implemented as dedicated hardware devices or as virtualized software running on general-purpose servers. Each approach has distinct advantages and use cases.</p>
+                    
+                    <h5>Router</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Routes packets between different networks using Layer 3 addressing</li>
+                        <li><strong>Key Features:</strong> Routing tables, NAT, DHCP, firewall capabilities</li>
+                        <li><strong>Use Cases:</strong> Internet connectivity, inter-VLAN routing, WAN connections</li>
+                        <li><strong>Physical vs Virtual:</strong> Hardware routers for high performance, virtual routers for cloud environments</li>
+                    </ul>
+                    
+                    <h5>Switch</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Forwards frames within a network segment using MAC addresses</li>
+                        <li><strong>Types:</strong> Unmanaged, managed, Layer 3 switches</li>
+                        <li><strong>Features:</strong> VLAN support, PoE, port mirroring, STP</li>
+                        <li><strong>Virtual Implementation:</strong> vSwitches in virtualized environments</li>
+                    </ul>
+                    
+                    <h5>Firewall</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Controls network traffic based on security rules</li>
+                        <li><strong>Types:</strong> Packet filtering, stateful inspection, application layer</li>
+                        <li><strong>Features:</strong> Access control lists, intrusion prevention, VPN support</li>
+                        <li><strong>Deployment:</strong> Perimeter, internal segmentation, host-based</li>
+                    </ul>
+                    
+                    <h5>Intrusion Detection System (IDS) / Intrusion Prevention System (IPS)</h5>
+                    <ul>
+                        <li><strong>IDS Function:</strong> Monitors and alerts on suspicious network activity</li>
+                        <li><strong>IPS Function:</strong> Actively blocks detected threats</li>
+                        <li><strong>Detection Methods:</strong> Signature-based, anomaly-based, behavior-based</li>
+                        <li><strong>Deployment:</strong> Network-based (NIDS/NIPS) or host-based (HIDS/HIPS)</li>
+                    </ul>
+                    
+                    <h5>Load Balancer</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Distributes network traffic across multiple servers</li>
+                        <li><strong>Algorithms:</strong> Round-robin, least connections, weighted, hash-based</li>
+                        <li><strong>Health Checking:</strong> Monitors server availability and performance</li>
+                        <li><strong>SSL Termination:</strong> Offloads encryption processing from servers</li>
+                    </ul>
+                    
+                    <h5>Proxy</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Acts as intermediary between clients and servers</li>
+                        <li><strong>Types:</strong> Forward proxy, reverse proxy, transparent proxy</li>
+                        <li><strong>Benefits:</strong> Caching, content filtering, anonymity, security</li>
+                        <li><strong>Use Cases:</strong> Web acceleration, content filtering, API gateway</li>
+                    </ul>
+                    
+                    <h5>Network-Attached Storage (NAS)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Provides file-level storage over a network</li>
+                        <li><strong>Protocols:</strong> NFS, SMB/CIFS, FTP, HTTP</li>
+                        <li><strong>Features:</strong> RAID support, user access controls, backup capabilities</li>
+                        <li><strong>Use Cases:</strong> File sharing, backup storage, media streaming</li>
+                    </ul>
+                    
+                    <h5>Storage Area Network (SAN)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Provides block-level storage over dedicated networks</li>
+                        <li><strong>Protocols:</strong> Fibre Channel, iSCSI, FCoE</li>
+                        <li><strong>Architecture:</strong> Dedicated high-speed network for storage</li>
+                        <li><strong>Use Cases:</strong> Database storage, virtualization, high-performance applications</li>
+                    </ul>
+                    
+                    <h5>Wireless Devices</h5>
+                    <div class="sub-objective">
+                        <h6>Access Point (AP)</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Provides wireless connectivity to wired networks</li>
+                            <li><strong>Types:</strong> Autonomous, controller-based, cloud-managed</li>
+                            <li><strong>Features:</strong> Multiple SSIDs, VLAN support, band steering</li>
+                            <li><strong>Standards:</strong> 802.11a/b/g/n/ac/ax (Wi-Fi 6)</li>
+                        </ul>
+                        
+                        <h6>Wireless Controller</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Centrally manages multiple access points</li>
+                            <li><strong>Features:</strong> Configuration management, firmware updates, monitoring</li>
+                            <li><strong>Benefits:</strong> Simplified management, consistent policies, roaming support</li>
+                            <li><strong>Deployment:</strong> On-premises, cloud-based, virtual</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Applications</h4>
+                    
+                    <h5>Content Delivery Network (CDN)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Distributes content across geographically dispersed servers</li>
+                        <li><strong>Benefits:</strong> Reduced latency, improved performance, load distribution</li>
+                        <li><strong>Content Types:</strong> Static content, dynamic content, streaming media</li>
+                        <li><strong>Caching Strategies:</strong> Origin pull, push, edge caching</li>
+                        <li><strong>Providers:</strong> CloudFlare, Akamai, Amazon CloudFront, Azure CDN</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Functions</h4>
+                    
+                    <h5>Virtual Private Network (VPN)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Creates secure tunnels over public networks</li>
+                        <li><strong>Types:</strong> Site-to-site, client-to-site, clientless</li>
+                        <li><strong>Protocols:</strong> IPSec, SSL/TLS, PPTP, L2TP</li>
+                        <li><strong>Use Cases:</strong> Remote access, site connectivity, secure communications</li>
+                    </ul>
+                    
+                    <h5>Quality of Service (QoS)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Prioritizes network traffic based on requirements</li>
+                        <li><strong>Mechanisms:</strong> Traffic shaping, packet marking, queuing</li>
+                        <li><strong>Classes:</strong> Voice, video, data, best effort</li>
+                        <li><strong>Implementation:</strong> DiffServ, IntServ, traffic policing</li>
+                    </ul>
+                    
+                    <h5>Time to Live (TTL)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Prevents packets from circulating indefinitely</li>
+                        <li><strong>Mechanism:</strong> Decremented at each hop, packet dropped when zero</li>
+                        <li><strong>Uses:</strong> Loop prevention, traceroute functionality</li>
+                        <li><strong>Default Values:</strong> Vary by operating system (64, 128, 255)</li>
+                    </ul>
+                </div>
+
+                <div class="network-diagram">
+                    <h3>Typical Network Infrastructure</h3>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="device">Internet</div>
+                            <div class="connection"></div>
+                            <div class="device">Firewall</div>
+                            <div class="connection"></div>
+                            <div class="device">Router</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="device">Load Balancer</div>
+                            <div class="connection"></div>
+                            <div class="device">Core Switch</div>
+                            <div class="connection"></div>
+                            <div class="device">IDS/IPS</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="device">Access Switch</div>
+                            <div class="connection"></div>
+                            <div class="device">Servers</div>
+                            <div class="connection"></div>
+                            <div class="device">Workstations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Network Appliances Study Tips</h3>
+                    <ul>
+                        <li>Understand the OSI layer where each device primarily operates</li>
+                        <li>Learn the specific functions and use cases for each appliance</li>
+                        <li>Practice identifying optimal placement in network topologies</li>
+                        <li>Study the differences between physical and virtual implementations</li>
+                        <li>Understand how devices work together in a complete network solution</li>
+                        <li>Practice network design scenarios with different requirements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cloud Concepts Tab -->
+            <div id="cloud-concepts" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.3 Cloud Concepts and Connectivity Options</h2>
+                    <div class="objective-content">
+                        <p>Cloud computing has revolutionized how organizations deploy and manage IT infrastructure. Understanding cloud concepts, service models, and connectivity options is essential for modern network professionals.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Network Functions Virtualization (NFV)</h4>
+                    <ul>
+                        <li><strong>Definition:</strong> Virtualizes network functions traditionally performed by dedicated hardware</li>
+                        <li><strong>Benefits:</strong> Flexibility, cost reduction, rapid deployment, scalability</li>
+                        <li><strong>Examples:</strong> Virtual firewalls, virtual routers, virtual load balancers</li>
+                        <li><strong>Implementation:</strong> Software running on standard x86 servers</li>
+                        <li><strong>Management:</strong> Orchestration platforms for lifecycle management</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Virtual Private Cloud (VPC)</h4>
+                    <ul>
+                        <li><strong>Definition:</strong> Isolated virtual network within a public cloud environment</li>
+                        <li><strong>Components:</strong> Subnets, route tables, internet gateways, NAT gateways</li>
+                        <li><strong>Isolation:</strong> Logical separation using VLANs, VXLANs, or other technologies</li>
+                        <li><strong>Connectivity:</strong> VPN connections, direct connections, peering</li>
+                        <li><strong>Security:</strong> Network ACLs, security groups, private subnets</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Network Security Groups</h4>
+                    <ul>
+                        <li><strong>Function:</strong> Virtual firewalls that control traffic to/from cloud resources</li>
+                        <li><strong>Rules:</strong> Inbound and outbound rules based on IP, port, and protocol</li>
+                        <li><strong>Stateful:</strong> Automatically allows return traffic for established connections</li>
+                        <li><strong>Scope:</strong> Applied to network interfaces, subnets, or instances</li>
+                        <li><strong>Best Practices:</strong> Principle of least privilege, regular review and updates</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Network Security Lists</h4>
+                    <ul>
+                        <li><strong>Function:</strong> Subnet-level security controls in cloud environments</li>
+                        <li><strong>Operation:</strong> Stateless filtering - requires explicit allow rules for both directions</li>
+                        <li><strong>Evaluation:</strong> Rules processed in order, first match applies</li>
+                        <li><strong>Use Cases:</strong> Additional layer of security, compliance requirements</li>
+                        <li><strong>Difference from Security Groups:</strong> Subnet-level vs instance-level, stateless vs stateful</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Cloud Gateways</h4>
+                    
+                    <h5>Internet Gateway</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Provides internet access to VPC resources</li>
+                        <li><strong>Characteristics:</strong> Horizontally scaled, redundant, highly available</li>
+                        <li><strong>Routing:</strong> Routes traffic between VPC and internet</li>
+                        <li><strong>Public IPs:</strong> Required for instances to communicate with internet</li>
+                        <li><strong>Security:</strong> Works with route tables and security groups</li>
+                    </ul>
+                    
+                    <h5>Network Address Translation (NAT) Gateway</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Allows private subnet resources to access internet</li>
+                        <li><strong>Operation:</strong> Translates private IPs to public IPs for outbound traffic</li>
+                        <li><strong>Security:</strong> Prevents inbound connections from internet</li>
+                        <li><strong>High Availability:</strong> Deployed in multiple availability zones</li>
+                        <li><strong>Bandwidth:</strong> Scales automatically up to 45 Gbps</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Cloud Connectivity Options</h4>
+                    
+                    <h5>VPN (Virtual Private Network)</h5>
+                    <ul>
+                        <li><strong>Site-to-Site VPN:</strong> Connects on-premises networks to cloud VPCs</li>
+                        <li><strong>Client VPN:</strong> Secure remote access for individual users</li>
+                        <li><strong>Protocols:</strong> IPSec, SSL/TLS</li>
+                        <li><strong>Benefits:</strong> Encrypted communication, cost-effective, quick setup</li>
+                        <li><strong>Limitations:</strong> Internet dependency, variable performance</li>
+                    </ul>
+                    
+                    <h5>Direct Connect</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Dedicated network connection between on-premises and cloud</li>
+                        <li><strong>Benefits:</strong> Consistent performance, lower costs, higher bandwidth</li>
+                        <li><strong>Implementation:</strong> Physical connection through colocation facilities</li>
+                        <li><strong>VLAN Support:</strong> Multiple virtual interfaces on single connection</li>
+                        <li><strong>Redundancy:</strong> Multiple connections for high availability</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Cloud Deployment Models</h4>
+                    
+                    <h5>Public Cloud</h5>
+                    <ul>
+                        <li><strong>Characteristics:</strong> Shared infrastructure, internet-based access</li>
+                        <li><strong>Benefits:</strong> Lower costs, no maintenance, instant scalability</li>
+                        <li><strong>Use Cases:</strong> Web applications, development/testing, backup storage</li>
+                        <li><strong>Examples:</strong> AWS, Microsoft Azure, Google Cloud Platform</li>
+                        <li><strong>Considerations:</strong> Data location, compliance, security controls</li>
+                    </ul>
+                    
+                    <h5>Private Cloud</h5>
+                    <ul>
+                        <li><strong>Characteristics:</strong> Dedicated infrastructure, enhanced security</li>
+                        <li><strong>Benefits:</strong> Complete control, customization, compliance</li>
+                        <li><strong>Implementation:</strong> On-premises or hosted by third party</li>
+                        <li><strong>Use Cases:</strong> Sensitive data, regulatory requirements, high security</li>
+                        <li><strong>Challenges:</strong> Higher costs, maintenance responsibility</li>
+                    </ul>
+                    
+                    <h5>Hybrid Cloud</h5>
+                    <ul>
+                        <li><strong>Characteristics:</strong> Combination of public and private clouds</li>
+                        <li><strong>Benefits:</strong> Flexibility, cost optimization, workload placement</li>
+                        <li><strong>Use Cases:</strong> Burst capacity, data residency, gradual migration</li>
+                        <li><strong>Connectivity:</strong> VPN, direct connect, cloud interconnect</li>
+                        <li><strong>Management:</strong> Unified management across environments</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Cloud Service Models</h4>
+                    
+                    <h5>Software as a Service (SaaS)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Complete applications delivered over the internet</li>
+                        <li><strong>User Responsibility:</strong> Data and user management</li>
+                        <li><strong>Provider Responsibility:</strong> Infrastructure, platform, application</li>
+                        <li><strong>Examples:</strong> Office 365, Salesforce, Google Workspace</li>
+                        <li><strong>Benefits:</strong> No installation, automatic updates, accessibility</li>
+                    </ul>
+                    
+                    <h5>Infrastructure as a Service (IaaS)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Virtualized computing resources over the internet</li>
+                        <li><strong>User Responsibility:</strong> OS, applications, data, runtime</li>
+                        <li><strong>Provider Responsibility:</strong> Physical infrastructure, virtualization, networking</li>
+                        <li><strong>Examples:</strong> Amazon EC2, Azure Virtual Machines, Google Compute Engine</li>
+                        <li><strong>Benefits:</strong> Flexibility, scalability, pay-per-use model</li>
+                    </ul>
+                    
+                    <h5>Platform as a Service (PaaS)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Development and deployment platform in the cloud</li>
+                        <li><strong>User Responsibility:</strong> Applications and data</li>
+                        <li><strong>Provider Responsibility:</strong> Infrastructure, OS, runtime, middleware</li>
+                        <li><strong>Examples:</strong> AWS Elastic Beanstalk, Azure App Service, Google App Engine</li>
+                        <li><strong>Benefits:</strong> Faster development, reduced complexity, automatic scaling</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Cloud Characteristics</h4>
+                    
+                    <h5>Scalability</h5>
+                    <ul>
+                        <li><strong>Vertical Scaling (Scale Up):</strong> Increasing resources of existing instances</li>
+                        <li><strong>Horizontal Scaling (Scale Out):</strong> Adding more instances to handle load</li>
+                        <li><strong>Planning:</strong> Capacity planning and resource allocation</li>
+                        <li><strong>Automation:</strong> Auto-scaling based on metrics and policies</li>
+                        <li><strong>Considerations:</strong> Application architecture, database scaling, stateless design</li>
+                    </ul>
+                    
+                    <h5>Elasticity</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Ability to automatically scale resources up or down</li>
+                        <li><strong>Triggers:</strong> CPU utilization, memory usage, network traffic, custom metrics</li>
+                        <li><strong>Benefits:</strong> Cost optimization, performance optimization, automatic response</li>
+                        <li><strong>Implementation:</strong> Auto-scaling groups, policies, monitoring</li>
+                        <li><strong>Best Practices:</strong> Gradual scaling, cool-down periods, health checks</li>
+                    </ul>
+                    
+                    <h5>Multitenancy</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Multiple customers sharing the same infrastructure</li>
+                        <li><strong>Isolation:</strong> Logical separation of tenant data and resources</li>
+                        <li><strong>Benefits:</strong> Cost efficiency, resource utilization, economies of scale</li>
+                        <li><strong>Security:</strong> Strong isolation mechanisms, encryption, access controls</li>
+                        <li><strong>Challenges:</strong> Performance isolation, compliance, data residency</li>
+                    </ul>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Cloud Concepts Study Tips</h3>
+                    <ul>
+                        <li>Understand the shared responsibility model for each service type</li>
+                        <li>Practice designing hybrid cloud architectures</li>
+                        <li>Learn about specific cloud provider implementations</li>
+                        <li>Understand the differences between scalability and elasticity</li>
+                        <li>Study cloud security best practices and compliance requirements</li>
+                        <li>Practice cost optimization strategies for cloud deployments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Protocols and Ports Tab -->
+            <div id="protocols" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.4 Common Networking Ports, Protocols, Services, and Traffic Types</h2>
+                    <div class="objective-content">
+                        <p>Understanding network protocols, their associated port numbers, and traffic types is fundamental to network administration, troubleshooting, and security. This section covers the essential protocols and services used in modern networks.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Common Protocols and Port Numbers</h4>
+                    <p>The following table shows the most important protocols and their well-known port numbers that you must know for the Network+ exam:</p>
+                    
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Protocol</th>
+                                <th>Port(s)</th>
+                                <th>Transport</th>
+                                <th>Description</th>
+                                <th>Use Cases</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>FTP</strong></td>
+                                <td>20/21</td>
+                                <td>TCP</td>
+                                <td>File Transfer Protocol</td>
+                                <td>File transfers, web content management</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SFTP</strong></td>
+                                <td>22</td>
+                                <td>TCP</td>
+                                <td>Secure File Transfer Protocol</td>
+                                <td>Secure file transfers over SSH</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SSH</strong></td>
+                                <td>22</td>
+                                <td>TCP</td>
+                                <td>Secure Shell</td>
+                                <td>Remote administration, secure terminal access</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Telnet</strong></td>
+                                <td>23</td>
+                                <td>TCP</td>
+                                <td>Terminal Network Protocol</td>
+                                <td>Remote terminal access (insecure)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SMTP</strong></td>
+                                <td>25</td>
+                                <td>TCP</td>
+                                <td>Simple Mail Transfer Protocol</td>
+                                <td>Email transmission between servers</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DNS</strong></td>
+                                <td>53</td>
+                                <td>UDP/TCP</td>
+                                <td>Domain Name System</td>
+                                <td>Domain name resolution</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DHCP</strong></td>
+                                <td>67/68</td>
+                                <td>UDP</td>
+                                <td>Dynamic Host Configuration Protocol</td>
+                                <td>Automatic IP address assignment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TFTP</strong></td>
+                                <td>69</td>
+                                <td>UDP</td>
+                                <td>Trivial File Transfer Protocol</td>
+                                <td>Simple file transfers, device configuration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HTTP</strong></td>
+                                <td>80</td>
+                                <td>TCP</td>
+                                <td>Hypertext Transfer Protocol</td>
+                                <td>Web browsing, API communication</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NTP</strong></td>
+                                <td>123</td>
+                                <td>UDP</td>
+                                <td>Network Time Protocol</td>
+                                <td>Time synchronization</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SNMP</strong></td>
+                                <td>161/162</td>
+                                <td>UDP</td>
+                                <td>Simple Network Management Protocol</td>
+                                <td>Network monitoring and management</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LDAP</strong></td>
+                                <td>389</td>
+                                <td>TCP</td>
+                                <td>Lightweight Directory Access Protocol</td>
+                                <td>Directory services, authentication</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HTTPS</strong></td>
+                                <td>443</td>
+                                <td>TCP</td>
+                                <td>HTTP Secure</td>
+                                <td>Secure web browsing, encrypted communication</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SMB</strong></td>
+                                <td>445</td>
+                                <td>TCP</td>
+                                <td>Server Message Block</td>
+                                <td>File and printer sharing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Syslog</strong></td>
+                                <td>514</td>
+                                <td>UDP</td>
+                                <td>System Logging Protocol</td>
+                                <td>Centralized logging</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SMTPS</strong></td>
+                                <td>587</td>
+                                <td>TCP</td>
+                                <td>SMTP Secure</td>
+                                <td>Secure email submission</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LDAPS</strong></td>
+                                <td>636</td>
+                                <td>TCP</td>
+                                <td>LDAP over SSL</td>
+                                <td>Secure directory services</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SQL Server</strong></td>
+                                <td>1433</td>
+                                <td>TCP</td>
+                                <td>Microsoft SQL Server</td>
+                                <td>Database communication</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RDP</strong></td>
+                                <td>3389</td>
+                                <td>TCP</td>
+                                <td>Remote Desktop Protocol</td>
+                                <td>Remote desktop access</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SIP</strong></td>
+                                <td>5060/5061</td>
+                                <td>UDP/TCP</td>
+                                <td>Session Initiation Protocol</td>
+                                <td>VoIP signaling, multimedia sessions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Internet Protocol (IP) Types</h4>
+                    
+                    <h5>Internet Control Message Protocol (ICMP)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Error reporting and network diagnostics</li>
+                        <li><strong>Common Messages:</strong> Echo Request/Reply (ping), Destination Unreachable, Time Exceeded</li>
+                        <li><strong>Tools:</strong> Ping, traceroute, pathping</li>
+                        <li><strong>Security:</strong> Often blocked by firewalls, can be used for reconnaissance</li>
+                        <li><strong>IPv6 Equivalent:</strong> ICMPv6 with additional functionality</li>
+                    </ul>
+                    
+                    <h5>Transmission Control Protocol (TCP)</h5>
+                    <ul>
+                        <li><strong>Characteristics:</strong> Connection-oriented, reliable, ordered delivery</li>
+                        <li><strong>Three-Way Handshake:</strong> SYN, SYN-ACK, ACK</li>
+                        <li><strong>Features:</strong> Error correction, flow control, congestion control</li>
+                        <li><strong>Use Cases:</strong> Web browsing, email, file transfers, database connections</li>
+                        <li><strong>Overhead:</strong> Higher than UDP due to reliability mechanisms</li>
+                    </ul>
+                    
+                    <h5>User Datagram Protocol (UDP)</h5>
+                    <ul>
+                        <li><strong>Characteristics:</strong> Connectionless, unreliable, fast</li>
+                        <li><strong>Features:</strong> No error correction, no flow control, minimal overhead</li>
+                        <li><strong>Use Cases:</strong> DNS queries, DHCP, streaming media, online gaming</li>
+                        <li><strong>Benefits:</strong> Lower latency, reduced bandwidth usage</li>
+                        <li><strong>Applications:</strong> Real-time applications where speed > reliability</li>
+                    </ul>
+                    
+                    <h5>Generic Routing Encapsulation (GRE)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Tunneling protocol that encapsulates various protocols</li>
+                        <li><strong>Use Cases:</strong> VPNs, multicast over WAN, protocol bridging</li>
+                        <li><strong>Characteristics:</strong> Simple encapsulation, no built-in security</li>
+                        <li><strong>Combined with:</strong> IPSec for security, often used in site-to-site VPNs</li>
+                        <li><strong>Overhead:</strong> Additional headers increase packet size</li>
+                    </ul>
+                    
+                    <h5>Internet Protocol Security (IPSec)</h5>
+                    <ul>
+                        <li><strong>Function:</strong> Suite of protocols for securing IP communications</li>
+                        <li><strong>Modes:</strong> Transport mode (payload only), Tunnel mode (entire packet)</li>
+                        <li><strong>Components:</strong> Authentication Header (AH), Encapsulating Security Payload (ESP), Internet Key Exchange (IKE)</li>
+                    </ul>
+                    
+                    <div class="sub-objective">
+                        <h6>Authentication Header (AH)</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Provides authentication and integrity</li>
+                            <li><strong>Protection:</strong> Entire packet including IP headers</li>
+                            <li><strong>Limitations:</strong> No encryption, doesn't work with NAT</li>
+                            <li><strong>Protocol Number:</strong> 51</li>
+                        </ul>
+                        
+                        <h6>Encapsulating Security Payload (ESP)</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Provides authentication, integrity, and confidentiality</li>
+                            <li><strong>Encryption:</strong> Payload encryption for data confidentiality</li>
+                            <li><strong>Authentication:</strong> Optional authentication of ESP header</li>
+                            <li><strong>Protocol Number:</strong> 50</li>
+                        </ul>
+                        
+                        <h6>Internet Key Exchange (IKE)</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Key management protocol for IPSec</li>
+                            <li><strong>Versions:</strong> IKEv1 (older), IKEv2 (current standard)</li>
+                            <li><strong>Phases:</strong> Phase 1 (ISAKMP SA), Phase 2 (IPSec SA)</li>
+                            <li><strong>Authentication:</strong> Pre-shared keys, digital certificates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Traffic Types</h4>
+                    
+                    <h5>Unicast</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> One-to-one communication between sender and receiver</li>
+                        <li><strong>Characteristics:</strong> Most common traffic type, direct communication</li>
+                        <li><strong>Examples:</strong> Web browsing, email, file transfers</li>
+                        <li><strong>Addressing:</strong> Specific destination IP address</li>
+                        <li><strong>Efficiency:</strong> Point-to-point, no unnecessary network traffic</li>
+                    </ul>
+                    
+                    <h5>Multicast</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> One-to-many communication to a group of receivers</li>
+                        <li><strong>IP Range:</strong> 224.0.0.0 to 239.255.255.255 (IPv4)</li>
+                        <li><strong>Protocols:</strong> IGMP (Internet Group Management Protocol)</li>
+                        <li><strong>Examples:</strong> Video conferencing, IPTV, software updates</li>
+                        <li><strong>Benefits:</strong> Efficient bandwidth usage, reduces network congestion</li>
+                        <li><strong>Challenges:</strong> Router support required, complex configuration</li>
+                    </ul>
+                    
+                    <h5>Anycast</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> One-to-nearest communication to closest receiver</li>
+                        <li><strong>Implementation:</strong> Same IP address assigned to multiple servers</li>
+                        <li><strong>Routing:</strong> Router selects closest/best path destination</li>
+                        <li><strong>Examples:</strong> DNS root servers, CDN edge servers</li>
+                        <li><strong>Benefits:</strong> Load distribution, improved performance, redundancy</li>
+                        <li><strong>Use Cases:</strong> Global services, disaster recovery</li>
+                    </ul>
+                    
+                    <h5>Broadcast</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> One-to-all communication within a network segment</li>
+                        <li><strong>IP Address:</strong> Network broadcast address (all host bits set to 1)</li>
+                        <li><strong>Scope:</strong> Limited to local network segment (broadcast domain)</li>
+                        <li><strong>Examples:</strong> DHCP discovery, ARP requests, network announcements</li>
+                        <li><strong>Limitations:</strong> Creates network overhead, security concerns</li>
+                        <li><strong>IPv6:</strong> No broadcast traffic (replaced by multicast)</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>Protocol Quick Quiz</h3>
+                    <div class="quiz-question">Which protocol uses port 443 and provides secure web communication?</div>
+                    <ul class="quiz-options">
+                        <li onclick="selectQuizAnswer(this, false)">HTTP</li>
+                        <li onclick="selectQuizAnswer(this, true)">HTTPS</li>
+                        <li onclick="selectQuizAnswer(this, false)">SSH</li>
+                        <li onclick="selectQuizAnswer(this, false)">SFTP</li>
+                    </ul>
+                    <button class="btn" onclick="checkQuizAnswer()">Check Answer</button>
+                    <div id="quiz-result"></div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Protocols and Ports Study Tips</h3>
+                    <ul>
+                        <li>Create flashcards for port numbers and their associated protocols</li>
+                        <li>Practice with port number mnemonics and memory techniques</li>
+                        <li>Understand when to use TCP vs UDP for different applications</li>
+                        <li>Study the differences between traffic types and their use cases</li>
+                        <li>Practice identifying protocols in network captures</li>
+                        <li>Understand security implications of different protocols</li>
+                        <li>Learn about protocol encapsulation and headers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Transmission Media Tab -->
+            <div id="transmission" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.5 Transmission Media and Transceivers</h2>
+                    <div class="objective-content">
+                        <p>Understanding different transmission media, their characteristics, and appropriate transceiver technologies is crucial for network design and implementation. This section covers wired and wireless technologies used in modern networks.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Wireless Technologies</h4>
+                    
+                    <h5>802.11 Standards (Wi-Fi)</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Frequency</th>
+                                <th>Max Speed</th>
+                                <th>Range</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>802.11a</strong></td>
+                                <td>5 GHz</td>
+                                <td>54 Mbps</td>
+                                <td>35m indoor</td>
+                                <td>1999</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11b</strong></td>
+                                <td>2.4 GHz</td>
+                                <td>11 Mbps</td>
+                                <td>38m indoor</td>
+                                <td>1999</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11g</strong></td>
+                                <td>2.4 GHz</td>
+                                <td>54 Mbps</td>
+                                <td>38m indoor</td>
+                                <td>2003</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11n</strong></td>
+                                <td>2.4/5 GHz</td>
+                                <td>600 Mbps</td>
+                                <td>70m indoor</td>
+                                <td>2009</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11ac</strong></td>
+                                <td>5 GHz</td>
+                                <td>6.77 Gbps</td>
+                                <td>35m indoor</td>
+                                <td>2013</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11ax (Wi-Fi 6)</strong></td>
+                                <td>2.4/5/6 GHz</td>
+                                <td>9.6 Gbps</td>
+                                <td>Enhanced</td>
+                                <td>2019</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Cellular Technologies</h5>
+                    <ul>
+                        <li><strong>4G LTE:</strong> Long Term Evolution, up to 1 Gbps, mobile broadband</li>
+                        <li><strong>5G:</strong> Fifth generation, up to 20 Gbps, ultra-low latency</li>
+                        <li><strong>Use Cases:</strong> Mobile internet, IoT connectivity, backup connections</li>
+                        <li><strong>Coverage:</strong> Wide area coverage, outdoor and indoor</li>
+                        <li><strong>Considerations:</strong> Data caps, latency, signal strength</li>
+                    </ul>
+                    
+                    <h5>Satellite</h5>
+                    <ul>
+                        <li><strong>GEO (Geostationary):</strong> High latency (~500ms), wide coverage</li>
+                        <li><strong>LEO (Low Earth Orbit):</strong> Lower latency (~20-50ms), requires constellation</li>
+                        <li><strong>Use Cases:</strong> Remote locations, maritime, disaster recovery</li>
+                        <li><strong>Providers:</strong> Starlink, OneWeb, traditional satellite ISPs</li>
+                        <li><strong>Challenges:</strong> Weather interference, equipment costs</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Wired Technologies</h4>
+                    
+                    <h5>802.3 Standards (Ethernet)</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Speed</th>
+                                <th>Media</th>
+                                <th>Max Distance</th>
+                                <th>Common Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>10BASE-T</strong></td>
+                                <td>10 Mbps</td>
+                                <td>Cat3 UTP</td>
+                                <td>100m</td>
+                                <td>Legacy networks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>100BASE-TX</strong></td>
+                                <td>100 Mbps</td>
+                                <td>Cat5 UTP</td>
+                                <td>100m</td>
+                                <td>Desktop connections</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-T</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Cat5e/6 UTP</td>
+                                <td>100m</td>
+                                <td>Modern desktops/servers</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-T</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Cat6A/7 UTP</td>
+                                <td>100m</td>
+                                <td>High-performance networks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>100BASE-FX</strong></td>
+                                <td>100 Mbps</td>
+                                <td>Multimode fiber</td>
+                                <td>2km</td>
+                                <td>Building backbone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-SX</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Multimode fiber</td>
+                                <td>550m</td>
+                                <td>Campus backbone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-LX</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Single/multimode fiber</td>
+                                <td>10km</td>
+                                <td>Long-distance connections</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-SR</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Multimode fiber</td>
+                                <td>300m</td>
+                                <td>Data center</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-LR</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Single-mode fiber</td>
+                                <td>10km</td>
+                                <td>Metro area networks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Fiber Optic Types</h5>
+                    <div class="sub-objective">
+                        <h6>Single-mode Fiber</h6>
+                        <ul>
+                            <li><strong>Core Size:</strong> 8-10 microns</li>
+                            <li><strong>Light Source:</strong> Laser (coherent light)</li>
+                            <li><strong>Distance:</strong> Long distance (up to 40km+)</li>
+                            <li><strong>Cost:</strong> Higher equipment costs</li>
+                            <li><strong>Applications:</strong> WAN links, campus backbone, ISP connections</li>
+                        </ul>
+                        
+                        <h6>Multimode Fiber</h6>
+                        <ul>
+                            <li><strong>Core Size:</strong> 50 or 62.5 microns</li>
+                            <li><strong>Light Source:</strong> LED or VCSEL (incoherent light)</li>
+                            <li><strong>Distance:</strong> Medium distance (up to 2km)</li>
+                            <li><strong>Cost:</strong> Lower equipment costs</li>
+                            <li><strong>Applications:</strong> LAN backbone, data centers, building connections</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Direct Attach Copper (DAC) Cable</h5>
+                    <ul>
+                        <li><strong>Twinaxial Cable:</strong> Two copper conductors with shielding</li>
+                        <li><strong>Use Cases:</strong> Short-distance, high-speed connections</li>
+                        <li><strong>Benefits:</strong> Lower cost than fiber, lower power consumption</li>
+                        <li><strong>Limitations:</strong> Distance (typically 1-7 meters)</li>
+                        <li><strong>Applications:</strong> Data center top-of-rack to servers</li>
+                    </ul>
+                    
+                    <h5>Coaxial Cable</h5>
+                    <ul>
+                        <li><strong>RG-6:</strong> Cable TV, satellite, broadband internet</li>
+                        <li><strong>RG-59:</strong> Older cable TV installations, CCTV</li>
+                        <li><strong>Characteristics:</strong> Single copper conductor, shielding, 75-ohm impedance</li>
+                        <li><strong>Advantages:</strong> Good for high-frequency signals, EMI resistance</li>
+                        <li><strong>Disadvantages:</strong> Limited bandwidth compared to fiber</li>
+                    </ul>
+                    
+                    <h5>Cable Speeds and Standards</h5>
+                    <ul>
+                        <li><strong>Cat5e:</strong> 1 Gbps up to 100m</li>
+                        <li><strong>Cat6:</strong> 10 Gbps up to 55m, 1 Gbps up to 100m</li>
+                        <li><strong>Cat6A:</strong> 10 Gbps up to 100m</li>
+                        <li><strong>Cat7:</strong> 10 Gbps up to 100m (shielded)</li>
+                        <li><strong>Cat8:</strong> 25/40 Gbps up to 30m (data centers)</li>
+                    </ul>
+                    
+                    <h5>Plenum vs Non-Plenum Cable</h5>
+                    <ul>
+                        <li><strong>Plenum Cable:</strong> Fire-resistant, low-smoke, for air spaces</li>
+                        <li><strong>Non-Plenum (PVC):</strong> Standard cable, lower cost</li>
+                        <li><strong>Building Codes:</strong> Plenum required in air handling spaces</li>
+                        <li><strong>Cost:</strong> Plenum cables are more expensive</li>
+                        <li><strong>Installation:</strong> Must comply with local fire codes</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Transceivers</h4>
+                    
+                    <h5>Protocols</h5>
+                    <div class="sub-objective">
+                        <h6>Ethernet Transceivers</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Convert electrical signals to optical signals</li>
+                            <li><strong>Standards:</strong> IEEE 802.3 compliance</li>
+                            <li><strong>Types:</strong> Copper, fiber, direct attach</li>
+                            <li><strong>Hot-swappable:</strong> Can be replaced without downtime</li>
+                        </ul>
+                        
+                        <h6>Fibre Channel (FC)</h6>
+                        <ul>
+                            <li><strong>Function:</strong> High-speed storage area network communication</li>
+                            <li><strong>Speeds:</strong> 1, 2, 4, 8, 16, 32 Gbps</li>
+                            <li><strong>Applications:</strong> SAN connectivity, storage arrays</li>
+                            <li><strong>Benefits:</strong> Low latency, high reliability</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Form Factors</h5>
+                    <div class="sub-objective">
+                        <h6>Small Form-factor Pluggable (SFP)</h6>
+                        <ul>
+                            <li><strong>Speed:</strong> Up to 1 Gbps</li>
+                            <li><strong>Size:</strong> Compact, hot-swappable</li>
+                            <li><strong>Types:</strong> SFP-T (copper), SFP-SX/LX (fiber)</li>
+                            <li><strong>Applications:</strong> Switches, routers, network cards</li>
+                        </ul>
+                        
+                        <h6>Quad Small Form-factor Pluggable (QSFP)</h6>
+                        <ul>
+                            <li><strong>QSFP+:</strong> 40 Gbps (4 x 10 Gbps lanes)</li>
+                            <li><strong>QSFP28:</strong> 100 Gbps (4 x 25 Gbps lanes)</li>
+                            <li><strong>QSFP56:</strong> 200 Gbps (4 x 50 Gbps lanes)</li>
+                            <li><strong>Applications:</strong> Data center, high-performance computing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Connector Types</h4>
+                    
+                    <h5>Fiber Optic Connectors</h5>
+                    <ul>
+                        <li><strong>SC (Subscriber Connector):</strong> Square connector, push-pull coupling</li>
+                        <li><strong>LC (Local Connector):</strong> Small form factor, latch coupling</li>
+                        <li><strong>ST (Straight Tip):</strong> Round connector, twist-lock coupling</li>
+                        <li><strong>MPO (Multi-fiber Push On):</strong> High-density, multiple fibers</li>
+                    </ul>
+                    
+                    <h5>Copper Connectors</h5>
+                    <ul>
+                        <li><strong>RJ11:</strong> 6-position connector, telephone systems</li>
+                        <li><strong>RJ45:</strong> 8-position connector, Ethernet networks</li>
+                        <li><strong>F-type:</strong> Threaded connector, coaxial cable (cable TV)</li>
+                        <li><strong>BNC (Bayonet Neill–Concelman):</strong> Twist-lock, coaxial connector</li>
+                    </ul>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Transmission Media Study Tips</h3>
+                    <ul>
+                        <li>Memorize cable categories and their maximum speeds/distances</li>
+                        <li>Understand the differences between single-mode and multimode fiber</li>
+                        <li>Practice identifying connector types from images</li>
+                        <li>Learn when to use different cable types for various scenarios</li>
+                        <li>Understand the relationship between transceivers and media types</li>
+                        <li>Study wireless standards and their frequency bands</li>
+                        <li>Practice calculating cable runs and distance limitations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Network Topologies Tab -->
+            <div id="topologies" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.6 Network Topologies, Architectures, and Types</h2>
+                    <div class="objective-content">
+                        <p>Network topology refers to the arrangement of network devices and how they're interconnected. Understanding different topologies and architectures is crucial for network design, troubleshooting, and optimization.</p>
+                    </div>
+                </div>
+
+                <div class="topology-grid">
+                    <div class="topology-card" onclick="showTopologyDetails('mesh')">
+                        <div class="topology-visual">🕸️</div>
+                        <h3>Mesh Topology</h3>
+                        <p>Every device connects to every other device</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('hybrid')">
+                        <div class="topology-visual">🔀</div>
+                        <h3>Hybrid Topology</h3>
+                        <p>Combination of multiple topology types</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('star')">
+                        <div class="topology-visual">⭐</div>
+                        <h3>Star/Hub and Spoke</h3>
+                        <p>Central hub with devices radiating outward</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('spine-leaf')">
+                        <div class="topology-visual">🌿</div>
+                        <h3>Spine and Leaf</h3>
+                        <p>Data center architecture with spine and leaf switches</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('point-to-point')">
+                        <div class="topology-visual">↔️</div>
+                        <h3>Point to Point</h3>
+                        <p>Direct connection between two devices</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('three-tier')">
+                        <div class="topology-visual">🏗️</div>
+                        <h3>Three-tier Hierarchical</h3>
+                        <p>Core, Distribution, and Access layers</p>
+                    </div>
+                </div>
+
+                <div id="topology-details" class="sub-objective" style="display: none;">
+                    <div id="mesh-details" class="topology-detail" style="display: none;">
+                        <h4>Mesh Topology</h4>
+                        <ul>
+                            <li><strong>Full Mesh:</strong> Every device connected to every other device</li>
+                            <li><strong>Partial Mesh:</strong> Some devices have multiple connections</li>
+                            <li><strong>Advantages:</strong> High redundancy, fault tolerance, multiple paths</li>
+                            <li><strong>Disadvantages:</strong> Expensive, complex, difficult to manage</li>
+                            <li><strong>Use Cases:</strong> Critical networks, WAN connections, wireless mesh</li>
+                            <li><strong>Formula:</strong> n(n-1)/2 connections for full mesh (n = number of devices)</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="hybrid-details" class="topology-detail" style="display: none;">
+                        <h4>Hybrid Topology</h4>
+                        <ul>
+                            <li><strong>Definition:</strong> Combination of two or more basic topologies</li>
+                            <li><strong>Examples:</strong> Star-bus, star-ring, tree topology</li>
+                            <li><strong>Advantages:</strong> Flexible, scalable, optimized for specific needs</li>
+                            <li><strong>Disadvantages:</strong> Complex design, varied equipment needs</li>
+                            <li><strong>Use Cases:</strong> Large enterprise networks, campus networks</li>
+                            <li><strong>Design Considerations:</strong> Traffic patterns, cost, performance requirements</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="star-details" class="topology-detail" style="display: none;">
+                        <h4>Star/Hub and Spoke Topology</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Central device with all others connected to it</li>
+                            <li><strong>Central Device:</strong> Switch, hub, or router</li>
+                            <li><strong>Advantages:</strong> Easy to manage, centralized control, fault isolation</li>
+                            <li><strong>Disadvantages:</strong> Single point of failure, limited scalability</li>
+                            <li><strong>Use Cases:</strong> Small networks, branch offices, access layer</li>
+                            <li><strong>Variants:</strong> Extended star, distributed star</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="spine-leaf-details" class="topology-detail" style="display: none;">
+                        <h4>Spine and Leaf Topology</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Two-tier architecture with spine and leaf layers</li>
+                            <li><strong>Spine Layer:</strong> High-performance switches providing connectivity</li>
+                            <li><strong>Leaf Layer:</strong> Access switches connecting to servers/devices</li>
+                            <li><strong>Connectivity:</strong> Every leaf connects to every spine</li>
+                            <li><strong>Advantages:</strong> Predictable latency, high bandwidth, scalability</li>
+                            <li><strong>Use Cases:</strong> Data centers, cloud infrastructure, high-performance computing</li>
+                            <li><strong>Benefits:</strong> East-west traffic optimization, simplified cabling</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="point-to-point-details" class="topology-detail" style="display: none;">
+                        <h4>Point to Point Topology</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Direct connection between two devices</li>
+                            <li><strong>Media:</strong> Dedicated circuit, fiber, microwave, satellite</li>
+                            <li><strong>Advantages:</strong> High security, dedicated bandwidth, simple</li>
+                            <li><strong>Disadvantages:</strong> Limited scalability, single path</li>
+                            <li><strong>Use Cases:</strong> WAN links, backup connections, isolated systems</li>
+                            <li><strong>Protocols:</strong> PPP, HDLC, Frame Relay</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="three-tier-details" class="topology-detail" style="display: none;">
+                        <h4>Three-tier Hierarchical Model</h4>
+                        <div class="sub-objective">
+                            <h5>Core Layer</h5>
+                            <ul>
+                                <li><strong>Function:</strong> High-speed backbone, packet switching</li>
+                                <li><strong>Characteristics:</strong> High reliability, fast convergence, redundancy</li>
+                                <li><strong>Devices:</strong> High-end routers, multilayer switches</li>
+                                <li><strong>Design:</strong> Minimize latency, maximize throughput</li>
+                            </ul>
+                            
+                            <h5>Distribution Layer</h5>
+                            <ul>
+                                <li><strong>Function:</strong> Policy enforcement, traffic control, aggregation</li>
+                                <li><strong>Services:</strong> Routing, filtering, WAN access, VLAN routing</li>
+                                <li><strong>Devices:</strong> Layer 3 switches, routers with advanced features</li>
+                                <li><strong>Policies:</strong> QoS, security policies, route summarization</li>
+                            </ul>
+                            
+                            <h5>Access Layer</h5>
+                            <ul>
+                                <li><strong>Function:</strong> End device connectivity, port density</li>
+                                <li><strong>Services:</strong> VLAN assignment, PoE, port security</li>
+                                <li><strong>Devices:</strong> Access switches, wireless access points</li>
+                                <li><strong>Features:</strong> User access control, basic security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Collapsed Core Architecture</h4>
+                    <ul>
+                        <li><strong>Definition:</strong> Core and distribution layers combined into one</li>
+                        <li><strong>Use Cases:</strong> Smaller networks, cost-sensitive deployments</li>
+                        <li><strong>Advantages:</strong> Reduced cost, simplified management, fewer devices</li>
+                        <li><strong>Disadvantages:</strong> Limited scalability, potential performance bottlenecks</li>
+                        <li><strong>Implementation:</strong> High-performance multilayer switches</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Traffic Flows</h4>
+                    
+                    <h5>North-South Traffic</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Traffic flowing between different network layers</li>
+                        <li><strong>Examples:</strong> Client-server communication, internet access</li>
+                        <li><strong>Characteristics:</strong> Crosses network boundaries, often involves firewalls</li>
+                        <li><strong>Optimization:</strong> Proper hierarchy design, adequate uplinks</li>
+                        <li><strong>Security:</strong> Inspection points, policy enforcement</li>
+                    </ul>
+                    
+                    <h5>East-West Traffic</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Traffic flowing between devices at same network layer</li>
+                        <li><strong>Examples:</strong> Server-to-server communication, database replication</li>
+                        <li><strong>Growth:</strong> Increasing in data centers due to virtualization</li>
+                        <li><strong>Challenges:</strong> Traditional networks not optimized for this pattern</li>
+                        <li><strong>Solutions:</strong> Spine-leaf architecture, software-defined networking</li>
+                    </ul>
+                </div>
+
+                <div class="network-diagram">
+                    <h3>Three-Tier Hierarchical Model</h3>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                        <div style="background: #e74c3c; color: white; padding: 1rem 2rem; border-radius: 8px; font-weight: bold;">
+                            Core Layer - High-Speed Backbone
+                        </div>
+                        <div style="display: flex; gap: 2rem;">
+                            <div style="background: #f39c12; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: bold;">
+                                Distribution Layer
+                            </div>
+                            <div style="background: #f39c12; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: bold;">
+                                Distribution Layer
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Network Topologies Study Tips</h3>
+                    <ul>
+                        <li>Draw diagrams of each topology type to visualize connections</li>
+                        <li>Understand the advantages and disadvantages of each topology</li>
+                        <li>Practice identifying appropriate topologies for different scenarios</li>
+                        <li>Learn about redundancy and fault tolerance in each design</li>
+                        <li>Understand modern data center architectures like spine-leaf</li>
+                        <li>Study traffic flow patterns and their implications</li>
+                        <li>Practice calculating connection requirements for mesh networks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- IPv4 Addressing Tab -->
+            <div id="addressing" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.7 IPv4 Network Addressing</h2>
+                    <div class="objective-content">
+                        <p>IPv4 addressing is fundamental to network operations. Understanding public vs. private addressing, subnetting techniques, and address classes is essential for network design and troubleshooting.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Public vs Private Addressing</h4>
+                    
+                    <h5>Automatic Private IP Addressing (APIPA)</h5>
+                    <ul>
+                        <li><strong>Range:</strong> 169.254.0.0/16 (169.254.0.1 - 169.254.255.254)</li>
+                        <li><strong>Purpose:</strong> Self-assigned when DHCP is unavailable</li>
+                        <li><strong>Characteristics:</strong> Non-routable, link-local only</li>
+                        <li><strong>Use Cases:</strong> Small peer-to-peer networks, troubleshooting</li>
+                        <li><strong>Limitations:</strong> Cannot access internet or other subnets</li>
+                    </ul>
+                    
+                    <h5>RFC 1918 Private Address Ranges</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Range</th>
+                                <th>CIDR</th>
+                                <th>Subnet Mask</th>
+                                <th>Number of Addresses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Class A</strong></td>
+                                <td>10.0.0.0 - 10.255.255.255</td>
+                                <td>10.0.0.0/8</td>
+                                <td>255.0.0.0</td>
+                                <td>16,777,216</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class B</strong></td>
+                                <td>172.16.0.0 - 172.31.255.255</td>
+                                <td>172.16.0.0/12</td>
+                                <td>255.240.0.0</td>
+                                <td>1,048,576</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class C</strong></td>
+                                <td>192.168.0.0 - 192.168.255.255</td>
+                                <td>192.168.0.0/16</td>
+                                <td>255.255.0.0</td>
+                                <td>65,536</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Loopback/Localhost</h5>
+                    <ul>
+                        <li><strong>Range:</strong> 127.0.0.0/8 (127.0.0.1 most common)</li>
+                        <li><strong>Purpose:</strong> Testing network stack, local services</li>
+                        <li><strong>Characteristics:</strong> Always available, never leaves the host</li>
+                        <li><strong>Use Cases:</strong> Application testing, local services, diagnostics</li>
+                        <li><strong>IPv6 Equivalent:</strong> ::1</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Subnetting</h4>
+                    
+                    <h5>Variable Length Subnet Mask (VLSM)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Using different subnet mask lengths within the same network</li>
+                        <li><strong>Benefits:</strong> Efficient address utilization, flexible design</li>
+                        <li><strong>Requirements:</strong> Classless routing protocols (OSPF, EIGRP, BGP)</li>
+                        <li><strong>Design Process:</strong> Start with largest subnet, work down to smallest</li>
+                        <li><strong>Example:</strong> /24 network divided into /26, /27, /28 subnets</li>
+                    </ul>
+                    
+                    <h5>Classless Inter-domain Routing (CIDR)</h5>
+                    <ul>
+                        <li><strong>Notation:</strong> Network address followed by /prefix length</li>
+                        <li><strong>Example:</strong> 192.168.1.0/24 (24-bit network prefix)</li>
+                        <li><strong>Benefits:</strong> Route aggregation, efficient routing tables</li>
+                        <li><strong>Supernetting:</strong> Combining multiple networks into larger block</li>
+                        <li><strong>Route Summarization:</strong> Reducing routing table size</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>IPv4 Address Classes</h4>
+                    
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Range</th>
+                                <th>Default Mask</th>
+                                <th>CIDR</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Class A</strong></td>
+                                <td>1.0.0.0 - 126.255.255.255</td>
+                                <td>255.0.0.0</td>
+                                <td>/8</td>
+                                <td>Large networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class B</strong></td>
+                                <td>128.0.0.0 - 191.255.255.255</td>
+                                <td>255.255.0.0</td>
+                                <td>/16</td>
+                                <td>Medium networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class C</strong></td>
+                                <td>192.0.0.0 - 223.255.255.255</td>
+                                <td>255.255.255.0</td>
+                                <td>/24</td>
+                                <td>Small networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class D</strong></td>
+                                <td>224.0.0.0 - 239.255.255.255</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>Multicast addressing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class E</strong></td>
+                                <td>240.0.0.0 - 255.255.255.255</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>Experimental/Reserved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Special Addresses</h5>
+                    <ul>
+                        <li><strong>0.0.0.0:</strong> Default route, "this network"</li>
+                        <li><strong>255.255.255.255:</strong> Limited broadcast</li>
+                        <li><strong>Network Address:</strong> All host bits set to 0</li>
+                        <li><strong>Broadcast Address:</strong> All host bits set to 1</li>
+                        <li><strong>127.x.x.x:</strong> Loopback addresses</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Subnetting Calculator</h3>
+                    <p>Practice your subnetting skills with this interactive calculator</p>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; color: #333; margin-top: 1rem;">
+                        <div style="margin-bottom: 1rem;">
+                            <label>Network Address: </label>
+                            <input type="text" id="networkAddr" placeholder="192.168.1.0" style="padding: 0.5rem; margin-left: 1rem;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label>Subnet Mask: </label>
+                            <input type="text" id="subnetMask" placeholder="/24 or 255.255.255.0" style="padding: 0.5rem; margin-left: 1rem;">
+                        </div>
+                        <button class="btn" onclick="calculateSubnet()">Calculate</button>
+                        <div id="subnetResult" style="margin-top: 1rem; font-family: monospace;"></div>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Subnetting Practice Examples</h4>
+                    
+                    <h5>Example 1: Basic Subnetting</h5>
+                    <div class="code-block">
+Network: 192.168.1.0/24
+Requirement: 4 subnets with at least 50 hosts each
+
+Solution:
+- Need 2 bits for 4 subnets (2² = 4)
+- New mask: /26 (255.255.255.192)
+- Host bits: 6 (2⁶ - 2 = 62 usable hosts per subnet)
+
+Subnets:
+1. 192.168.1.0/26    (192.168.1.1 - 192.168.1.62)
+2. 192.168.1.64/26   (192.168.1.65 - 192.168.1.126)
+3. 192.168.1.128/26  (192.168.1.129 - 192.168.1.190)
+4. 192.168.1.192/26  (192.168.1.193 - 192.168.1.254)
+                    </div>
+                    
+                    <h5>Example 2: VLSM Design</h5>
+                    <div class="code-block">
+Network: 10.1.0.0/16
+Requirements:
+- Subnet A: 2000 hosts
+- Subnet B: 500 hosts  
+- Subnet C: 100 hosts
+- Subnet D: 50 hosts
+
+Solution (largest to smallest):
+A: 10.1.0.0/21   (2048 hosts) - 10.1.0.0 to 10.1.7.255
+B: 10.1.8.0/23   (512 hosts)  - 10.1.8.0 to 10.1.9.255
+C: 10.1.10.0/25  (128 hosts)  - 10.1.10.0 to 10.1.10.127
+D: 10.1.10.128/26 (64 hosts)  - 10.1.10.128 to 10.1.10.191
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>IPv4 Addressing Study Tips</h3>
+                    <ul>
+                        <li>Memorize the private address ranges (RFC 1918)</li>
+                        <li>Practice binary to decimal conversion for subnet calculations</li>
+                        <li>Learn the powers of 2 up to 2^16 for quick calculations</li>
+                        <li>Practice VLSM scenarios with different host requirements</li>
+                        <li>Understand the difference between network, broadcast, and host addresses</li>
+                        <li>Use subnetting shortcuts and tricks for faster calculations</li>
+                        <li>Practice with real-world network design scenarios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modern Networks Tab -->
+            <div id="modern-networks" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.8 Modern Network Environments</h2>
+                    <div class="objective-content">
+                        <p>Modern networking is evolving rapidly with software-defined technologies, zero trust architectures, and IPv6 adoption. Understanding these emerging technologies and use cases is crucial for contemporary network professionals.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Software-Defined Network (SDN) and SD-WAN</h4>
+                    
+                    <h5>Software-Defined Network (SDN)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Architecture separating control plane from data plane</li>
+                        <li><strong>Controller:</strong> Centralized control of network devices</li>
+                        <li><strong>OpenFlow:</strong> Protocol for controller-to-switch communication</li>
+                        <li><strong>Benefits:</strong> Centralized management, programmability, agility</li>
+                        <li><strong>Use Cases:</strong> Data centers, campus networks, network virtualization</li>
+                    </ul>
+                    
+                    <h5>Software-Defined WAN (SD-WAN)</h5>
+                    <ul>
+                        <li><strong>Application Aware:</strong> Traffic identification and optimization</li>
+                        <li><strong>Zero-Touch Provisioning:</strong> Automated device deployment</li>
+                        <li><strong>Transport Agnostic:</strong> Works over any connection type</li>
+                        <li><strong>Central Policy Management:</strong> Unified policy across all sites</li>
+                        <li><strong>Benefits:</strong> Cost reduction, improved performance, simplified management</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Virtual Extensible Local Area Network (VXLAN)</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Extends Layer 2 networks over Layer 3 infrastructure</li>
+                        <li><strong>Data Center Interconnect (DCI):</strong> Connects multiple data centers</li>
+                        <li><strong>Layer 2 Encapsulation:</strong> Carries Ethernet frames over IP networks</li>
+                        <li><strong>24-bit VNI:</strong> Virtual Network Identifier supports 16M networks</li>
+                        <li><strong>VTEP:</strong> VXLAN Tunnel Endpoints perform encapsulation/decapsulation</li>
+                        <li><strong>Use Cases:</strong> Multi-tenant environments, VM mobility, hybrid clouds</li>
+                        <li><strong>Benefits:</strong> Scalability, isolation, network virtualization</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Zero Trust Architecture (ZTA)</h4>
+                    <ul>
+                        <li><strong>Principle:</strong> "Never trust, always verify"</li>
+                        <li><strong>Policy-Based Authentication:</strong> Context-aware access decisions</li>
+                        <li><strong>Authorization:</strong> Continuous verification of user and device identity</li>
+                        <li><strong>Least Privilege Access:</strong> Minimum necessary permissions</li>
+                        <li><strong>Implementation:</strong> Micro-segmentation, identity verification, encryption</li>
+                        <li><strong>Components:</strong> Identity providers, policy engines, enforcement points</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Secure Access Service Edge (SASE) / Security Service Edge (SSE)</h4>
+                    <ul>
+                        <li><strong>SASE:</strong> Combines networking and security functions in the cloud</li>
+                        <li><strong>SSE:</strong> Security components of SASE framework</li>
+                        <li><strong>Components:</strong> CASB, SWG, ZTNA, FWaaS</li>
+                        <li><strong>Benefits:</strong> Simplified architecture, improved performance, unified policies</li>
+                        <li><strong>Use Cases:</strong> Remote work, cloud adoption, digital transformation</li>
+                        <li><strong>Delivery:</strong> Cloud-native, edge-based services</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Infrastructure as Code (IaC)</h4>
+                    
+                    <h5>Automation</h5>
+                    <div class="sub-objective">
+                        <h6>Playbooks/Templates/Reusable Tasks</h6>
+                        <ul>
+                            <li><strong>Playbooks:</strong> Ansible automation scripts</li>
+                            <li><strong>Templates:</strong> Infrastructure templates (Terraform, CloudFormation)</li>
+                            <li><strong>Reusable Tasks:</strong> Modular automation components</li>
+                            <li><strong>Benefits:</strong> Consistency, repeatability, scalability</li>
+                        </ul>
+                        
+                        <h6>Configuration Drift/Compliance</h6>
+                        <ul>
+                            <li><strong>Configuration Drift:</strong> Unintended changes from desired state</li>
+                            <li><strong>Detection:</strong> Automated monitoring and comparison</li>
+                            <li><strong>Remediation:</strong> Automatic correction to desired state</li>
+                            <li><strong>Compliance:</strong> Ensuring adherence to policies and standards</li>
+                        </ul>
+                        
+                        <h6>Upgrades</h6>
+                        <ul>
+                            <li><strong>Automated Updates:</strong> Scripted upgrade processes</li>
+                            <li><strong>Testing:</strong> Automated testing in staging environments</li>
+                            <li><strong>Rollback:</strong> Automatic reversion on failure</li>
+                            <li><strong>Blue-Green Deployments:</strong> Zero-downtime upgrades</li>
+                        </ul>
+                        
+                        <h6>Dynamic Inventories</h6>
+                        <ul>
+                            <li><strong>Auto-Discovery:</strong> Automatic device and service discovery</li>
+                            <li><strong>Cloud Integration:</strong> Integration with cloud APIs</li>
+                            <li><strong>Real-Time Updates:</strong> Dynamic inventory management</li>
+                            <li><strong>Tagging:</strong> Metadata-based grouping and management</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Source Control</h5>
+                    <div class="sub-objective">
+                        <h6>Version Control</h6>
+                        <ul>
+                            <li><strong>Git:</strong> Distributed version control system</li>
+                            <li><strong>History Tracking:</strong> Complete change history</li>
+                            <li><strong>Rollback Capability:</strong> Revert to previous versions</li>
+                            <li><strong>Collaboration:</strong> Multiple team members working together</li>
+                        </ul>
+                        
+                        <h6>Central Repository</h6>
+                        <ul>
+                            <li><strong>GitHub/GitLab:</strong> Centralized code repositories</li>
+                            <li><strong>Access Control:</strong> Permission-based access</li>
+                            <li><strong>Backup:</strong> Redundant storage of code</li>
+                            <li><strong>Integration:</strong> CI/CD pipeline integration</li>
+                        </ul>
+                        
+                        <h6>Conflict Identification</h6>
+                        <ul>
+                            <li><strong>Merge Conflicts:</strong> Automatic detection of conflicting changes</li>
+                            <li><strong>Resolution Tools:</strong> Visual merge tools</li>
+                            <li><strong>Conflict Prevention:</strong> Branch-based development</li>
+                            <li><strong>Review Process:</strong> Code review before merging</li>
+                        </ul>
+                        
+                        <h6>Branching</h6>
+                        <ul>
+                            <li><strong>Feature Branches:</strong> Isolated development environments</li>
+                            <li><strong>Release Branches:</strong> Stable release preparation</li>
+                            <li><strong>Hotfix Branches:</strong> Emergency fixes</li>
+                            <li><strong>Merge Strategies:</strong> Different approaches to combining branches</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>IPv6 Addressing</h4>
+                    
+                    <h5>Mitigating Address Exhaustion</h5>
+                    <ul>
+                        <li><strong>Problem:</strong> IPv4 address space depletion</li>
+                        <li><strong>IPv6 Space:</strong> 128-bit addresses (340 undecillion addresses)</li>
+                        <li><strong>Benefits:</strong> Virtually unlimited addresses, simplified routing</li>
+                        <li><strong>Features:</strong> Built-in security, autoconfiguration, improved QoS</li>
+                        <li><strong>Adoption:</strong> Gradual transition from IPv4</li>
+                    </ul>
+                    
+                    <h5>Compatibility Requirements</h5>
+                    <div class="sub-objective">
+                        <h6>Tunneling</h6>
+                        <ul>
+                            <li><strong>6to4:</strong> IPv6 packets over IPv4 networks</li>
+                            <li><strong>Teredo:</strong> IPv6 connectivity through NAT devices</li>
+                            <li><strong>ISATAP:</strong> Intra-Site Automatic Tunnel Addressing Protocol</li>
+                            <li><strong>Use Cases:</strong> Early IPv6 adoption, connectivity across IPv4 networks</li>
+                        </ul>
+                        
+                        <h6>Dual Stack</h6>
+                        <ul>
+                            <li><strong>Implementation:</strong> Running IPv4 and IPv6 simultaneously</li>
+                            <li><strong>Benefits:</strong> Gradual migration, backward compatibility</li>
+                            <li><strong>Challenges:</strong> Increased complexity, resource usage</li>
+                            <li><strong>Best Practice:</strong> Preferred transition method</li>
+                        </ul>
+                        
+                        <h6>NAT64</h6>
+                        <ul>
+                            <li><strong>Function:</strong> Translation between IPv6 and IPv4</li>
+                            <li><strong>Use Cases:</strong> IPv6-only clients accessing IPv4 services</li>
+                            <li><strong>DNS64:</strong> Companion technology for address resolution</li>
+                            <li><strong>Stateful/Stateless:</strong> Different implementation approaches</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Modern Network Technologies Comparison</h3>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; color: #333; margin-top: 1rem;">
+                        <table class="protocol-table">
+                            <thead>
+                                <tr>
+                                    <th>Technology</th>
+                                    <th>Primary Benefit</th>
+                                    <th>Use Case</th>
+                                    <th>Implementation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SDN</strong></td>
+                                    <td>Centralized Control</td>
+                                    <td>Data Centers</td>
+                                    <td>OpenFlow Controllers</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SD-WAN</strong></td>
+                                    <td>WAN Optimization</td>
+                                    <td>Branch Connectivity</td>
+                                    <td>Overlay Networks</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>VXLAN</strong></td>
+                                    <td>Network Virtualization</td>
+                                    <td>Multi-tenant Environments</td>
+                                    <td>Overlay Tunneling</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Zero Trust</strong></td>
+                                    <td>Enhanced Security</td>
+                                    <td>Remote Access</td>
+                                    <td>Identity-Based Controls</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SASE</strong></td>
+                                    <td>Unified Security</td>
+                                    <td>Cloud Transformation</td>
+                                    <td>Cloud-Delivered Services</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IaC</strong></td>
+                                    <td>Automation</td>
+                                    <td>Infrastructure Management</td>
+                                    <td>Code-Based Deployment</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IPv6</strong></td>
+                                    <td>Address Space</td>
+                                    <td>Future Internet</td>
+                                    <td>Dual Stack/Tunneling</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Modern Networks Study Tips</h3>
+                    <ul>
+                        <li>Understand the business drivers behind each technology</li>
+                        <li>Study the differences between traditional and modern approaches</li>
+                        <li>Learn about vendor implementations and solutions</li>
+                        <li>Practice designing modern network architectures</li>
+                        <li>Understand IPv6 addressing and transition mechanisms</li>
+                        <li>Study automation tools and Infrastructure as Code concepts</li>
+                        <li>Stay current with emerging networking trends and technologies</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Practice Quiz Tab -->
+            <div id="quiz" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">Practice Quiz - Domain 1.0 Networking Concepts</h2>
+                    <div class="objective-content">
+                        <p>Test your knowledge of Network+ Domain 1.0 concepts with this comprehensive practice quiz. Each question is designed to reinforce key learning objectives.</p>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress"></div>
+                    </div>
+                    <p>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">20</span></p>
+                    
+                    <div id="quiz-questions">
+                        <!-- Quiz questions will be populated by JavaScript -->
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn" id="prevBtn" onclick="previousQuestion()" style="display: none;">Previous</button>
+                        <button class="btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+                        <button class="btn btn-secondary" id="submitBtn" onclick="submitQuiz()" style="display: none;">Submit Quiz</button>
+                    </div>
+                    
+                    <div id="quiz-results" style="display: none;">
+                        <h3>Quiz Results</h3>
+                        <div id="score-display"></div>
+                        <div id="detailed-results"></div>
+                        <button class="btn" onclick="restartQuiz()">Retake Quiz</button>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Quiz Tips</h3>
+                    <ul>
+                        <li>Read each question carefully before selecting an answer</li>
+                        <li>Eliminate obviously incorrect answers first</li>
+                        <li>Look for key words that might indicate the correct answer</li>
+                        <li>Don't overthink - go with your first instinct if you know the material</li>
+                        <li>Review explanations for both correct and incorrect answers</li>
+                        <li>Retake the quiz to reinforce your learning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 CompTIA Network+ Study Guide. Educational content based on N10-009 exam objectives.</p>
+            <p>This comprehensive study guide is designed for a 15-week course covering all Network+ Domain 1.0 concepts.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Management
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav buttons
+            const navButtons = document.querySelectorAll('.nav-tabs button');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab and mark button as active
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // OSI Layer Toggle
+        function toggleLayer(layerNumber) {
+            const details = document.getElementById(`layer${layerNumber}`);
+            const layer = details.parentElement;
+            
+            // Close all other layers
+            document.querySelectorAll('.osi-layer').forEach(l => {
+                if (l !== layer) {
+                    l.classList.remove('active');
+                    l.querySelector('.layer-details').classList.remove('active');
+                }
+            });
+            
+            // Toggle current layer
+            layer.classList.toggle('active');
+            details.classList.toggle('active');
+        }
+
+        // Topology Details
+        function showTopologyDetails(topology) {
+            const detailsContainer = document.getElementById('topology-details');
+            const allDetails = document.querySelectorAll('.topology-detail');
+            
+            // Hide all details
+            allDetails.forEach(detail => detail.style.display = 'none');
+            
+            // Show selected topology details
+            const selectedDetail = document.getElementById(`${topology}-details`);
+            if (selectedDetail) {
+                selectedDetail.style.display = 'block';
+                detailsContainer.style.display = 'block';
+            }
+        }
+
+        // Quiz Management
+        let currentQuizQuestion = 0;
+        let quizAnswers = [];
+        let quizQuestions = [
+            {
+                question: "Which OSI layer is responsible for routing packets between different networks?",
+                options: ["Layer 2 - Data Link", "Layer 3 - Network", "Layer 4 - Transport", "Layer 5 - Session"],
+                correct: 1,
+                explanation: "Layer 3 (Network Layer) is responsible for routing packets between different networks using logical addressing (IP addresses)."
+            },
+            {
+                question: "What is the default port number for HTTPS?",
+                options: ["80", "443", "22", "25"],
+                correct: 1,
+                explanation: "HTTPS uses port 443 by default for secure web communication over SSL/TLS."
+            },
+            {
+                question: "Which private IP address range is defined by RFC 1918 for Class A networks?",
+                options: ["192.168.0.0/16", "172.16.0.0/12", "10.0.0.0/8", "169.254.0.0/16"],
+                correct: 2,
+                explanation: "10.0.0.0/8 is the RFC 1918 private address range for Class A networks, providing over 16 million addresses."
+            },
+            {
+                question: "What does VXLAN stand for?",
+                options: ["Virtual Extensible LAN", "Virtual External LAN", "Variable Extended LAN", "Virtual Express LAN"],
+                correct: 0,
+                explanation: "VXLAN stands for Virtual Extensible LAN, a network virtualization technology that extends Layer 2 networks over Layer 3 infrastructure."
+            },
+            {
+                question: "Which topology connects every device to every other device?",
+                options: ["Star", "Ring", "Mesh", "Bus"],
+                correct: 2,
+                explanation: "Mesh topology connects every device to every other device, providing maximum redundancy and fault tolerance."
+            },
+            {
+                question: "What is the primary purpose of NAT?",
+                options: ["Encrypt network traffic", "Translate private IP addresses to public IP addresses", "Route packets between VLANs", "Provide DHCP services"],
+                correct: 1,
+                explanation: "NAT (Network Address Translation) translates private IP addresses to public IP addresses, allowing multiple devices to share a single public IP."
+            },
+            {
+                question: "Which protocol uses UDP and is commonly used for time synchronization?",
+                options: ["SMTP", "HTTP", "NTP", "SSH"],
+                correct: 2,
+                explanation: "NTP (Network Time Protocol) uses UDP port 123 for time synchronization across networks."
+            },
+            {
+                question: "What is the maximum distance for Cat6A cable at 10 Gbps?",
+                options: ["55 meters", "100 meters", "300 meters", "1000 meters"],
+                correct: 1,
+                explanation: "Cat6A cable can support 10 Gbps speeds up to 100 meters, making it suitable for most Ethernet applications."
+            },
+            {
+                question: "Which cloud service model provides the most control over the underlying infrastructure?",
+                options: ["SaaS", "PaaS", "IaaS", "DaaS"],
+                correct: 2,
+                explanation: "IaaS (Infrastructure as a Service) provides the most control, giving users access to virtualized computing resources."
+            },
+            {
+                question: "What does the /24 in CIDR notation represent?",
+                options: ["24 host bits", "24 network bits", "24 subnets", "24 devices"],
+                correct: 1,
+                explanation: "The /24 in CIDR notation represents 24 network bits, leaving 8 bits for host addresses (254 usable hosts)."
+            },
+            {
+                question: "Which fiber optic connector uses a square design?",
+                options: ["LC", "SC", "ST", "FC"],
+                correct: 1,
+                explanation: "SC (Subscriber Connector) uses a square design with push-pull coupling mechanism."
+            },
+            {
+                question: "What is the primary benefit of SD-WAN?",
+                options: ["Increased security", "Application-aware routing", "Lower hardware costs", "Faster speeds"],
+                correct: 1,
+                explanation: "SD-WAN's primary benefit is application-aware routing, which optimizes traffic based on application requirements and network conditions."
+            },
+            {
+                question: "Which traffic type is used for one-to-many communication?",
+                options: ["Unicast", "Multicast", "Anycast", "Broadcast"],
+                correct: 1,
+                explanation: "Multicast is used for one-to-many communication, efficiently delivering data to multiple recipients simultaneously."
+            },
+            {
+                question: "What is the loopback address range in IPv4?",
+                options: ["192.168.0.0/16", "169.254.0.0/16", "127.0.0.0/8", "10.0.0.0/8"],
+                correct: 2,
+                explanation: "127.0.0.0/8 is the loopback address range, with 127.0.0.1 being the most commonly used localhost address."
+            },
+            {
+                question: "Which protocol is used for secure file transfer over SSH?",
+                options: ["FTP", "TFTP", "SFTP", "HTTP"],
+                correct: 2,
+                explanation: "SFTP (Secure File Transfer Protocol) provides secure file transfer capabilities over SSH connections."
+            },
+            {
+                question: "What does Zero Trust Architecture assume?",
+                options: ["Internal networks are secure", "Perimeter security is sufficient", "Never trust, always verify", "VPNs provide adequate security"],
+                correct: 2,
+                explanation: "Zero Trust Architecture operates on the principle of 'never trust, always verify,' requiring verification for every access request."
+            },
+            {
+                question: "Which layer of the hierarchical model provides policy enforcement?",
+                options: ["Core", "Distribution", "Access", "Internet"],
+                correct: 1,
+                explanation: "The Distribution layer provides policy enforcement, including routing policies, access control, and QoS implementation."
+            },
+            {
+                question: "What is the maximum number of VLANs supported by standard 802.1Q?",
+                options: ["1024", "2048", "4094", "4096"],
+                correct: 2,
+                explanation: "Standard 802.1Q supports 4094 VLANs (VLAN IDs 1-4094), with IDs 0 and 4095 being reserved."
+            },
+            {
+                question: "Which wireless standard operates in the 6 GHz band?",
+                options: ["802.11n", "802.11ac", "802.11ax", "802.11ad"],
+                correct: 2,
+                explanation: "802.11ax (Wi-Fi 6) is the first standard to operate in the 6 GHz band, providing additional spectrum for wireless communications."
+            },
+            {
+                question: "What is the primary purpose of Infrastructure as Code (IaC)?",
+                options: ["Reduce hardware costs", "Automate infrastructure deployment", "Improve network security", "Increase bandwidth"],
+                correct: 1,
+                explanation: "IaC (Infrastructure as Code) automates infrastructure deployment and management through code, improving consistency and reducing manual errors."
+            }
+        ];
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            quizAnswers = new Array(quizQuestions.length);
+            document.getElementById('totalQuestions').textContent = quizQuestions.length;
+            showQuestion(currentQuizQuestion);
+            updateQuizProgress();
+        }
+
+        function showQuestion(questionIndex) {
+            const question = quizQuestions[questionIndex];
+            const questionsContainer = document.getElementById('quiz-questions');
+            
+            questionsContainer.innerHTML = `
+                <div class="quiz-question">${question.question}</div>
+                <ul class="quiz-options">
+                    ${question.options.map((option, index) => 
+                        `<li onclick="selectAnswer(${index})" data-option="${index}">${option}</li>`
+                    ).join('')}
+                </ul>
+            `;
+            
+            // Restore previous answer if exists
+            if (quizAnswers[questionIndex] !== undefined) {
+                const options = questionsContainer.querySelectorAll('.quiz-options li');
+                options[quizAnswers[questionIndex]].classList.add('selected');
+            }
+            
+            document.getElementById('currentQuestion').textContent = questionIndex + 1;
+            
+            // Update button visibility
+            document.getElementById('prevBtn').style.display = questionIndex > 0 ? 'inline-block' : 'none';
+            document.getElementById('nextBtn').style.display = questionIndex < quizQuestions.length - 1 ? 'inline-block' : 'none';
+            document.getElementById('submitBtn').style.display = questionIndex === quizQuestions.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function selectAnswer(optionIndex) {
+            // Clear previous selection
+            document.querySelectorAll('.quiz-options li').forEach(li => li.classList.remove('selected'));
+            
+            // Mark selected option
+            event.target.classList.add('selected');
+            
+            // Store answer
+            quizAnswers[currentQuizQuestion] = optionIndex;
+        }
+
+        function nextQuestion() {
+            if (currentQuizQuestion < quizQuestions.length - 1) {
+                currentQuizQuestion++;
+                showQuestion(currentQuizQuestion);
+                updateQuizProgress();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuizQuestion > 0) {
+                currentQuizQuestion--;
+                showQuestion(currentQuizQuestion);
+                updateQuizProgress();
+            }
+        }
+
+        function updateQuizProgress() {
+            const progress = ((currentQuizQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('quizProgress').style.width = `${progress}%`;
+        }
+
+        function submitQuiz() {
+            const score = calculateScore();
+            showQuizResults(score);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    correct++;
+                }
+            });
+            return {
+                correct: correct,
+                total: quizQuestions.length,
+                percentage: Math.round((correct / quizQuestions.length) * 100)
+            };
+        }
+
+        function showQuizResults(score) {
+            document.getElementById('quiz-questions').style.display = 'none';
+            document.querySelector('.quiz-container .progress-bar').style.display = 'none';
+            document.querySelector('.quiz-container p').style.display = 'none';
+            document.querySelectorAll('.quiz-container button').forEach(btn => btn.style.display = 'none');
+            
+            const resultsDiv = document.getElementById('quiz-results');
+            const scoreDisplay = document.getElementById('score-display');
+            const detailedResults = document.getElementById('detailed-results');
+            
+            scoreDisplay.innerHTML = `
+                <div class="stat-card" style="display: inline-block; margin: 1rem;">
+                    <div class="stat-number">${score.percentage}%</div>
+                    <div class="stat-label">Score: ${score.correct}/${score.total}</div>
+                </div>
+            `;
+            
+            let detailedHtml = '<h4>Detailed Results:</h4>';
+            quizQuestions.forEach((question, index) => {
+                const userAnswer = quizAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                
+                detailedHtml += `
+                    <div style="margin: 1rem 0; padding: 1rem; border-left: 4px solid ${isCorrect ? '#27ae60' : '#e74c3c'}; background: #f8f9fa;">
+                        <strong>Question ${index + 1}:</strong> ${question.question}<br>
+                        <strong>Your Answer:</strong> ${userAnswer !== undefined ? question.options[userAnswer] : 'Not answered'}<br>
+                        <strong>Correct Answer:</strong> ${question.options[question.correct]}<br>
+                        <strong>Explanation:</strong> ${question.explanation}
+                    </div>
+                `;
+            });
+            
+            detailedResults.innerHTML = detailedHtml;
+            resultsDiv.style.display = 'block';
+        }
+
+        function restartQuiz() {
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-questions').style.display = 'block';
+            document.querySelector('.quiz-container .progress-bar').style.display = 'block';
+            document.querySelector('.quiz-container p').style.display = 'block';
+            startQuiz();
+        }
+
+        // Subnet Calculator
+        function calculateSubnet() {
+            const networkAddr = document.getElementById('networkAddr').value;
+            const subnetMask = document.getElementById('subnetMask').value;
+            const resultDiv = document.getElementById('subnetResult');
+            
+            try {
+                // Basic subnet calculation (simplified)
+                if (!networkAddr || !subnetMask) {
+                    resultDiv.innerHTML = 'Please enter both network address and subnet mask.';
+                    return;
+                }
+                
+                let cidr;
+                if (subnetMask.startsWith('/')) {
+                    cidr = parseInt(subnetMask.substring(1));
+                } else if (subnetMask.includes('.')) {
+                    // Convert subnet mask to CIDR (simplified)
+                    const parts = subnetMask.split('.').map(part => parseInt(part));
+                    cidr = parts.reduce((acc, part) => acc + part.toString(2).split('1').length - 1, 0);
+                } else {
+                    cidr = parseInt(subnetMask);
+                }
+                
+                const hostBits = 32 - cidr;
+                const numHosts = Math.pow(2, hostBits) - 2;
+                const numSubnets = Math.pow(2, cidr - (cidr <= 8 ? 8 : cidr <= 16 ? 16 : 24));
+                
+                resultDiv.innerHTML = `
+                    <strong>Network:</strong> ${networkAddr}/${cidr}<br>
+                    <strong>Subnet Mask:</strong> ${cidr}<br>
+                    <strong>Host Bits:</strong> ${hostBits}<br>
+                    <strong>Usable Hosts per Subnet:</strong> ${numHosts}<br>
+                    <strong>Network Address:</strong> ${networkAddr}<br>
+                    <strong>Broadcast Address:</strong> [Calculation varies by network]<br>
+                    <em>Note: This is a simplified calculator for educational purposes.</em>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = 'Invalid input. Please check your network address and subnet mask.';
+            }
+        }
+
+        // Search functionality
+        function searchContent() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allContent = document.querySelectorAll('.objective-content, .sub-objective, .layer-details');
+            
+            allContent.forEach(element => {
+                const text = element.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    element.style.display = 'block';
+                    if (element.classList.contains('layer-details')) {
+                        element.parentElement.style.display = 'block';
+                    }
+                } else {
+                    if (!element.classList.contains('layer-details')) {
+                        element.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Quiz answer selection for protocol quiz
+        function selectQuizAnswer(element, isCorrect) {
+            // Clear previous selections
+            element.parentElement.querySelectorAll('li').forEach(li => {
+                li.classList.remove('selected');
+            });
+            
+            // Mark selected
+            element.classList.add('selected');
+            element.dataset.correct = isCorrect;
+        }
+
+        function checkQuizAnswer() {
+            const selected = document.querySelector('.quiz-options li.selected');
+            const result = document.getElementById('quiz-result');
+            
+            if (!selected) {
+                result.innerHTML = '<p style="color: #e74c3c;">Please select an answer first.</p>';
+                return;
+            }
+            
+            const isCorrect = selected.dataset.correct === 'true';
+            
+            // Show correct/incorrect styling
+            document.querySelectorAll('.quiz-options li').forEach(li => {
+                if (li.dataset.correct === 'true') {
+                    li.classList.add('correct');
+                } else if (li.classList.contains('selected') && !isCorrect) {
+                    li.classList.add('incorrect');
+                }
+            });
+            
+            if (isCorrect) {
+                result.innerHTML = '<p style="color: #27ae60; font-weight: bold;">✓ Correct! HTTPS uses port 443 for secure web communication.</p>';
+            } else {
+                result.innerHTML = '<p style="color: #e74c3c; font-weight: bold;">✗ Incorrect. The correct answer is HTTPS, which uses port 443.</p>';
+            }
+        }
+
+        // Initialize quiz when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            startQuiz();
+        });
+    </script>
+</body>
+</html>

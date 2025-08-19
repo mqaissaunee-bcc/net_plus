@@ -149,18 +149,194 @@
             font-size: 1.5rem;
         }
 
-        .tips-list {
+        .study-section, .tools-section {
+            margin: 3rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .study-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .study-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .study-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+
+        .study-card:not(.coming-soon)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .study-card:not(.coming-soon):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .study-card.coming-soon {
+            opacity: 0.6;
+            background: #f7fafc;
+        }
+
+        .study-card.coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e2e8f0;
+        }
+
+        .study-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .study-card.featured .study-icon {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #2d3748;
+        }
+
+        .study-card.coming-soon .study-icon {
+            background: #e2e8f0;
+            color: #a0aec0;
+        }
+
+        .study-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .study-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .study-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .duration, .difficulty {
+            background: #f7fafc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .study-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .study-card.featured .study-link {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #2d3748;
+        }
+
+        .study-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .study-card.featured .study-link:hover {
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .study-tips {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .study-tips h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .study-path {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
 
-        .tip-item {
+        .path-step {
             background: rgba(255,255,255,0.1);
             padding: 1rem;
             border-radius: 8px;
             border-left: 4px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .path-step:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
         }
 
         @media (max-width: 768px) {
@@ -186,23 +362,88 @@
             <div class="cert-badge">CompTIA Network+ (N10-008) Preparation</div>
         </header>
 
-        <div class="study-tips">
-            <h2>📚 Study Strategy</h2>
-            <div class="tips-list">
-                <div class="tip-item">
-                    <strong>Practice Regularly:</strong> Use these tools daily to reinforce concepts
+        <!-- Study Guide Section -->
+        <section class="study-section">
+            <div class="section-header">
+                <h2>📖 Comprehensive Study Guide</h2>
+                <p>Master all Network+ domains with our structured learning materials</p>
+            </div>
+
+            <div class="study-grid">
+                <div class="study-card featured">
+                    <div class="study-icon">📋</div>
+                    <h3>Network+ Overview</h3>
+                    <p>Complete introduction to the Network+ certification, exam objectives, and study roadmap. Essential starting point for your certification journey.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 30 min read</span>
+                        <span class="difficulty">🟢 Beginner</span>
+                    </div>
+                    <a href="network_plus_overview.html" class="study-link">Start Here</a>
                 </div>
-                <div class="tip-item">
-                    <strong>Hands-On Learning:</strong> Simulate real-world scenarios
+
+                <div class="study-card">
+                    <div class="study-icon">🌐</div>
+                    <h3>Domain 1: Network Fundamentals</h3>
+                    <p>OSI model, network topologies, protocols, and basic networking concepts. Foundation knowledge for all other domains.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 2-3 hours</span>
+                        <span class="difficulty">🟡 Intermediate</span>
+                    </div>
+                    <a href="network_plus_domain1_study_guide.html" class="study-link">Study Domain 1</a>
                 </div>
-                <div class="tip-item">
-                    <strong>Track Progress:</strong> Focus on areas that need improvement
+
+                <div class="study-card">
+                    <div class="study-icon">🔐</div>
+                    <h3>Domain 2: Network Security</h3>
+                    <p>Security threats, mitigation techniques, access control, and network security devices. Critical for modern networking.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 2-3 hours</span>
+                        <span class="difficulty">🟡 Intermediate</span>
+                    </div>
+                    <a href="network_plus_domain2_study_guide.html" class="study-link">Study Domain 2</a>
                 </div>
-                <div class="tip-item">
-                    <strong>Apply Knowledge:</strong> Test theories with practical exercises
+
+                <div class="study-card">
+                    <div class="study-icon">📡</div>
+                    <h3>Domain 3: Network Operations</h3>
+                    <p>Network monitoring, configuration management, and performance optimization techniques.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 2-3 hours</span>
+                        <span class="difficulty">🟡 Intermediate</span>
+                    </div>
+                    <a href="network_plus_domain3_study_guide.html" class="study-link">Study Domain 3</a>
+                </div>
+
+                <div class="study-card">
+                    <div class="study-icon">🔧</div>
+                    <h3>Domain 4: Network Troubleshooting</h3>
+                    <p>Systematic troubleshooting methodology, common issues, and resolution techniques.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 2-3 hours</span>
+                        <span class="difficulty">🟠 Advanced</span>
+                    </div>
+                    <a href="network_plus_domain4_study_guide.html" class="study-link">Study Domain 4</a>
+                </div>
+
+                <div class="study-card">
+                    <div class="study-icon">☁️</div>
+                    <h3>Domain 5: Network Architecture</h3>
+                    <p>Network design principles, virtualization, cloud computing, and modern network architectures.</p>
+                    <div class="study-meta">
+                        <span class="duration">⏱️ 2-3 hours</span>
+                        <span class="difficulty">🟠 Advanced</span>
+                    </div>
+                    <a href="network_plus_domain5_study_guide.html" class="study-link">Study Domain 5</a>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Interactive Tools Section -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🛠️ Interactive Study Tools</h2>
+                <p>Reinforce your learning with hands-on practice and simulations</p>
+            </div>
 
         <div class="tools-grid">
             <div class="tool-card">
@@ -240,10 +481,29 @@
                 <a href="port_protocol_reference.html" class="tool-link">View Reference</a>
             </div>
         </div>
+        </section>
+
+        <div class="study-tips">
+            <h2>📚 Recommended Study Path</h2>
+            <div class="study-path">
+                <div class="path-step">
+                    <strong>1. Start with Overview:</strong> Get familiar with exam structure and objectives
+                </div>
+                <div class="path-step">
+                    <strong>2. Study Each Domain:</strong> Work through domains 1-5 systematically
+                </div>
+                <div class="path-step">
+                    <strong>3. Practice with Tools:</strong> Use interactive simulators to reinforce learning
+                </div>
+                <div class="path-step">
+                    <strong>4. Review & Test:</strong> Focus on weak areas and take practice exams
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">
-            <p>💡 <strong>Pro Tip:</strong> Combine these tools with official CompTIA study materials for the best exam preparation experience.</p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Good luck with your Network+ certification journey! 🚀</p>
+            <p>💡 <strong>Study Smart:</strong> Combine study guides with hands-on practice for maximum retention.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Master the Network+ certification with confidence! 🚀</p>
         </footer>
     </div>
 
