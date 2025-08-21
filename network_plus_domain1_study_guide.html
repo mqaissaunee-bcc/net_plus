@@ -1837,10 +1837,1244 @@
                 </div>
             </div>
 
-            <!-- Continue with remaining tabs... -->
-            <!-- The file is getting quite long, so I'll implement the rest in the next response -->
+            <!-- Transmission Media Tab -->
+            <div id="transmission" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.5 Transmission Media and Transceivers</h2>
+                    <div class="objective-content">
+                        <p>Understanding different transmission media, their characteristics, and appropriate transceiver technologies is crucial for network design and implementation. This section covers wired and wireless technologies used in modern networks, along with their performance characteristics and optimal use cases.</p>
+                    </div>
+                </div>
 
-            <!-- Practice Quiz Tab -->
+                <div class="sub-objective">
+                    <h4>Wireless Technologies</h4>
+                    
+                    <h5>802.11 Standards (Wi-Fi)</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Frequency</th>
+                                <th>Max Speed</th>
+                                <th>Range (Indoor)</th>
+                                <th>Year Introduced</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>802.11a</strong></td>
+                                <td>5 GHz</td>
+                                <td>54 Mbps</td>
+                                <td>35 meters</td>
+                                <td>1999</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11b</strong></td>
+                                <td>2.4 GHz</td>
+                                <td>11 Mbps</td>
+                                <td>38 meters</td>
+                                <td>1999</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11g</strong></td>
+                                <td>2.4 GHz</td>
+                                <td>54 Mbps</td>
+                                <td>38 meters</td>
+                                <td>2003</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11n (Wi-Fi 4)</strong></td>
+                                <td>2.4/5 GHz</td>
+                                <td>600 Mbps</td>
+                                <td>70 meters</td>
+                                <td>2009</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11ac (Wi-Fi 5)</strong></td>
+                                <td>5 GHz</td>
+                                <td>6.77 Gbps</td>
+                                <td>35 meters</td>
+                                <td>2013</td>
+                            </tr>
+                            <tr>
+                                <td><strong>802.11ax (Wi-Fi 6)</strong></td>
+                                <td>2.4/5/6 GHz</td>
+                                <td>9.6 Gbps</td>
+                                <td>Enhanced coverage</td>
+                                <td>2019</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Cellular Technologies</h5>
+                    <ul>
+                        <li><strong>4G LTE:</strong> Long Term Evolution, theoretical speeds up to 1 Gbps, widespread mobile broadband</li>
+                        <li><strong>5G:</strong> Fifth generation cellular, speeds up to 20 Gbps, ultra-low latency (1ms), massive IoT support</li>
+                        <li><strong>Use Cases:</strong> Mobile internet access, IoT connectivity, backup WAN connections, emergency communications</li>
+                        <li><strong>Coverage Characteristics:</strong> Wide area coverage, both outdoor and indoor penetration</li>
+                        <li><strong>Business Considerations:</strong> Data usage caps, variable latency, signal strength dependencies</li>
+                        <li><strong>Network Slicing:</strong> 5G feature allowing dedicated virtual networks for specific applications</li>
+                    </ul>
+                    
+                    <h5>Satellite Communications</h5>
+                    <ul>
+                        <li><strong>GEO (Geostationary):</strong> High latency (~500-700ms), wide coverage area, traditional satellite internet</li>
+                        <li><strong>LEO (Low Earth Orbit):</strong> Lower latency (~20-50ms), requires satellite constellation management</li>
+                        <li><strong>MEO (Medium Earth Orbit):</strong> Moderate latency (~150ms), used for GPS and some communications</li>
+                        <li><strong>Use Cases:</strong> Remote locations, maritime communications, disaster recovery, rural broadband</li>
+                        <li><strong>Modern Providers:</strong> Starlink (SpaceX), OneWeb, Amazon Kuiper, traditional GEO providers</li>
+                        <li><strong>Technical Challenges:</strong> Weather interference, equipment costs, regulatory compliance</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Wired Technologies</h4>
+                    
+                    <h5>802.3 Ethernet Standards</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Speed</th>
+                                <th>Media Type</th>
+                                <th>Max Distance</th>
+                                <th>Common Applications</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>10BASE-T</strong></td>
+                                <td>10 Mbps</td>
+                                <td>Cat3 UTP</td>
+                                <td>100 meters</td>
+                                <td>Legacy networks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>100BASE-TX</strong></td>
+                                <td>100 Mbps</td>
+                                <td>Cat5 UTP</td>
+                                <td>100 meters</td>
+                                <td>Desktop connections</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-T</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Cat5e/6 UTP</td>
+                                <td>100 meters</td>
+                                <td>Modern workstations/servers</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-T</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Cat6A/7 UTP</td>
+                                <td>100 meters</td>
+                                <td>High-performance networks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>100BASE-FX</strong></td>
+                                <td>100 Mbps</td>
+                                <td>Multimode fiber</td>
+                                <td>2 kilometers</td>
+                                <td>Building backbone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>100BASE-SX</strong></td>
+                                <td>100 Mbps</td>
+                                <td>Multimode fiber</td>
+                                <td>300 meters</td>
+                                <td>Short-distance fiber</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-SX</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Multimode fiber</td>
+                                <td>550 meters</td>
+                                <td>Campus backbone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1000BASE-LX</strong></td>
+                                <td>1 Gbps</td>
+                                <td>Single/multimode fiber</td>
+                                <td>10 kilometers</td>
+                                <td>Long-distance connections</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-SR</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Multimode fiber</td>
+                                <td>300 meters</td>
+                                <td>Data center connections</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10GBASE-LR</strong></td>
+                                <td>10 Gbps</td>
+                                <td>Single-mode fiber</td>
+                                <td>10 kilometers</td>
+                                <td>Metro area networks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Fiber Optic Technology</h5>
+                    <div class="sub-objective">
+                        <h6>Single-mode Fiber (SMF)</h6>
+                        <ul>
+                            <li><strong>Core Diameter:</strong> 8-10 microns, allows only one mode of light propagation</li>
+                            <li><strong>Light Source:</strong> Laser diodes providing coherent, focused light</li>
+                            <li><strong>Distance Capability:</strong> Long distance transmission (40+ kilometers)</li>
+                            <li><strong>Bandwidth:</strong> Higher bandwidth capacity, less modal dispersion</li>
+                            <li><strong>Cost Considerations:</strong> Higher equipment costs, more expensive transceivers</li>
+                            <li><strong>Applications:</strong> WAN links, campus backbone, ISP connections, submarine cables</li>
+                        </ul>
+                        
+                        <h6>Multimode Fiber (MMF)</h6>
+                        <ul>
+                            <li><strong>Core Diameter:</strong> 50 or 62.5 microns, multiple light propagation modes</li>
+                            <li><strong>Light Source:</strong> LEDs or VCSELs providing incoherent light</li>
+                            <li><strong>Distance Capability:</strong> Medium distance transmission (up to 2 kilometers)</li>
+                            <li><strong>Bandwidth:</strong> Lower bandwidth due to modal dispersion</li>
+                            <li><strong>Cost Advantages:</strong> Lower equipment costs, less expensive to implement</li>
+                            <li><strong>Applications:</strong> LAN backbone, data centers, building connections</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Direct Attach Copper (DAC) Cable</h5>
+                    <ul>
+                        <li><strong>Twinaxial Design:</strong> Two copper conductors with comprehensive shielding</li>
+                        <li><strong>Use Cases:</strong> Short-distance, high-speed data center connections</li>
+                        <li><strong>Performance Benefits:</strong> Lower cost than fiber, reduced power consumption</li>
+                        <li><strong>Distance Limitations:</strong> Typically 1-7 meters maximum length</li>
+                        <li><strong>Speed Support:</strong> 10G, 25G, 40G, 100G depending on specification</li>
+                        <li><strong>Applications:</strong> Top-of-rack to server connections, switch-to-switch links</li>
+                    </ul>
+                    
+                    <h5>Coaxial Cable</h5>
+                    <ul>
+                        <li><strong>RG-6:</strong> Cable TV, satellite TV, broadband internet (75-ohm impedance)</li>
+                        <li><strong>RG-59:</strong> Older cable TV installations, closed-circuit television (CCTV)</li>
+                        <li><strong>RG-58:</strong> Legacy 10Base2 Ethernet networks (50-ohm impedance)</li>
+                        <li><strong>Construction:</strong> Central conductor, dielectric insulator, shielding, outer jacket</li>
+                        <li><strong>Advantages:</strong> Good high-frequency performance, EMI resistance, long-distance capability</li>
+                        <li><strong>Disadvantages:</strong> Limited bandwidth compared to fiber, bulkier than twisted pair</li>
+                    </ul>
+                    
+                    <h5>Cable Categories and Performance</h5>
+                    <ul>
+                        <li><strong>Cat5e:</strong> Enhanced Category 5, 1 Gbps up to 100 meters, 100 MHz bandwidth</li>
+                        <li><strong>Cat6:</strong> 10 Gbps up to 55 meters, 1 Gbps up to 100 meters, 250 MHz bandwidth</li>
+                        <li><strong>Cat6A:</strong> Augmented Category 6, 10 Gbps up to 100 meters, 500 MHz bandwidth</li>
+                        <li><strong>Cat7:</strong> 10 Gbps up to 100 meters, 600 MHz bandwidth, shielded construction</li>
+                        <li><strong>Cat8:</strong> 25/40 Gbps up to 30 meters, 2000 MHz bandwidth, data center focus</li>
+                        <li><strong>Backwards Compatibility:</strong> Higher categories support lower category applications</li>
+                    </ul>
+                    
+                    <h5>Plenum vs Non-Plenum Cable</h5>
+                    <ul>
+                        <li><strong>Plenum-Rated Cable:</strong> Fire-resistant, low-smoke materials for air handling spaces</li>
+                        <li><strong>Non-Plenum (PVC):</strong> Standard cable for general installation areas</li>
+                        <li><strong>Building Code Requirements:</strong> Plenum cable mandatory in air return spaces</li>
+                        <li><strong>Cost Implications:</strong> Plenum cables cost 2-3 times more than PVC</li>
+                        <li><strong>Safety Considerations:</strong> Reduced toxic gas emission during fires</li>
+                        <li><strong>Installation Planning:</strong> Must comply with local fire codes and regulations</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Transceivers and Form Factors</h4>
+                    
+                    <h5>Transceiver Protocols</h5>
+                    <div class="sub-objective">
+                        <h6>Ethernet Transceivers</h6>
+                        <ul>
+                            <li><strong>Primary Function:</strong> Convert electrical signals to optical signals and vice versa</li>
+                            <li><strong>IEEE Standards:</strong> Compliance with 802.3 specifications for different speeds</li>
+                            <li><strong>Media Types:</strong> Support for copper, fiber optic, and direct attach cables</li>
+                            <li><strong>Hot-Swappable:</strong> Can be replaced without powering down equipment</li>
+                            <li><strong>Distance Support:</strong> Various reach capabilities from 100m to 40km+</li>
+                            <li><strong>Wavelength Options:</strong> Different optical wavelengths for specific applications</li>
+                        </ul>
+                        
+                        <h6>Fibre Channel (FC) Transceivers</h6>
+                        <ul>
+                            <li><strong>Primary Function:</strong> High-speed storage area network communication</li>
+                            <li><strong>Speed Options:</strong> 1, 2, 4, 8, 16, 32 Gbps generations</li>
+                            <li><strong>Applications:</strong> SAN connectivity, storage arrays, enterprise storage</li>
+                            <li><strong>Reliability Features:</strong> Low latency, high reliability for mission-critical storage</li>
+                            <li><strong>Compatibility:</strong> Backward compatibility with previous FC speeds</li>
+                            <li><strong>Distance Capabilities:</strong> Short wave (SW) and long wave (LW) options</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Transceiver Form Factors</h5>
+                    <div class="sub-objective">
+                        <h6>Small Form-factor Pluggable (SFP)</h6>
+                        <ul>
+                            <li><strong>Speed Support:</strong> Up to 1 Gbps for standard SFP</li>
+                            <li><strong>Physical Size:</strong> Compact design, hot-swappable modules</li>
+                            <li><strong>Connector Types:</strong> SFP-T (RJ45 copper), SFP-SX/LX (fiber)</li>
+                            <li><strong>Applications:</strong> Gigabit switches, routers, network interface cards</li>
+                            <li><strong>MSA Compliance:</strong> Multi-Source Agreement ensures vendor interoperability</li>
+                            <li><strong>Digital Diagnostics:</strong> Monitoring of temperature, voltage, optical power</li>
+                        </ul>
+                        
+                        <h6>SFP+ (Enhanced SFP)</h6>
+                        <ul>
+                            <li><strong>Speed Support:</strong> 10 Gbps transmission rates</li>
+                            <li><strong>Compatibility:</strong> Same physical form factor as SFP</li>
+                            <li><strong>Reach Options:</strong> SR (short reach), LR (long reach), ER (extended reach)</li>
+                            <li><strong>Cost Effectiveness:</strong> Lower cost alternative to XFP for 10G</li>
+                        </ul>
+                        
+                        <h6>Quad Small Form-factor Pluggable (QSFP)</h6>
+                        <ul>
+                            <li><strong>QSFP+:</strong> 40 Gbps (4 x 10 Gbps lanes) for data center applications</li>
+                            <li><strong>QSFP28:</strong> 100 Gbps (4 x 25 Gbps lanes) for high-performance networks</li>
+                            <li><strong>QSFP56:</strong> 200 Gbps (4 x 50 Gbps lanes) for next-generation requirements</li>
+                            <li><strong>Applications:</strong> Data center spine-leaf architectures, high-performance computing</li>
+                            <li><strong>Breakout Capability:</strong> Single QSFP can break out to multiple lower-speed connections</li>
+                            <li><strong>Power Consumption:</strong> Higher power requirements than single-lane transceivers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Connector Types and Applications</h4>
+                    
+                    <h5>Fiber Optic Connectors</h5>
+                    <ul>
+                        <li><strong>SC (Subscriber Connector):</strong> Square connector with push-pull coupling mechanism</li>
+                        <li><strong>LC (Local Connector):</strong> Small form factor with latch coupling, high density</li>
+                        <li><strong>ST (Straight Tip):</strong> Round connector with bayonet twist-lock coupling</li>
+                        <li><strong>MPO (Multi-fiber Push On):</strong> High-density connector supporting 12-72 fibers</li>
+                        <li><strong>FC (Ferrule Connector):</strong> Threaded coupling for secure connections</li>
+                        <li><strong>Polish Types:</strong> PC (Physical Contact), UPC (Ultra Physical Contact), APC (Angled Physical Contact)</li>
+                    </ul>
+                    
+                    <h5>Copper Connectors</h5>
+                    <ul>
+                        <li><strong>RJ11:</strong> 6-position connector primarily used for telephone systems</li>
+                        <li><strong>RJ45:</strong> 8-position connector standard for Ethernet networks</li>
+                        <li><strong>F-type:</strong> Threaded coaxial connector for cable TV and satellite</li>
+                        <li><strong>BNC (Bayonet Neill–Concelman):</strong> Twist-lock coaxial connector for legacy networks</li>
+                        <li><strong>N-type:</strong> Larger coaxial connector for high-frequency applications</li>
+                        <li><strong>SMA:</strong> Small coaxial connector for RF and microwave applications</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Cable Selection Guide</h3>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; color: #333; margin-top: 1rem;">
+                        <h4>Choose the Right Cable for Your Application:</h4>
+                        <table class="protocol-table">
+                            <thead>
+                                <tr>
+                                    <th>Distance</th>
+                                    <th>Speed Requirement</th>
+                                    <th>Environment</th>
+                                    <th>Recommended Cable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0-100m</td>
+                                    <td>1 Gbps</td>
+                                    <td>Office</td>
+                                    <td>Cat5e UTP</td>
+                                </tr>
+                                <tr>
+                                    <td>0-55m</td>
+                                    <td>10 Gbps</td>
+                                    <td>Office</td>
+                                    <td>Cat6 UTP</td>
+                                </tr>
+                                <tr>
+                                    <td>0-100m</td>
+                                    <td>10 Gbps</td>
+                                    <td>Office</td>
+                                    <td>Cat6A UTP</td>
+                                </tr>
+                                <tr>
+                                    <td>100m-2km</td>
+                                    <td>1-10 Gbps</td>
+                                    <td>Campus</td>
+                                    <td>Multimode Fiber</td>
+                                </tr>
+                                <tr>
+                                    <td>2km+</td>
+                                    <td>1-100 Gbps</td>
+                                    <td>WAN</td>
+                                    <td>Single-mode Fiber</td>
+                                </tr>
+                                <tr>
+                                    <td>1-7m</td>
+                                    <td>10-100 Gbps</td>
+                                    <td>Data Center</td>
+                                    <td>DAC Twinax</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Transmission Media Study Tips</h3>
+                    <ul>
+                        <li>Memorize cable categories and their maximum speeds and distances</li>
+                        <li>Understand the differences between single-mode and multimode fiber applications</li>
+                        <li>Practice identifying connector types from visual descriptions</li>
+                        <li>Learn when to use different cable types for various network scenarios</li>
+                        <li>Understand the relationship between transceivers and media types</li>
+                        <li>Study wireless standards and their frequency bands and applications</li>
+                        <li>Practice calculating cable runs and understanding distance limitations</li>
+                        <li>Learn about environmental considerations like plenum requirements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Network Topologies Tab -->
+            <div id="topologies" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.6 Network Topologies, Architectures, and Types</h2>
+                    <div class="objective-content">
+                        <p>Network topology refers to the arrangement of network devices and their interconnections. Understanding different topologies, architectures, and design patterns is crucial for network design, troubleshooting, performance optimization, and scalability planning.</p>
+                    </div>
+                </div>
+
+                <div class="topology-grid">
+                    <div class="topology-card" onclick="showTopologyDetails('mesh')">
+                        <div class="topology-visual">🕸️</div>
+                        <h3>Mesh Topology</h3>
+                        <p>Every device connects to every other device for maximum redundancy</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('hybrid')">
+                        <div class="topology-visual">🔀</div>
+                        <h3>Hybrid Topology</h3>
+                        <p>Combination of multiple topology types for optimized design</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('star')">
+                        <div class="topology-visual">⭐</div>
+                        <h3>Star/Hub and Spoke</h3>
+                        <p>Central hub with devices radiating outward in spoke pattern</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('spine-leaf')">
+                        <div class="topology-visual">🌿</div>
+                        <h3>Spine and Leaf</h3>
+                        <p>Modern data center architecture with spine and leaf switches</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('point-to-point')">
+                        <div class="topology-visual">↔️</div>
+                        <h3>Point to Point</h3>
+                        <p>Direct connection between two devices or networks</p>
+                    </div>
+                    
+                    <div class="topology-card" onclick="showTopologyDetails('three-tier')">
+                        <div class="topology-visual">🏗️</div>
+                        <h3>Three-tier Hierarchical</h3>
+                        <p>Structured design with Core, Distribution, and Access layers</p>
+                    </div>
+                </div>
+
+                <div id="topology-details" class="sub-objective" style="display: none;">
+                    <div id="mesh-details" class="topology-detail" style="display: none;">
+                        <h4>Mesh Topology</h4>
+                        <ul>
+                            <li><strong>Full Mesh:</strong> Every device directly connected to every other device</li>
+                            <li><strong>Partial Mesh:</strong> Some devices have multiple connections, but not all-to-all</li>
+                            <li><strong>Advantages:</strong> Maximum redundancy, fault tolerance, multiple communication paths</li>
+                            <li><strong>Disadvantages:</strong> Expensive implementation, complex management, high cable costs</li>
+                            <li><strong>Use Cases:</strong> Critical networks, WAN backbone connections, wireless mesh networks</li>
+                            <li><strong>Connection Formula:</strong> n(n-1)/2 connections required for full mesh (n = number of devices)</li>
+                            <li><strong>Scalability Issues:</strong> Exponential growth in connections as devices are added</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="hybrid-details" class="topology-detail" style="display: none;">
+                        <h4>Hybrid Topology</h4>
+                        <ul>
+                            <li><strong>Definition:</strong> Strategic combination of two or more basic topology types</li>
+                            <li><strong>Common Examples:</strong> Star-bus, star-ring, hierarchical tree structures</li>
+                            <li><strong>Design Advantages:</strong> Flexible configuration, application-specific optimization</li>
+                            <li><strong>Scalability Benefits:</strong> Can grow and adapt to changing requirements</li>
+                            <li><strong>Complexity Considerations:</strong> More complex design and troubleshooting requirements</li>
+                            <li><strong>Use Cases:</strong> Large enterprise networks, campus networks, multi-site organizations</li>
+                            <li><strong>Design Factors:</strong> Traffic patterns, cost constraints, performance requirements</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="star-details" class="topology-detail" style="display: none;">
+                        <h4>Star/Hub and Spoke Topology</h4>
+                        <ul>
+                            <li><strong>Basic Structure:</strong> Central device with all other devices connected directly to it</li>
+                            <li><strong>Central Device Options:</strong> Switch, hub (legacy), router, or wireless access point</li>
+                            <li><strong>Key Advantages:</strong> Easy management, centralized control, simple troubleshooting</li>
+                            <li><strong>Fault Tolerance:</strong> Individual device failure doesn't affect others</li>
+                            <li><strong>Single Point of Failure:</strong> Central device failure affects entire network</li>
+                            <li><strong>Use Cases:</strong> Small to medium networks, branch offices, access layer design</li>
+                            <li><strong>Scalability:</strong> Limited by central device port capacity and performance</li>
+                            <li><strong>Modern Implementation:</strong> Switch-based star topology in most LANs</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="spine-leaf-details" class="topology-detail" style="display: none;">
+                        <h4>Spine and Leaf Topology</h4>
+                        <ul>
+                            <li><strong>Architecture:</strong> Two-tier design optimized for east-west traffic flows</li>
+                            <li><strong>Spine Layer:</strong> High-performance switches providing core connectivity fabric</li>
+                            <li><strong>Leaf Layer:</strong> Access switches connecting directly to servers and devices</li>
+                            <li><strong>Connectivity Rule:</strong> Every leaf switch connects to every spine switch</li>
+                            <li><strong>Performance Benefits:</strong> Predictable latency, high bandwidth, load distribution</li>
+                            <li><strong>Scalability:</strong> Easy horizontal scaling by adding spine or leaf switches</li>
+                            <li><strong>Use Cases:</strong> Modern data centers, cloud infrastructure, high-performance computing</li>
+                            <li><strong>Traffic Optimization:</strong> Designed for server-to-server communication patterns</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="point-to-point-details" class="topology-detail" style="display: none;">
+                        <h4>Point-to-Point Topology</h4>
+                        <ul>
+                            <li><strong>Basic Structure:</strong> Direct connection between exactly two devices or networks</li>
+                            <li><strong>Connection Types:</strong> Dedicated circuits, fiber links, microwave, satellite</li>
+                            <li><strong>Security Advantages:</strong> Isolated communication path, reduced attack surface</li>
+                            <li><strong>Performance Benefits:</strong> Dedicated bandwidth, minimal latency, no contention</li>
+                            <li><strong>Limitations:</strong> No redundancy, single path dependency, limited scalability</li>
+                            <li><strong>Use Cases:</strong> WAN links, backup connections, secure communications, isolated systems</li>
+                            <li><strong>Protocol Support:</strong> PPP, HDLC, Frame Relay, dedicated Ethernet</li>
+                            <li><strong>Cost Considerations:</strong> Can be expensive for long distances</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="three-tier-details" class="topology-detail" style="display: none;">
+                        <h4>Three-Tier Hierarchical Model</h4>
+                        <div class="sub-objective">
+                            <h5>Core Layer (Network Backbone)</h5>
+                            <ul>
+                                <li><strong>Primary Function:</strong> High-speed packet switching and routing backbone</li>
+                                <li><strong>Design Principles:</strong> High reliability, fast convergence, maximum availability</li>
+                                <li><strong>Device Types:</strong> High-end routers, multilayer switches, chassis-based systems</li>
+                                <li><strong>Performance Focus:</strong> Minimize latency, maximize throughput, ensure redundancy</li>
+                                <li><strong>Traffic Handling:</strong> Primarily transit traffic between distribution layers</li>
+                            </ul>
+                            
+                            <h5>Distribution Layer (Policy Layer)</h5>
+                            <ul>
+                                <li><strong>Primary Function:</strong> Policy enforcement, traffic control, and aggregation</li>
+                                <li><strong>Key Services:</strong> Routing between VLANs, access control, QoS implementation</li>
+                                <li><strong>Device Types:</strong> Layer 3 switches, routers with advanced feature sets</li>
+                                <li><strong>Policy Implementation:</strong> Security policies, QoS marking, route summarization</li>
+                                <li><strong>WAN Connectivity:</strong> Often provides WAN access and internet connectivity</li>
+                            </ul>
+                            
+                            <h5>Access Layer (Desktop Layer)</h5>
+                            <ul>
+                                <li><strong>Primary Function:</strong> End device connectivity and port density provision</li>
+                                <li><strong>Key Services:</strong> VLAN assignment, PoE delivery, port security</li>
+                                <li><strong>Device Types:</strong> Access switches, wireless access points, IP phones</li>
+                                <li><strong>User Services:</strong> Authentication, authorization, basic security controls</li>
+                                <li><strong>Cost Optimization:</strong> Focus on port density and basic functionality</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Collapsed Core Architecture</h4>
+                    <ul>
+                        <li><strong>Design Concept:</strong> Core and distribution layers combined into single tier</li>
+                        <li><strong>Implementation:</strong> High-performance multilayer switches handle both functions</li>
+                        <li><strong>Cost Benefits:</strong> Reduced equipment costs, simplified infrastructure</li>
+                        <li><strong>Management Advantages:</strong> Fewer devices to manage, simplified configuration</li>
+                        <li><strong>Scalability Limitations:</strong> May not scale to very large networks</li>
+                        <li><strong>Use Cases:</strong> Small to medium enterprises, cost-sensitive deployments</li>
+                        <li><strong>Performance Considerations:</strong> Must ensure adequate capacity for combined roles</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Traffic Flow Patterns</h4>
+                    
+                    <h5>North-South Traffic</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Traffic flowing between different network tiers or external networks</li>
+                        <li><strong>Common Examples:</strong> Client-server communication, internet access, external API calls</li>
+                        <li><strong>Network Path:</strong> Typically crosses firewalls, routers, and security boundaries</li>
+                        <li><strong>Security Implications:</strong> Multiple inspection points, policy enforcement opportunities</li>
+                        <li><strong>Optimization Strategies:</strong> Proper hierarchical design, adequate uplink capacity</li>
+                        <li><strong>Traditional Focus:</strong> Most legacy network designs optimized for this pattern</li>
+                    </ul>
+                    
+                    <h5>East-West Traffic</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Traffic flowing between devices at the same network tier</li>
+                        <li><strong>Modern Examples:</strong> Server-to-server communication, microservices, database replication</li>
+                        <li><strong>Growth Drivers:</strong> Virtualization, cloud computing, distributed applications</li>
+                        <li><strong>Design Challenges:</strong> Traditional networks not optimized for lateral traffic</li>
+                        <li><strong>Modern Solutions:</strong> Spine-leaf architecture, software-defined networking</li>
+                        <li><strong>Security Considerations:</strong> Lateral movement prevention, micro-segmentation</li>
+                    </ul>
+                </div>
+
+                <div class="network-diagram">
+                    <h3>Three-Tier Hierarchical Model Visualization</h3>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                        <div style="background: #e74c3c; color: white; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; font-size: 1.1rem;">
+                            Core Layer - High-Speed Backbone
+                        </div>
+                        <div style="display: flex; gap: 2rem;">
+                            <div style="background: #f39c12; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: bold;">
+                                Distribution Layer
+                            </div>
+                            <div style="background: #f39c12; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: bold;">
+                                Distribution Layer
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                            <div style="background: #27ae60; color: white; padding: 0.8rem 1rem; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">
+                                Access
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Network Topologies Study Tips</h3>
+                    <ul>
+                        <li>Draw diagrams of each topology type to visualize connection patterns</li>
+                        <li>Understand the advantages and disadvantages of each topology design</li>
+                        <li>Practice identifying appropriate topologies for different business scenarios</li>
+                        <li>Learn about redundancy and fault tolerance characteristics of each design</li>
+                        <li>Understand modern data center architectures like spine-leaf vs traditional designs</li>
+                        <li>Study traffic flow patterns and their impact on network performance</li>
+                        <li>Practice calculating connection requirements and costs for different topologies</li>
+                        <li>Learn how topology choice affects scalability and management complexity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- IPv4 Addressing Tab -->
+            <div id="addressing" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.7 IPv4 Network Addressing</h2>
+                    <div class="objective-content">
+                        <p>IPv4 addressing is fundamental to network operations and design. Understanding public vs. private addressing, subnetting techniques, address classes, and advanced addressing concepts is essential for network implementation, troubleshooting, and optimization.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Public vs Private Addressing</h4>
+                    
+                    <h5>Automatic Private IP Addressing (APIPA)</h5>
+                    <ul>
+                        <li><strong>Address Range:</strong> 169.254.0.0/16 (169.254.0.1 - 169.254.255.254)</li>
+                        <li><strong>Primary Purpose:</strong> Self-assigned addressing when DHCP is unavailable</li>
+                        <li><strong>Technical Characteristics:</strong> Non-routable, link-local scope only</li>
+                        <li><strong>Use Cases:</strong> Small peer-to-peer networks, emergency connectivity, troubleshooting</li>
+                        <li><strong>Limitations:</strong> Cannot access internet, cannot route between subnets</li>
+                        <li><strong>Implementation:</strong> Automatic assignment by operating systems (Windows, macOS)</li>
+                        <li><strong>Conflict Detection:</strong> ARP-based duplicate address detection before assignment</li>
+                    </ul>
+                    
+                    <h5>RFC 1918 Private Address Ranges</h5>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Address Range</th>
+                                <th>CIDR Notation</th>
+                                <th>Default Subnet Mask</th>
+                                <th>Total Addresses</th>
+                                <th>Typical Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Class A</strong></td>
+                                <td>10.0.0.0 - 10.255.255.255</td>
+                                <td>10.0.0.0/8</td>
+                                <td>255.0.0.0</td>
+                                <td>16,777,216</td>
+                                <td>Large enterprises</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class B</strong></td>
+                                <td>172.16.0.0 - 172.31.255.255</td>
+                                <td>172.16.0.0/12</td>
+                                <td>255.240.0.0</td>
+                                <td>1,048,576</td>
+                                <td>Medium enterprises</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class C</strong></td>
+                                <td>192.168.0.0 - 192.168.255.255</td>
+                                <td>192.168.0.0/16</td>
+                                <td>255.255.0.0</td>
+                                <td>65,536</td>
+                                <td>Small networks, homes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Loopback/Localhost Addressing</h5>
+                    <ul>
+                        <li><strong>Address Range:</strong> 127.0.0.0/8 (entire Class A block reserved)</li>
+                        <li><strong>Common Address:</strong> 127.0.0.1 (most frequently used loopback address)</li>
+                        <li><strong>Primary Purpose:</strong> Testing network stack, local service communication</li>
+                        <li><strong>Technical Characteristics:</strong> Always available, never leaves the host system</li>
+                        <li><strong>Use Cases:</strong> Application testing, local services, diagnostic tools</li>
+                        <li><strong>IPv6 Equivalent:</strong> ::1 (single address, not a range)</li>
+                        <li><strong>Performance:</strong> No network overhead, processed entirely within host</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Advanced Subnetting Concepts</h4>
+                    
+                    <h5>Variable Length Subnet Mask (VLSM)</h5>
+                    <ul>
+                        <li><strong>Definition:</strong> Using different subnet mask lengths within the same major network</li>
+                        <li><strong>Efficiency Benefits:</strong> Optimal address utilization, reduces address waste</li>
+                        <li><strong>Design Flexibility:</strong> Subnets sized according to actual requirements</li>
+                        <li><strong>Protocol Requirements:</strong> Classless routing protocols (OSPF, EIGRP, BGP, RIP v2)</li>
+                        <li><strong>Design Process:</strong> Start with largest subnet requirements, work down to smallest</li>
+                        <li><strong>Example Application:</strong> /24 network divided into /26, /27, /28, /30 subnets</li>
+                        <li><strong>Planning Considerations:</strong> Future growth, address summarization, route aggregation</li>
+                    </ul>
+                    
+                    <h5>Classless Inter-domain Routing (CIDR)</h5>
+                    <ul>
+                        <li><strong>Notation Format:</strong> Network address followed by /prefix length (e.g., 192.168.1.0/24)</li>
+                        <li><strong>Prefix Length:</strong> Number of bits in the network portion (0-32)</li>
+                        <li><strong>Key Benefits:</strong> Route aggregation, more efficient routing tables</li>
+                        <li><strong>Supernetting:</strong> Combining multiple smaller networks into larger address blocks</li>
+                        <li><strong>Route Summarization:</strong> Advertising single route for multiple subnets</li>
+                        <li><strong>Elimination of Classes:</strong> No longer bound by traditional Class A/B/C boundaries</li>
+                        <li><strong>Internet Efficiency:</strong> Reduced routing table size, improved convergence</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>IPv4 Address Classes (Historical Context)</h4>
+                    
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>First Octet Range</th>
+                                <th>Default Subnet Mask</th>
+                                <th>CIDR Equivalent</th>
+                                <th>Network/Host Bits</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Class A</strong></td>
+                                <td>1-126</td>
+                                <td>255.0.0.0</td>
+                                <td>/8</td>
+                                <td>8/24</td>
+                                <td>Large networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class B</strong></td>
+                                <td>128-191</td>
+                                <td>255.255.0.0</td>
+                                <td>/16</td>
+                                <td>16/16</td>
+                                <td>Medium networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class C</strong></td>
+                                <td>192-223</td>
+                                <td>255.255.255.0</td>
+                                <td>/24</td>
+                                <td>24/8</td>
+                                <td>Small networks (unicast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class D</strong></td>
+                                <td>224-239</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>Multicast addressing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Class E</strong></td>
+                                <td>240-255</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>Experimental/Reserved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Special Purpose Addresses</h5>
+                    <ul>
+                        <li><strong>0.0.0.0:</strong> Default route representation, "this network" designation</li>
+                        <li><strong>255.255.255.255:</strong> Limited broadcast address (local subnet only)</li>
+                        <li><strong>Network Address:</strong> All host bits set to 0 (identifies the subnet)</li>
+                        <li><strong>Broadcast Address:</strong> All host bits set to 1 (broadcasts to all hosts)</li>
+                        <li><strong>127.x.x.x:</strong> Loopback address range for local testing</li>
+                        <li><strong>224.0.0.0-239.255.255.255:</strong> Multicast address range</li>
+                        <li><strong>169.254.x.x:</strong> APIPA automatic addressing range</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Interactive Subnetting Calculator</h3>
+                    <p>Practice your subnetting skills with this interactive calculator</p>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; color: #333; margin-top: 1rem;">
+                        <div style="margin-bottom: 1rem;">
+                            <label><strong>Network Address:</strong> </label>
+                            <input type="text" id="networkAddr" placeholder="192.168.1.0" style="padding: 0.5rem; margin-left: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label><strong>Subnet Mask:</strong> </label>
+                            <input type="text" id="subnetMask" placeholder="/24 or 255.255.255.0" style="padding: 0.5rem; margin-left: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                        </div>
+                        <button class="btn" onclick="calculateSubnet()">Calculate Subnet Information</button>
+                        <div id="subnetResult" style="margin-top: 1rem; font-family: monospace; background: #f8f9fa; padding: 1rem; border-radius: 4px;"></div>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Practical Subnetting Examples</h4>
+                    
+                    <h5>Example 1: Basic Equal-Size Subnetting</h5>
+                    <div class="code-block">
+Given Network: 192.168.1.0/24
+Requirement: 4 equal subnets, at least 50 hosts each
+
+Solution Steps:
+1. Determine subnet bits needed: 2 bits (2² = 4 subnets)
+2. New subnet mask: /24 + 2 = /26 (255.255.255.192)
+3. Host bits remaining: 32 - 26 = 6 bits
+4. Hosts per subnet: 2⁶ - 2 = 62 usable addresses
+
+Resulting Subnets:
+Subnet 1: 192.168.1.0/26    (192.168.1.1 - 192.168.1.62)
+Subnet 2: 192.168.1.64/26   (192.168.1.65 - 192.168.1.126)
+Subnet 3: 192.168.1.128/26  (192.168.1.129 - 192.168.1.190)
+Subnet 4: 192.168.1.192/26  (192.168.1.193 - 192.168.1.254)
+                    </div>
+                    
+                    <h5>Example 2: VLSM Design for Different Requirements</h5>
+                    <div class="code-block">
+Given Network: 10.1.0.0/16
+Requirements:
+- Subnet A: 2000 hosts (Sales department)
+- Subnet B: 500 hosts (Engineering)
+- Subnet C: 100 hosts (Marketing)
+- Subnet D: 50 hosts (Management)
+- Point-to-point links: 30 links needed
+
+VLSM Solution (largest to smallest):
+1. Subnet A: Needs 2000 hosts
+   - Requires 11 host bits (2¹¹ = 2048)
+   - Subnet: 10.1.0.0/21 (2046 usable hosts)
+   - Range: 10.1.0.0 - 10.1.7.255
+
+2. Subnet B: Needs 500 hosts
+   - Requires 9 host bits (2⁹ = 512)
+   - Subnet: 10.1.8.0/23 (510 usable hosts)
+   - Range: 10.1.8.0 - 10.1.9.255
+
+3. Subnet C: Needs 100 hosts
+   - Requires 7 host bits (2⁷ = 128)
+   - Subnet: 10.1.10.0/25 (126 usable hosts)
+   - Range: 10.1.10.0 - 10.1.10.127
+
+4. Subnet D: Needs 50 hosts
+   - Requires 6 host bits (2⁶ = 64)
+   - Subnet: 10.1.10.128/26 (62 usable hosts)
+   - Range: 10.1.10.128 - 10.1.10.191
+
+5. Point-to-point links: /30 subnets (2 usable hosts each)
+   - Start at 10.1.10.192/30
+   - Continue: 10.1.10.196/30, 10.1.10.200/30, etc.
+                    </div>
+                    
+                    <h5>Example 3: Subnetting for Hierarchical Design</h5>
+                    <div class="code-block">
+Enterprise Network: 172.16.0.0/12
+Branch Office Allocation Strategy:
+
+Main Campus: 172.16.0.0/16 (65,534 hosts)
+├── Core Network: 172.16.0.0/24
+├── Server Farm: 172.16.1.0/24
+├── WiFi Network: 172.16.2.0/23 (512 hosts)
+└── User VLANs: 172.16.4.0/22 (1,024 hosts)
+
+Branch Offices: 172.17.0.0/16
+├── Branch 1: 172.17.1.0/24
+├── Branch 2: 172.17.2.0/24
+├── Branch 3: 172.17.3.0/24
+└── Future expansion: 172.17.4.0/22
+
+Remote Sites: 172.18.0.0/16
+├── Small sites: 172.18.1.0/26 through 172.18.1.192/26
+└── Point-to-point: 172.18.2.0/24 (64 x /30 subnets)
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Subnetting Quick Reference</h4>
+                    <table class="protocol-table">
+                        <thead>
+                            <tr>
+                                <th>CIDR</th>
+                                <th>Subnet Mask</th>
+                                <th>Host Bits</th>
+                                <th>Usable Hosts</th>
+                                <th>Subnets (Class C)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>/24</td><td>255.255.255.0</td><td>8</td><td>254</td><td>1</td></tr>
+                            <tr><td>/25</td><td>255.255.255.128</td><td>7</td><td>126</td><td>2</td></tr>
+                            <tr><td>/26</td><td>255.255.255.192</td><td>6</td><td>62</td><td>4</td></tr>
+                            <tr><td>/27</td><td>255.255.255.224</td><td>5</td><td>30</td><td>8</td></tr>
+                            <tr><td>/28</td><td>255.255.255.240</td><td>4</td><td>14</td><td>16</td></tr>
+                            <tr><td>/29</td><td>255.255.255.248</td><td>3</td><td>6</td><td>32</td></tr>
+                            <tr><td>/30</td><td>255.255.255.252</td><td>2</td><td>2</td><td>64</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="study-tips">
+                    <h3>IPv4 Addressing Study Tips</h3>
+                    <ul>
+                        <li>Memorize the RFC 1918 private address ranges and their applications</li>
+                        <li>Practice binary to decimal conversion for subnet mask calculations</li>
+                        <li>Learn the powers of 2 up to 2¹⁶ for quick subnet calculations</li>
+                        <li>Practice VLSM scenarios with varying host requirements</li>
+                        <li>Understand the difference between network, broadcast, and usable host addresses</li>
+                        <li>Use subnetting shortcuts and memory techniques for faster calculations</li>
+                        <li>Practice with real-world network design scenarios and constraints</li>
+                        <li>Understand how subnetting affects routing and network performance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modern Networks Tab -->
+            <div id="modern-networks" class="tab-content">
+                <div class="objective-card">
+                    <h2 class="objective-title">1.8 Modern Network Environments</h2>
+                    <div class="objective-content">
+                        <p>Modern networking is rapidly evolving with software-defined technologies, zero trust security architectures, and IPv6 adoption. Understanding these emerging technologies, use cases, and implementation strategies is crucial for contemporary network professionals working in digital transformation initiatives.</p>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Software-Defined Network (SDN) and SD-WAN</h4>
+                    
+                    <h5>Software-Defined Network (SDN)</h5>
+                    <ul>
+                        <li><strong>Core Architecture:</strong> Separation of control plane from data plane for centralized management</li>
+                        <li><strong>SDN Controller:</strong> Centralized intelligence that programs and manages network devices</li>
+                        <li><strong>OpenFlow Protocol:</strong> Communication standard between controller and network devices</li>
+                        <li><strong>Key Benefits:</strong> Centralized management, network programmability, rapid deployment, agility</li>
+                        <li><strong>Use Cases:</strong> Data center networks, campus networks, network virtualization, cloud networking</li>
+                        <li><strong>Implementation Models:</strong> Pure SDN, hybrid SDN, SDN overlays</li>
+                    </ul>
+                    
+                    <h5>Software-Defined WAN (SD-WAN)</h5>
+                    <ul>
+                        <li><strong>Application Aware:</strong> Intelligent traffic identification and application-specific optimization</li>
+                        <li><strong>Zero-Touch Provisioning:</strong> Automated device deployment and configuration management</li>
+                        <li><strong>Transport Agnostic:</strong> Works over MPLS, internet, LTE, satellite connections</li>
+                        <li><strong>Central Policy Management:</strong> Unified policy deployment across all sites and users</li>
+                        <li><strong>Business Benefits:</strong> Cost reduction, improved performance, simplified management</li>
+                        <li><strong>Security Integration:</strong> Built-in firewall, VPN, threat protection capabilities</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Virtual Extensible Local Area Network (VXLAN)</h4>
+                    <ul>
+                        <li><strong>Primary Purpose:</strong> Extends Layer 2 networks over Layer 3 infrastructure</li>
+                        <li><strong>Data Center Interconnect (DCI):</strong> Connects multiple data centers seamlessly</li>
+                        <li><strong>Layer 2 Encapsulation:</strong> Carries Ethernet frames over IP networks using UDP</li>
+                        <li><strong>24-bit VNI:</strong> Virtual Network Identifier supports up to 16 million virtual networks</li>
+                        <li><strong>VTEP Functionality:</strong> VXLAN Tunnel Endpoints perform encapsulation and decapsulation</li>
+                        <li><strong>Use Cases:</strong> Multi-tenant cloud environments, VM mobility, hybrid cloud connectivity</li>
+                        <li><strong>Scalability Benefits:</strong> Overcomes VLAN limitations, supports massive scale-out</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Zero Trust Architecture (ZTA)</h4>
+                    <ul>
+                        <li><strong>Core Principle:</strong> "Never trust, always verify" approach to security</li>
+                        <li><strong>Policy-Based Authentication:</strong> Context-aware access decisions using multiple factors</li>
+                        <li><strong>Continuous Authorization:</strong> Ongoing verification of user and device identity</li>
+                        <li><strong>Least Privilege Access:</strong> Minimum necessary permissions granted for specific tasks</li>
+                        <li><strong>Implementation Components:</strong> Micro-segmentation, identity verification, encryption everywhere</li>
+                        <li><strong>Key Technologies:</strong> Identity providers, policy engines, enforcement points, analytics</li>
+                        <li><strong>Business Drivers:</strong> Remote work, cloud adoption, advanced persistent threats</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Secure Access Service Edge (SASE) / Security Service Edge (SSE)</h4>
+                    <ul>
+                        <li><strong>SASE Framework:</strong> Combines networking and security functions in cloud-delivered services</li>
+                        <li><strong>SSE Components:</strong> Security-focused subset of SASE including CASB, SWG, ZTNA, FWaaS</li>
+                        <li><strong>Core Components:</strong> Cloud Access Security Broker, Secure Web Gateway, Zero Trust Network Access</li>
+                        <li><strong>Architecture Benefits:</strong> Simplified infrastructure, improved performance, unified security policies</li>
+                        <li><strong>Use Cases:</strong> Remote workforce enablement, cloud transformation, branch office connectivity</li>
+                        <li><strong>Delivery Model:</strong> Cloud-native services delivered from global edge locations</li>
+                    </ul>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Infrastructure as Code (IaC)</h4>
+                    
+                    <h5>Automation Capabilities</h5>
+                    <div class="sub-objective">
+                        <h6>Playbooks/Templates/Reusable Tasks</h6>
+                        <ul>
+                            <li><strong>Ansible Playbooks:</strong> Declarative automation scripts for configuration management</li>
+                            <li><strong>Infrastructure Templates:</strong> Terraform, CloudFormation, ARM templates for provisioning</li>
+                            <li><strong>Reusable Components:</strong> Modular automation elements for consistent deployment</li>
+                            <li><strong>Version Control:</strong> Git-based management of infrastructure definitions</li>
+                            <li><strong>Benefits:</strong> Consistency, repeatability, scalability, documentation</li>
+                        </ul>
+                        
+                        <h6>Configuration Drift and Compliance</h6>
+                        <ul>
+                            <li><strong>Configuration Drift:</strong> Unintended changes from desired infrastructure state</li>
+                            <li><strong>Detection Methods:</strong> Automated monitoring, configuration scanning, compliance reporting</li>
+                            <li><strong>Remediation:</strong> Automatic correction to desired state, rollback capabilities</li>
+                            <li><strong>Compliance Management:</strong> Ensuring adherence to security policies and standards</li>
+                            <li><strong>Continuous Monitoring:</strong> Real-time tracking of infrastructure changes</li>
+                        </ul>
+                        
+                        <h6>Automated Upgrades</h6>
+                        <ul>
+                            <li><strong>Automated Updates:</strong> Scripted upgrade processes for firmware and software</li>
+                            <li><strong>Testing Pipelines:</strong> Automated testing in staging environments before production</li>
+                            <li><strong>Rollback Mechanisms:</strong> Automatic reversion on failure or performance degradation</li>
+                            <li><strong>Blue-Green Deployments:</strong> Zero-downtime upgrades using parallel environments</li>
+                            <li><strong>Canary Releases:</strong> Gradual rollout to minimize risk and impact</li>
+                        </ul>
+                        
+                        <h6>Dynamic Inventories</h6>
+                        <ul>
+                            <li><strong>Auto-Discovery:</strong> Automatic detection and cataloging of network devices</li>
+                            <li><strong>Cloud Integration:</strong> Integration with cloud provider APIs for resource discovery</li>
+                            <li><strong>Real-Time Updates:</strong> Dynamic inventory management as infrastructure changes</li>
+                            <li><strong>Metadata Tagging:</strong> Automated tagging and grouping based on attributes</li>
+                            <li><strong>Multi-Cloud Support:</strong> Unified inventory across multiple cloud providers</li>
+                        </ul>
+                    </div>
+                    
+                    <h5>Source Control and Version Management</h5>
+                    <div class="sub-objective">
+                        <h6>Version Control Systems</h6>
+                        <ul>
+                            <li><strong>Git Integration:</strong> Distributed version control for infrastructure code</li>
+                            <li><strong>Change Tracking:</strong> Complete history of infrastructure modifications</li>
+                            <li><strong>Rollback Capabilities:</strong> Easy reversion to previous working configurations</li>
+                            <li><strong>Collaboration:</strong> Multiple team members working on infrastructure simultaneously</li>
+                            <li><strong>Audit Trail:</strong> Who changed what, when, and why for compliance</li>
+                        </ul>
+                        
+                        <h6>Central Repository Management</h6>
+                        <ul>
+                            <li><strong>Platform Options:</strong> GitHub, GitLab, Bitbucket, Azure DevOps</li>
+                            <li><strong>Access Control:</strong> Role-based permissions for infrastructure code</li>
+                            <li><strong>Backup and Recovery:</strong> Redundant storage of critical infrastructure definitions</li>
+                            <li><strong>CI/CD Integration:</strong> Automated testing and deployment pipelines</li>
+                            <li><strong>Documentation:</strong> Embedded documentation within code repositories</li>
+                        </ul>
+                        
+                        <h6>Conflict Resolution</h6>
+                        <ul>
+                            <li><strong>Merge Conflicts:</strong> Automatic detection of conflicting infrastructure changes</li>
+                            <li><strong>Resolution Tools:</strong> Visual merge tools and automated conflict resolution</li>
+                            <li><strong>Branch Protection:</strong> Preventing direct changes to production branches</li>
+                            <li><strong>Code Review Process:</strong> Peer review before merging infrastructure changes</li>
+                            <li><strong>Testing Requirements:</strong> Mandatory testing before code integration</li>
+                        </ul>
+                        
+                        <h6>Branching Strategies</h6>
+                        <ul>
+                            <li><strong>Feature Branches:</strong> Isolated development environments for new features</li>
+                            <li><strong>Environment Branches:</strong> Separate branches for dev, staging, and production</li>
+                            <li><strong>Release Branches:</strong> Stable release preparation and maintenance</li>
+                            <li><strong>Hotfix Branches:</strong> Emergency fixes for critical production issues</li>
+                            <li><strong>GitFlow Model:</strong> Structured workflow for complex infrastructure projects</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>IPv6 Addressing and Transition</h4>
+                    
+                    <h5>Addressing IPv4 Exhaustion</h5>
+                    <ul>
+                        <li><strong>IPv4 Limitations:</strong> 32-bit address space exhaustion (4.3 billion addresses)</li>
+                        <li><strong>IPv6 Solution:</strong> 128-bit addresses providing 340 undecillion unique addresses</li>
+                        <li><strong>Additional Benefits:</strong> Simplified routing, built-in security, improved QoS support</li>
+                        <li><strong>Auto-configuration:</strong> Stateless address autoconfiguration (SLAAC)</li>
+                        <li><strong>Adoption Timeline:</strong> Gradual transition driven by mobile, IoT, and cloud growth</li>
+                    </ul>
+                    
+                    <h5>IPv6 Compatibility and Transition Mechanisms</h5>
+                    <div class="sub-objective">
+                        <h6>Tunneling Technologies</h6>
+                        <ul>
+                            <li><strong>6to4 Tunneling:</strong> IPv6 packets encapsulated over IPv4 networks automatically</li>
+                            <li><strong>Teredo:</strong> IPv6 connectivity through NAT devices using UDP encapsulation</li>
+                            <li><strong>ISATAP:</strong> Intra-Site Automatic Tunnel Addressing Protocol for enterprise networks</li>
+                            <li><strong>6rd:</strong> IPv6 Rapid Deployment for service provider networks</li>
+                            <li><strong>Use Cases:</strong> Early IPv6 adoption, connectivity across IPv4-only infrastructure</li>
+                            <li><strong>Limitations:</strong> Performance overhead, complexity, temporary solutions</li>
+                        </ul>
+                        
+                        <h6>Dual Stack Implementation</h6>
+                        <ul>
+                            <li><strong>Concept:</strong> Running IPv4 and IPv6 simultaneously on same devices</li>
+                            <li><strong>Benefits:</strong> Gradual migration path, maintains backward compatibility</li>
+                            <li><strong>Challenges:</strong> Increased complexity, higher resource requirements</li>
+                            <li><strong>Best Practice:</strong> Industry-preferred transition methodology</li>
+                            <li><strong>Happy Eyeballs:</strong> Algorithm for preferring IPv6 when both are available</li>
+                            <li><strong>Management:</strong> Requires dual protocol monitoring and troubleshooting</li>
+                        </ul>
+                        
+                        <h6>NAT64 Translation</h6>
+                        <ul>
+                            <li><strong>Primary Function:</strong> Translation between IPv6-only clients and IPv4 services</li>
+                            <li><strong>Use Cases:</strong> IPv6-only networks accessing legacy IPv4 services</li>
+                            <li><strong>DNS64 Integration:</strong> Companion technology for address resolution and mapping</li>
+                            <li><strong>Implementation Types:</strong> Stateful NAT64 (session tracking) vs stateless (algorithmic)</li>
+                            <li><strong>Performance:</strong> Potential bottleneck, requires proper capacity planning</li>
+                            <li><strong>Limitations:</strong> Protocol limitations, application compatibility issues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-element">
+                    <h3>Modern Network Technologies Comparison Matrix</h3>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; color: #333; margin-top: 1rem;">
+                        <table class="protocol-table">
+                            <thead>
+                                <tr>
+                                    <th>Technology</th>
+                                    <th>Primary Benefit</th>
+                                    <th>Best Use Case</th>
+                                    <th>Implementation Complexity</th>
+                                    <th>ROI Timeline</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SDN</strong></td>
+                                    <td>Centralized Control</td>
+                                    <td>Data Center Automation</td>
+                                    <td>High</td>
+                                    <td>12-18 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SD-WAN</strong></td>
+                                    <td>WAN Cost Reduction</td>
+                                    <td>Branch Office Connectivity</td>
+                                    <td>Medium</td>
+                                    <td>6-12 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>VXLAN</strong></td>
+                                    <td>Network Virtualization</td>
+                                    <td>Multi-tenant Environments</td>
+                                    <td>High</td>
+                                    <td>18-24 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Zero Trust</strong></td>
+                                    <td>Enhanced Security</td>
+                                    <td>Remote Access Security</td>
+                                    <td>Medium-High</td>
+                                    <td>12-18 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SASE</strong></td>
+                                    <td>Unified Security/Networking</td>
+                                    <td>Cloud Transformation</td>
+                                    <td>Medium</td>
+                                    <td>6-12 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IaC</strong></td>
+                                    <td>Automation & Consistency</td>
+                                    <td>Infrastructure Management</td>
+                                    <td>Medium</td>
+                                    <td>3-6 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IPv6</strong></td>
+                                    <td>Address Space Expansion</td>
+                                    <td>Future-proofing</td>
+                                    <td>Low-Medium</td>
+                                    <td>Long-term</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sub-objective">
+                    <h4>Implementation Considerations</h4>
+                    
+                    <h5>Technology Selection Criteria</h5>
+                    <ul>
+                        <li><strong>Business Requirements:</strong> Align technology choices with business objectives</li>
+                        <li><strong>Current Infrastructure:</strong> Assess existing environment and integration needs</li>
+                        <li><strong>Skill Requirements:</strong> Evaluate team capabilities and training needs</li>
+                        <li><strong>Vendor Ecosystem:</strong> Consider vendor support and ecosystem maturity</li>
+                        <li><strong>Total Cost of Ownership:</strong> Include implementation, training, and operational costs</li>
+                        <li><strong>Risk Assessment:</strong> Evaluate implementation risks and mitigation strategies</li>
+                    </ul>
+                    
+                    <h5>Migration Strategies</h5>
+                    <ul>
+                        <li><strong>Phased Approach:</strong> Gradual implementation to minimize risk and disruption</li>
+                        <li><strong>Pilot Projects:</strong> Small-scale implementations to prove concepts</li>
+                        <li><strong>Parallel Operation:</strong> Running old and new systems simultaneously</li>
+                        <li><strong>Training Programs:</strong> Staff education and certification requirements</li>
+                        <li><strong>Rollback Plans:</strong> Contingency plans for implementation failures</li>
+                        <li><strong>Success Metrics:</strong> Define measurable outcomes and KPIs</li>
+                    </ul>
+                </div>
+
+                <div class="study-tips">
+                    <h3>Modern Networks Study Tips</h3>
+                    <ul>
+                        <li>Understand the business drivers and benefits behind each modern technology</li>
+                        <li>Study the differences between traditional and software-defined approaches</li>
+                        <li>Learn about major vendor implementations and solution offerings</li>
+                        <li>Practice designing modern network architectures for different scenarios</li>
+                        <li>Understand IPv6 addressing structure and transition mechanisms</li>
+                        <li>Study automation tools and Infrastructure as Code principles</li>
+                        <li>Stay current with emerging networking trends and industry developments</li>
+                        <li>Practice troubleshooting modern network technologies and their interactions</li>
+                    </ul>
+                </div>
+            </div>
             <div id="quiz" class="tab-content">
                 <div class="objective-card">
                     <h2 class="objective-title">Practice Quiz - Domain 1.0 Networking Concepts</h2>
@@ -1927,6 +3161,178 @@
             // Toggle current layer
             layer.classList.toggle('active');
             details.classList.toggle('active');
+        }
+
+        // Topology Details
+        function showTopologyDetails(topology) {
+            const detailsContainer = document.getElementById('topology-details');
+            const allDetails = document.querySelectorAll('.topology-detail');
+            
+            // Hide all details
+            allDetails.forEach(detail => detail.style.display = 'none');
+            
+            // Show selected topology details
+            const selectedDetail = document.getElementById(`${topology}-details`);
+            if (selectedDetail) {
+                selectedDetail.style.display = 'block';
+                detailsContainer.style.display = 'block';
+                detailsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Subnet Calculator
+        function calculateSubnet() {
+            const networkAddr = document.getElementById('networkAddr').value.trim();
+            const subnetMask = document.getElementById('subnetMask').value.trim();
+            const resultDiv = document.getElementById('subnetResult');
+            
+            try {
+                if (!networkAddr || !subnetMask) {
+                    resultDiv.innerHTML = '<strong>Error:</strong> Please enter both network address and subnet mask.';
+                    return;
+                }
+                
+                // Parse CIDR notation
+                let cidr;
+                if (subnetMask.startsWith('/')) {
+                    cidr = parseInt(subnetMask.substring(1));
+                } else if (subnetMask.includes('.')) {
+                    // Convert subnet mask to CIDR
+                    const parts = subnetMask.split('.').map(part => parseInt(part));
+                    if (parts.length !== 4 || parts.some(part => isNaN(part) || part < 0 || part > 255)) {
+                        throw new Error('Invalid subnet mask format');
+                    }
+                    cidr = parts.reduce((acc, part) => {
+                        return acc + part.toString(2).split('1').length - 1;
+                    }, 0);
+                } else {
+                    cidr = parseInt(subnetMask);
+                }
+                
+                if (isNaN(cidr) || cidr < 0 || cidr > 32) {
+                    throw new Error('Invalid CIDR notation (must be 0-32)');
+                }
+                
+                // Validate network address
+                const ipParts = networkAddr.split('.').map(part => parseInt(part));
+                if (ipParts.length !== 4 || ipParts.some(part => isNaN(part) || part < 0 || part > 255)) {
+                    throw new Error('Invalid IP address format');
+                }
+                
+                // Calculate subnet information
+                const hostBits = 32 - cidr;
+                const numHosts = Math.pow(2, hostBits);
+                const usableHosts = Math.max(0, numHosts - 2); // Subtract network and broadcast
+                const subnetMaskDecimal = (0xFFFFFFFF << hostBits) >>> 0;
+                
+                // Convert subnet mask to dotted decimal
+                const maskParts = [
+                    (subnetMaskDecimal >>> 24) & 0xFF,
+                    (subnetMaskDecimal >>> 16) & 0xFF,
+                    (subnetMaskDecimal >>> 8) & 0xFF,
+                    subnetMaskDecimal & 0xFF
+                ];
+                const subnetMaskDotted = maskParts.join('.');
+                
+                // Calculate network and broadcast addresses
+                const networkDecimal = ((ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3]) >>> 0;
+                const networkAddressDecimal = (networkDecimal & subnetMaskDecimal) >>> 0;
+                const broadcastDecimal = (networkAddressDecimal | (numHosts - 1)) >>> 0;
+                
+                // Convert back to dotted decimal
+                const networkAddress = [
+                    (networkAddressDecimal >>> 24) & 0xFF,
+                    (networkAddressDecimal >>> 16) & 0xFF,
+                    (networkAddressDecimal >>> 8) & 0xFF,
+                    networkAddressDecimal & 0xFF
+                ].join('.');
+                
+                const broadcastAddress = [
+                    (broadcastDecimal >>> 24) & 0xFF,
+                    (broadcastDecimal >>> 16) & 0xFF,
+                    (broadcastDecimal >>> 8) & 0xFF,
+                    broadcastDecimal & 0xFF
+                ].join('.');
+                
+                // Calculate first and last usable host addresses
+                const firstHostDecimal = networkAddressDecimal + 1;
+                const lastHostDecimal = broadcastDecimal - 1;
+                
+                const firstHost = [
+                    (firstHostDecimal >>> 24) & 0xFF,
+                    (firstHostDecimal >>> 16) & 0xFF,
+                    (firstHostDecimal >>> 8) & 0xFF,
+                    firstHostDecimal & 0xFF
+                ].join('.');
+                
+                const lastHost = [
+                    (lastHostDecimal >>> 24) & 0xFF,
+                    (lastHostDecimal >>> 16) & 0xFF,
+                    (lastHostDecimal >>> 8) & 0xFF,
+                    lastHostDecimal & 0xFF
+                ].join('.');
+                
+                // Determine address class
+                const firstOctet = ipParts[0];
+                let addressClass = 'Unknown';
+                if (firstOctet >= 1 && firstOctet <= 126) addressClass = 'A';
+                else if (firstOctet >= 128 && firstOctet <= 191) addressClass = 'B';
+                else if (firstOctet >= 192 && firstOctet <= 223) addressClass = 'C';
+                else if (firstOctet >= 224 && firstOctet <= 239) addressClass = 'D (Multicast)';
+                else if (firstOctet >= 240 && firstOctet <= 255) addressClass = 'E (Experimental)';
+                
+                // Determine if private address
+                const isPrivate = (firstOctet === 10) ||
+                                (firstOctet === 172 && ipParts[1] >= 16 && ipParts[1] <= 31) ||
+                                (firstOctet === 192 && ipParts[1] === 168) ||
+                                (firstOctet === 169 && ipParts[1] === 254);
+                
+                resultDiv.innerHTML = `
+                    <div style="border: 2px solid #27ae60; border-radius: 8px; padding: 1rem; background: #f8fff8;">
+                        <h4 style="color: #27ae60; margin-bottom: 1rem;">📊 Subnet Calculation Results</h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <strong>🌐 Network Information:</strong><br>
+                                Network Address: <code>${networkAddress}</code><br>
+                                CIDR Notation: <code>/${cidr}</code><br>
+                                Subnet Mask: <code>${subnetMaskDotted}</code><br>
+                                Address Class: <strong>${addressClass}</strong><br>
+                                Address Type: <strong>${isPrivate ? 'Private' : 'Public'}</strong>
+                            </div>
+                            <div>
+                                <strong>📈 Capacity Information:</strong><br>
+                                Host Bits: <code>${hostBits}</code><br>
+                                Total Addresses: <code>${numHosts.toLocaleString()}</code><br>
+                                Usable Hosts: <code>${usableHosts.toLocaleString()}</code><br>
+                                Broadcast Address: <code>${broadcastAddress}</code>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e8; padding: 1rem; border-radius: 4px;">
+                            <strong>🔢 Host Range:</strong><br>
+                            First Usable Host: <code>${firstHost}</code><br>
+                            Last Usable Host: <code>${lastHost}</code>
+                        </div>
+                        
+                        <div style="margin-top: 1rem; font-size: 0.9em; color: #666;">
+                            <em>💡 Tip: Remember that network and broadcast addresses are not usable for host assignment.</em>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="border: 2px solid #e74c3c; border-radius: 8px; padding: 1rem; background: #fff8f8;">
+                        <h4 style="color: #e74c3c;">❌ Calculation Error</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><em>Please check your input format:</em></p>
+                        <ul>
+                            <li>Network address: 192.168.1.0</li>
+                            <li>Subnet mask: /24 or 255.255.255.0</li>
+                        </ul>
+                    </div>
+                `;
+            }
         }
 
         // Quiz Management
