@@ -3176,7 +3176,20 @@ Remote Sites: 172.18.0.0/16
             if (selectedDetail) {
                 selectedDetail.style.display = 'block';
                 detailsContainer.style.display = 'block';
-                detailsContainer.scrollIntoView({ behavior: 'smooth' });
+                
+                // Calculate offset for sticky header (header height + nav tabs height + some padding)
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const navHeight = document.querySelector('.nav-tabs').offsetHeight;
+                const offset = headerHeight + navHeight + 20; // 20px extra padding
+                
+                // Scroll to the details container with offset
+                const elementPosition = detailsContainer.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             }
         }
 
